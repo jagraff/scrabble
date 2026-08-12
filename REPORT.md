@@ -234,7 +234,27 @@ makes the model feasible with objective **exactly 1,786** in 10 s
 (`tests/test_cstage.py`), validating automata, flow, inventory and
 scoring in one shot.
 
-**Result: [FILLED IN AFTER SOLVE — results/tableau.json]**
+Solving the tableau with everything free proved too slow (CP-SAT presolve
+of 45 automaton constraints over a free grid), so the final case is
+decided by decomposition (`scrabble_max/finalize.py`):
+
+1. **Enumerate scoring configurations.** A configuration is (placed set,
+   concrete cross word per placed column). Under the stage-B⁺ model these
+   determine the score. A CP-SAT blocking-clause loop enumerates every
+   configuration with relaxed score ≥ 1,787; when the loop ends in
+   INFEASIBLE, the list is provably complete. (A separate solve with
+   `Σ placed ≤ 6` shows any non-bingo play tops out at **1,730**, so only
+   7-tile placements need enumerating.)
+2. **Refute each configuration exactly.** For each configuration, the
+   full tableau model is solved with the cross columns pinned to the
+   chosen words and everything else (supports, glue, blanks,
+   connectivity) free, asking for a valid pre-move position scoring
+   ≥ 1,787. With the columns pinned, presolve collapses the automata and
+   each check takes seconds.
+
+**Result: every enumerated configuration is INFEASIBLE — no legal static
+position realizes any of them.  [Final counts in
+results/config_checks.log / results/configs.json.]**
 
 ## 8. Question A vs. question B (reachability)
 
