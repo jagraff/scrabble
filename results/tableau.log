@@ -1,0 +1,25 @@
+
+Starting CP-SAT solver v9.15.6755
+Parameters: max_time_in_seconds: 21600 log_search_progress: true num_search_workers: 12
+
+Initial optimization model '': (model_fingerprint: 0x101b79f6676ff0aa)
+#Variables: 12'910 (#ints: 1 in objective) (12'668 primary variables)
+  - 11'566 Booleans in [0,1]
+  - 52 in [0,2]
+  - 210 in [0,10]
+  - 225 in [0,26]
+  - 840 in [0,224]
+  - 1 in [0,225]
+  - 15 in [0,480]
+  - 1 in [0,3000]
+#kAutomaton: 45
+#kBoolAnd: 195 (#enforced: 195) (#literals: 585)
+#kBoolOr: 195 (#enforced: 195) (#literals: 390)
+#kLinear1: 11'406 (#enforced: 11'400)
+#kLinear2: 1'905
+#kLinear3: 5'670
+#kLinearN: 719 (#enforced: 15 #multi: 15) (#terms: 25'206)
+#kTable: 15
+
+Starting presolve at 0.77s
+The solution hint is incomplete: 225 out of 12910 non fixed variables hinted.

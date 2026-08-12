@@ -1,0 +1,5 @@
+OXYPHENBUTAZONE row=0: relaxed 2000 -> tight 1798  (75.8s)
+  building line DAWG...
+  row1-exact: 1798 -> 1794 (33.5s)
+OXYPHENBUTAZONE row=14: relaxed 1935 -> tight 1778  (99.4s)
+PSYCHOANALYZING row=0: relaxed 1911 -> tight 1430  (97.2s)

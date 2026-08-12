@@ -4,6 +4,16 @@
   "row": 0,
   "relaxed_max": 2000,
   "tight_bound": 1798.0,
+  "per_mask": {
+   "0": 264.0,
+   "1": 413.0,
+   "2": 416.0,
+   "3": 784.0,
+   "4": 414.0,
+   "5": 780.0,
+   "6": 784.0,
+   "7": 1798.0
+  },
   "detail": {
    "T": [
     0,
@@ -29,11 +39,57 @@
     "11": "ZOOGAMETE",
     "14": "EJACULATING"
    },
-   "blanks": {
-    "C": 1,
-    "N": 1
+   "blanks(bs,bu)": {
+    "C": [
+     1,
+     0
+    ],
+    "N": [
+     1,
+     0
+    ]
    },
-   "bingo": true
+   "bingo": true,
+   "proved_optimal": true
+  },
+  "row1_exact_bound": 1794.0,
+  "row1_exact_detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    10,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BRANCHLIKE",
+    "10": "AMELIORATIVE",
+    "11": "ZOOGAMETES",
+    "14": "EJACULATING"
+   },
+   "blanks(bs,bu)": {
+    "C": [
+     2,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true,
+   "row1": "PEER.TURR.MOD.J"
+  },
+  "row1_exact_per_mask": {
+   "7": 1794.0
   }
  },
  {
@@ -41,6 +97,16 @@
   "row": 14,
   "relaxed_max": 1935,
   "tight_bound": 1778.0,
+  "per_mask": {
+   "0": 262.0,
+   "1": 407.0,
+   "2": 394.0,
+   "3": 756.0,
+   "4": 426.0,
+   "5": 778.0,
+   "6": 775.0,
+   "7": 1778.0
+  },
   "detail": {
    "T": [
     0,
@@ -66,11 +132,18 @@
     "11": "FRITZ",
     "14": "ZOOXANTHELLAE"
    },
-   "blanks": {
-    "X": 1,
-    "Z": 1
+   "blanks(bs,bu)": {
+    "X": [
+     1,
+     0
+    ],
+    "Z": [
+     1,
+     0
+    ]
    },
-   "bingo": true
+   "bingo": true,
+   "proved_optimal": true
   }
  },
  {
@@ -78,6 +151,16 @@
   "row": 0,
   "relaxed_max": 1911,
   "tight_bound": 1430.0,
+  "per_mask": {
+   "0": 249.0,
+   "1": 413.0,
+   "2": 386.0,
+   "3": 650.0,
+   "4": 400.0,
+   "5": 763.0,
+   "6": 740.0,
+   "7": 1430.0
+  },
   "detail": {
    "T": [
     0,
@@ -103,47 +186,14 @@
     "10": "YOURSELF",
     "14": "GIZZARDS"
    },
-   "blanks": {
-    "Z": 2
+   "blanks(bs,bu)": {
+    "Z": [
+     2,
+     0
+    ]
    },
-   "bingo": true
-  }
- },
- {
-  "word": "PSYCHOANALYZING",
-  "row": 14,
-  "relaxed_max": 1897,
-  "tight_bound": 1424.0,
-  "detail": {
-   "T": [
-    0,
-    7,
-    14
-   ],
-   "WM": 27,
-   "placed": [
-    0,
-    1,
-    3,
-    6,
-    7,
-    10,
-    14
-   ],
-   "crosses": {
-    "0": "MINICAMP",
-    "1": "WAXWORKERS",
-    "3": "QUADRATIC",
-    "6": "JAVELINA",
-    "7": "DEEPFROZEN",
-    "10": "INVESTIGATORY",
-    "14": "HIGHFALUTING"
-   },
-   "blanks": {
-    "H": 1,
-    "Z": 1
-   },
-   "bingo": true
+   "bingo": true,
+   "proved_optimal": true
   }
  }
 ]
