@@ -1,0 +1,28 @@
+{
+ "threshold": 1786,
+ "complete": false,
+ "count": 1,
+ "configs": [
+  {
+   "placed": [
+    0,
+    1,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREMARKET",
+    "4": "HOVERFLY",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EQUIPPING"
+   },
+   "relaxed_score": 1788
+  }
+ ]
+}

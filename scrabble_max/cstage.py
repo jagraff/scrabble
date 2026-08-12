@@ -43,7 +43,7 @@ LETTERS = [chr(ord('A') + i) for i in range(26)]
 def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
                   time_limit=3600.0, hint_grid=None, hint_placed=None,
                   min_score=None, known_upper=None, fix_hint=False,
-                  log=print):
+                  fix_placed_exact=None, fix_crosses=None, log=print):
     """Maximize the score of playing `word` on row 0 with the given TW
     cells placed.  Returns (status_name, best_value, bound, solution)."""
     assert row == 0, "row-14 candidates were eliminated earlier"
@@ -111,6 +111,22 @@ def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
 
     # center occupied pre-move
     m.Add(g[(7, 7)] != 0)
+
+    # ---- optional: pin a specific configuration (per-config checking) ----
+    if fix_placed_exact is not None:
+        for c in range(N):
+            m.Add(placed[c] == (1 if c in fix_placed_exact else 0))
+    if fix_crosses is not None:
+        for c in fix_placed_exact:
+            w = fix_crosses.get(c)
+            if w is None:
+                m.Add(g[(1, c)] == 0)  # no cross word at this placed cell
+                continue
+            assert w[0] == word[c]
+            for r in range(1, len(w)):
+                m.Add(g[(r, c)] == code(w[r]))
+            if len(w) < N:
+                m.Add(g[(len(w), c)] == 0)  # the cross word ends here
 
     # inventory with blank allowances.  A blank on a *scored* tile (row 0
     # or a cross-word cell) loses at least its face value; blanks on

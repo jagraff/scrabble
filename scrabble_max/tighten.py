@@ -159,7 +159,8 @@ def build_line_dawg(lexicon):
 def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
                       opts_cache=None, adj_pairs=None, log=print,
                       row1_exact=False, dawg=None, mask_filter=None,
-                      pairwise_all_rows=False):
+                      pairwise_all_rows=False, enumerate_above=None,
+                      enumerate_cb=None):
     """Return ((bound, detail), per_mask) for a full-row edge play.
 
     row1_exact adds the exact model of the next row inward: every tile in
@@ -393,6 +394,15 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
             terms.append(score * v)
         for ch in LETTERS:
             terms.append(-VALUES[ch] * bs[ch])
+
+        if enumerate_above is not None:
+            # feasibility enumeration mode: hand the model to the caller
+            total_var = model.NewIntVar(0, 3000, 'total')
+            model.Add(total_var == sum(terms) + const)
+            model.Add(total_var >= enumerate_above + 1)
+            return enumerate_cb(model,
+                                (placed, x, opt_lists, has_cross, total_var))
+
         model.Maximize(sum(terms) + const)
 
         solver = cp_model.CpSolver()

@@ -122,10 +122,13 @@ bag + 2 blanks are excluded — provably unplayable on any board).
 **Result: only full-row 15-letter spans on row 1 and row 15 (and their
 column transposes) have caps ≥ 1,786.** Every shorter word, every inner
 line, every partial span is eliminated at once (`results/candidates.json`,
-`live_geometries_by_length`). The intuition is confirmed quantitatively:
-a ×27 word multiplier is achievable only by covering three TWs in one
-line, which forces exactly this geometry; without it, even best-case
-letters plus seven tripled cross words fall short.
+`live_geometries_by_length`). The margins are wide: the best cap of any
+eliminated geometry is **1,656** (a full 15-letter word through the
+center row's two TWs and the center DW), and the best 14-letter edge
+span caps at 1,031. A ×27 word multiplier is achievable only by newly
+covering three TWs in one line, which forces exactly the surviving
+geometry; without it, even best-case letters plus seven tripled
+cross-words fall short.
 
 For the surviving geometry the per-word relaxed maximum (exact
 maximization over placed subsets under the relaxations) leaves **17
@@ -173,13 +176,24 @@ The real 1,786 play satisfies every one of these constraints, giving the
 soundness regression `test_tight_bound_dominates_known_1786` (bound must
 be ≥ 1,786 — it is).
 
-**Results** (`results/tight_bounds.json`): every candidate except
-OXYPHENBUTAZONE-top collapses far below 1,786 — e.g. PSYCHOANALYZING
-1911→1430, OXYPHENBUTAZONE-bottom 1935→**1778**. Crucially, the per-TW-mask
-breakdown for OXYPHENBUTAZONE-top is `{no TWs: 264, …, two TWs: ≤784,
-all three TWs: 1798}`: **the only configuration anywhere above 1,786 is
-the known one — OXYPHENBUTAZONE across the top row placing tiles on all
-three triple-word squares.**
+**Results** (`results/tight_bounds.json`), relaxed → stage-B bound, for
+(top row / bottom row):
+
+```
+OXYPHENBUTAZONE  2000→1798 / 1935→1778   PSYCHOANALYZING  1911→1430 / 1897→1424
+DEMYTHOLOGIZING  1845→1650 / 1860→1703   DEMYTHOLOGIZERS  1836→1629 / 1839→1716
+NEPHRECTOMIZING  1824→1642 / 1836→1639   REMYTHOLOGIZING  1815→1621 / 1830→1666
+HYPERIMMUNIZING  1825→1645 / 1807→1624   VENTRILOQUIZING  1834→1629 (top)
+DICHLOROBENZENE  1790→1585 (top)         OVEREMPHASIZING  1789→1560 (top)
+```
+
+Every candidate except OXYPHENBUTAZONE-top collapses below 1,786 (the
+runner-up is OXYPHENBUTAZONE played on the *bottom* row at 1,778, where
+cross words must *end* at the edge). Crucially, the per-TW-mask breakdown
+for OXYPHENBUTAZONE-top is `{no TWs: 264, …, two TWs: ≤784, all three
+TWs: 1798}`: **the only configuration anywhere above 1,786 is the known
+one — OXYPHENBUTAZONE across the top row placing tiles on all three
+triple-word squares.**
 
 ### Stage B⁺ — exact model of the second row
 
