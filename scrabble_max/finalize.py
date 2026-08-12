@@ -30,7 +30,7 @@ LETTERS = [chr(ord('A') + i) for i in range(26)]
 
 def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
                       threshold=1786, time_limit=900.0, max_configs=100000,
-                      log=print):
+                      known_configs=(), log=print):
     """All (placed, crosses) configs with row-1-exact relaxed score
     > threshold, for the all-TWs mask."""
     # Build the same model as tighten_candidate(row1_exact=True) for
@@ -50,6 +50,29 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
         solver.parameters.max_time_in_seconds = time_limit
         solver.parameters.num_search_workers = 8
         placed, x, opt_lists, has_cross, total = handles
+
+        def add_block(placed_cols, crosses):
+            clause = []
+            for c, wrd in crosses.items():
+                c = int(c)
+                for oi, o in enumerate(opt_lists[c]):
+                    if o[3] == wrd:
+                        clause.append(x[(c, oi)].Not())
+                        break
+                else:
+                    return  # word not in option list: cannot recur, skip
+            for c in range(N):
+                if c not in {int(k) for k in crosses}:
+                    clause.append(has_cross[c])
+                clause.append(placed[c].Not() if c in placed_cols
+                              else placed[c])
+            model.AddBoolOr(clause)
+
+        for kc in known_configs:
+            add_block(set(kc['placed']), kc['crosses'])
+        if known_configs:
+            log(f'  pre-blocked {len(known_configs)} known configs')
+
         while len(configs) < max_configs:
             status = solver.Solve(model)
             if status == cp_model.INFEASIBLE:
@@ -143,7 +166,22 @@ def main():
             print(' ', r['status'], r['value'], r['config']['placed'])
         return
     t0 = time.time()
-    configs, complete = enumerate_configs(lex, threshold=args.threshold)
+    known = []
+    import ast
+    import re
+    try:
+        for line in open('results/configs.log'):
+            mm = re.match(r'\s*config #(\d+): (\d+) placed=(\([^)]*\)) (\{.*\})',
+                          line)
+            if mm:
+                known.append({'relaxed_score': int(mm.group(2)),
+                              'placed': ast.literal_eval(mm.group(3)),
+                              'crosses': ast.literal_eval(mm.group(4))})
+    except FileNotFoundError:
+        pass
+    configs, complete = enumerate_configs(lex, threshold=args.threshold,
+                                          known_configs=known)
+    configs = known + configs
     configs.sort(key=lambda c: -c['relaxed_score'])
     os.makedirs('results', exist_ok=True)
     with open(args.out, 'w') as f:
