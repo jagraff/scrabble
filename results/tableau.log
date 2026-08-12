@@ -23,3 +23,6 @@ Initial optimization model '': (model_fingerprint: 0x101b79f6676ff0aa)
 
 Starting presolve at 0.77s
 The solution hint is incomplete: 225 out of 12910 non fixed variables hinted.
+  7.43e-03s  0.00e+00d  [DetectDominanceRelations] 
+  2.35e+01s  0.00e+00d  [PresolveToFixPoint] #num_loops=4 #num_dual_strengthening=2 
+  1.76e-04s  0.00e+00d  [ExtractEncodingFromLinear] 
