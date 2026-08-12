@@ -1,0 +1,31 @@
+tee: results/enumeration.log: No such file or directory
+  0/196588 words, 0 candidates, 3s
+  20000/196588 words, 0 candidates, 3s
+  40000/196588 words, 0 candidates, 3s
+  60000/196588 words, 5 candidates, 3s
+  80000/196588 words, 5 candidates, 3s
+  100000/196588 words, 7 candidates, 3s
+  120000/196588 words, 10 candidates, 3s
+  140000/196588 words, 14 candidates, 3s
+  160000/196588 words, 16 candidates, 3s
+  180000/196588 words, 16 candidates, 3s
+
+17 candidates with relaxed max >= 1786 (3s) -> results/candidates.json
+live geometries by length: {15: 2}
+   2000  OXYPHENBUTAZONE row=0 c0=0 placed=(0, 3, 4, 7, 11, 12, 14)
+   1935  OXYPHENBUTAZONE row=14 c0=0 placed=(0, 3, 5, 7, 11, 13, 14)
+   1911  PSYCHOANALYZING row=0 c0=0 placed=(0, 1, 3, 5, 7, 11, 14)
+   1897  PSYCHOANALYZING row=14 c0=0 placed=(0, 1, 3, 7, 11, 13, 14)
+   1860  DEMYTHOLOGIZING row=14 c0=0 placed=(0, 1, 3, 7, 11, 13, 14)
+   1845  DEMYTHOLOGIZING row=0 c0=0 placed=(0, 3, 6, 7, 8, 11, 14)
+   1839  DEMYTHOLOGIZERS row=14 c0=0 placed=(0, 1, 3, 7, 11, 12, 14)
+   1836  DEMYTHOLOGIZERS row=0 c0=0 placed=(0, 3, 6, 7, 8, 11, 14)
+   1836  NEPHRECTOMIZING row=14 c0=0 placed=(0, 1, 3, 5, 7, 11, 14)
+   1834  VENTRILOQUIZING row=0 c0=0 placed=(0, 3, 7, 10, 11, 12, 14)
+   1830  REMYTHOLOGIZING row=14 c0=0 placed=(0, 1, 3, 7, 11, 13, 14)
+   1825  HYPERIMMUNIZING row=0 c0=0 placed=(0, 2, 3, 6, 7, 11, 14)
+   1824  NEPHRECTOMIZING row=0 c0=0 placed=(0, 2, 3, 7, 8, 11, 14)
+   1815  REMYTHOLOGIZING row=0 c0=0 placed=(0, 3, 6, 7, 8, 11, 14)
+   1807  HYPERIMMUNIZING row=14 c0=0 placed=(0, 3, 7, 9, 11, 13, 14)
+   1790  DICHLOROBENZENE row=0 c0=0 placed=(0, 2, 3, 5, 7, 11, 14)
+   1789  OVEREMPHASIZING row=0 c0=0 placed=(0, 3, 6, 7, 9, 11, 14)

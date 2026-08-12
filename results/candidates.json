@@ -1,0 +1,273 @@
+{
+ "threshold": 1786,
+ "count": 17,
+ "live_geometries_by_length": {
+  "15": [
+   [
+    0,
+    0
+   ],
+   [
+    14,
+    0
+   ]
+  ]
+ },
+ "candidates": [
+  {
+   "word": "OXYPHENBUTAZONE",
+   "row": 0,
+   "col0": 0,
+   "relaxed_max": 2000,
+   "placed_cols": [
+    0,
+    3,
+    4,
+    7,
+    11,
+    12,
+    14
+   ]
+  },
+  {
+   "word": "OXYPHENBUTAZONE",
+   "row": 14,
+   "col0": 0,
+   "relaxed_max": 1935,
+   "placed_cols": [
+    0,
+    3,
+    5,
+    7,
+    11,
+    13,
+    14
+   ]
+  },
+  {
+   "word": "PSYCHOANALYZING",
+   "row": 0,
+   "col0": 0,
+   "relaxed_max": 1911,
+   "placed_cols": [
+    0,
+    1,
+    3,
+    5,
+    7,
+    11,
+    14
+   ]
+  },
+  {
+   "word": "PSYCHOANALYZING",
+   "row": 14,
+   "col0": 0,
+   "relaxed_max": 1897,
+   "placed_cols": [
+    0,
+    1,
+    3,
+    7,
+    11,
+    13,
+    14
+   ]
+  },
+  {
+   "word": "DEMYTHOLOGIZING",
+   "row": 14,
+   "col0": 0,
+   "relaxed_max": 1860,
+   "placed_cols": [
+    0,
+    1,
+    3,
+    7,
+    11,
+    13,
+    14
+   ]
+  },
+  {
+   "word": "DEMYTHOLOGIZING",
+   "row": 0,
+   "col0": 0,
+   "relaxed_max": 1845,
+   "placed_cols": [
+    0,
+    3,
+    6,
+    7,
+    8,
+    11,
+    14
+   ]
+  },
+  {
+   "word": "DEMYTHOLOGIZERS",
+   "row": 14,
+   "col0": 0,
+   "relaxed_max": 1839,
+   "placed_cols": [
+    0,
+    1,
+    3,
+    7,
+    11,
+    12,
+    14
+   ]
+  },
+  {
+   "word": "DEMYTHOLOGIZERS",
+   "row": 0,
+   "col0": 0,
+   "relaxed_max": 1836,
+   "placed_cols": [
+    0,
+    3,
+    6,
+    7,
+    8,
+    11,
+    14
+   ]
+  },
+  {
+   "word": "NEPHRECTOMIZING",
+   "row": 14,
+   "col0": 0,
+   "relaxed_max": 1836,
+   "placed_cols": [
+    0,
+    1,
+    3,
+    5,
+    7,
+    11,
+    14
+   ]
+  },
+  {
+   "word": "VENTRILOQUIZING",
+   "row": 0,
+   "col0": 0,
+   "relaxed_max": 1834,
+   "placed_cols": [
+    0,
+    3,
+    7,
+    10,
+    11,
+    12,
+    14
+   ]
+  },
+  {
+   "word": "REMYTHOLOGIZING",
+   "row": 14,
+   "col0": 0,
+   "relaxed_max": 1830,
+   "placed_cols": [
+    0,
+    1,
+    3,
+    7,
+    11,
+    13,
+    14
+   ]
+  },
+  {
+   "word": "HYPERIMMUNIZING",
+   "row": 0,
+   "col0": 0,
+   "relaxed_max": 1825,
+   "placed_cols": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ]
+  },
+  {
+   "word": "NEPHRECTOMIZING",
+   "row": 0,
+   "col0": 0,
+   "relaxed_max": 1824,
+   "placed_cols": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ]
+  },
+  {
+   "word": "REMYTHOLOGIZING",
+   "row": 0,
+   "col0": 0,
+   "relaxed_max": 1815,
+   "placed_cols": [
+    0,
+    3,
+    6,
+    7,
+    8,
+    11,
+    14
+   ]
+  },
+  {
+   "word": "HYPERIMMUNIZING",
+   "row": 14,
+   "col0": 0,
+   "relaxed_max": 1807,
+   "placed_cols": [
+    0,
+    3,
+    7,
+    9,
+    11,
+    13,
+    14
+   ]
+  },
+  {
+   "word": "DICHLOROBENZENE",
+   "row": 0,
+   "col0": 0,
+   "relaxed_max": 1790,
+   "placed_cols": [
+    0,
+    2,
+    3,
+    5,
+    7,
+    11,
+    14
+   ]
+  },
+  {
+   "word": "OVEREMPHASIZING",
+   "row": 0,
+   "col0": 0,
+   "relaxed_max": 1789,
+   "placed_cols": [
+    0,
+    3,
+    6,
+    7,
+    9,
+    11,
+    14
+   ]
+  }
+ ]
+}
