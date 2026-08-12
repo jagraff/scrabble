@@ -1,0 +1,407 @@
+[
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    10,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XYLEMS",
+    "3": "PREBOOKED",
+    "7": "BRAINWASHING",
+    "10": "AVENGEFUL",
+    "11": "ZOOGAMETES",
+    "14": "EQUIPPED"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    1,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XI",
+    "3": "PREQUALIFIED",
+    "6": "NUMBERED",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1788,
+   "placed": [
+    0,
+    1,
+    2,
+    3,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "2": "YAWED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "11": "ZONETIME",
+    "14": "EVOCATIVELY"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    10,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BLADDERLIKE",
+    "10": "AMENORRHOEAS",
+    "11": "ZONETIME",
+    "14": "EVOCATIVELY"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    10,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWED",
+    "3": "PREQUALIFYING",
+    "7": "BOOZINESSES",
+    "10": "AMELIORATIVE",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YESES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWADDLING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    1,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PRESURVEYED",
+    "4": "HOVERFLIES",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EQUIPPING"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1788,
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    10,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREJUDGED",
+    "7": "BRAINWASHING",
+    "10": "AWAKENED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1788,
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TALLOWING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    1,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREMARKETED",
+    "4": "HOVERFLIES",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EQUALITY"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    1,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROSES",
+    "3": "PREINTERVIEWING",
+    "4": "HOVERFLY",
+    "7": "BRAINWASHED",
+    "11": "ZOOGAMETES",
+    "14": "EQUIPPED"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    1,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XENOPHILE",
+    "3": "PREJUDGING",
+    "4": "HOVERFLIES",
+    "7": "BRAINWASHED",
+    "11": "ZOOGAMETES",
+    "14": "EQUALITY"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    1,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "4": "HOVERED",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    10,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YATAGHANS",
+    "3": "PREQUALIFIED",
+    "7": "BLADDERLIKE",
+    "10": "ABIOGENESIS",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "relaxed_score": 1787,
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    10,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XYLEMS",
+    "3": "PREJUDGED",
+    "7": "BRAINWASHED",
+    "10": "AWAKEN",
+    "11": "ZOOGAMETES",
+    "14": "EQUIPPING"
+   }
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ }
+]
