@@ -43,7 +43,8 @@ LETTERS = [chr(ord('A') + i) for i in range(26)]
 def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
                   time_limit=3600.0, hint_grid=None, hint_placed=None,
                   min_score=None, known_upper=None, fix_hint=False,
-                  fix_placed_exact=None, fix_crosses=None, log=print):
+                  fix_placed_exact=None, fix_crosses=None,
+                  fixed_blank_loss=None, log=print):
     """Maximize the score of playing `word` on row 0 with the given TW
     cells placed.  Returns (status_name, best_value, bound, solution)."""
     assert row == 0, "row-14 candidates were eliminated earlier"
@@ -242,8 +243,16 @@ def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
     WM = 3 ** len(tw_placed)
 
     total = m.NewIntVar(0, 3000, 'total')
-    m.Add(total == WM * sum(main_terms) + sum(cross_scores) + 50 * bingo
-          - sum(VALUES[ch] * pen[ch] for ch in LETTERS))
+    if fixed_blank_loss is not None:
+        # pinned configuration: the forced-blank loss among fixed scored
+        # tiles is a known constant (exact, not optimistic)
+        n_forced, loss = fixed_blank_loss
+        m.Add(total == WM * sum(main_terms) + sum(cross_scores)
+              + 50 * bingo - loss)
+    else:
+        m.Add(total == WM * sum(main_terms) + sum(cross_scores)
+              + 50 * bingo
+              - sum(VALUES[ch] * pen[ch] for ch in LETTERS))
     if min_score is not None:
         m.Add(total >= min_score)
     if known_upper is not None:

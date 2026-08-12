@@ -114,6 +114,41 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
     return configs, complete
 
 
+def exact_fixed_blank_loss(word, placed, crosses):
+    """For a pinned configuration, the number of forced blanks among the
+    *fixed, scored* tiles is a constant, and so is the minimum score loss:
+    every copy of an over-subscribed letter sits in a known word with a
+    known multiplier.  Returns (num_forced, min_loss) or None if the
+    configuration needs more than 2 blanks and is impossible outright."""
+    from .rules import VALUES as V, DISTRIBUTION as D
+    copies = Counter(word)
+    loss_opts = {ch: [] for ch in copies}
+    # main-word copies: value x letter-mult x 27, plus the cross word's
+    # share if the cell is a hook with a cross word
+    for c, ch in enumerate(word):
+        lm = 2 if c in (3, 11) else 1
+        wm = 3 if c in (0, 7, 14) else 1
+        loss = V[ch] * lm * 27
+        if c in crosses:
+            loss += wm * V[ch] * lm
+        loss_opts.setdefault(ch, []).append(loss)
+    for c, w in crosses.items():
+        wm = 3 if c in (0, 7, 14) else 1
+        for ch in w[1:]:
+            copies[ch] += 1
+            loss_opts.setdefault(ch, []).append(V[ch] * wm)
+    total_forced = 0
+    total_loss = 0
+    for ch, n in copies.items():
+        k = n - D[ch]
+        if k > 0:
+            total_forced += k
+            total_loss += sum(sorted(loss_opts[ch])[:k])
+    if total_forced > 2:
+        return None
+    return total_forced, total_loss
+
+
 def check_configs(lexicon, configs, threshold=1786, time_limit=600.0,
                   out_path='results/config_checks.json', log=print):
     """Decide each configuration exactly with the pinned tableau model."""
@@ -126,10 +161,20 @@ def check_configs(lexicon, configs, threshold=1786, time_limit=600.0,
             else dict(cfg['crosses'])
         import time as _t
         t0 = _t.time()
+        fb = exact_fixed_blank_loss('OXYPHENBUTAZONE', placed, crosses)
+        if fb is None:
+            log(f"[{i+1}/{len(configs)}] needs >2 blanks -> IMPOSSIBLE")
+            results.append({'config': cfg, 'status': 'INFEASIBLE',
+                            'value': None, 'bound': None, 'solution': None,
+                            'reason': 'needs more than 2 blanks'})
+            with open(out_path, 'w') as f:
+                json.dump(results, f, indent=1, default=str)
+            continue
         name, val, bound, sol = solve_tableau(
             lexicon, 'OXYPHENBUTAZONE', 0, time_limit=time_limit,
             fix_placed_exact=placed, fix_crosses=crosses,
-            min_score=threshold + 1, known_upper=1794, log=lambda s: None)
+            min_score=threshold + 1, known_upper=1794,
+            fixed_blank_loss=fb, log=lambda s: None)
         log(f"[{i+1}/{len(configs)}] relaxed={cfg['relaxed_score']} "
             f"placed={sorted(placed)} -> {name} "
             f"val={val} bound={bound} ({_t.time()-t0:.0f}s)", flush=True)
