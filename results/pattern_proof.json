@@ -2,129 +2,17 @@
  {
   "placed": [
    0,
-   3,
-   4,
-   7,
-   11,
-   12,
-   14
-  ],
-  "relaxed_bound": 2000,
-  "status": "INFEASIBLE",
-  "value": null,
-  "seconds": 5.1,
-  "solution": null
- },
- {
-  "placed": [
-   0,
-   3,
-   7,
-   9,
-   11,
-   12,
-   14
-  ],
-  "relaxed_bound": 1998,
-  "status": "INFEASIBLE",
-  "value": null,
-  "seconds": 5.0,
-  "solution": null
- },
- {
-  "placed": [
-   0,
-   3,
-   5,
-   7,
-   11,
-   12,
-   14
-  ],
-  "relaxed_bound": 1997,
-  "status": "INFEASIBLE",
-  "value": null,
-  "seconds": 5.1,
-  "solution": null
- },
- {
-  "placed": [
-   0,
+   2,
    3,
    7,
    11,
-   12,
    13,
    14
   ],
-  "relaxed_bound": 1996,
-  "status": "INFEASIBLE",
+  "relaxed_bound": 1787.0,
+  "status": "UNKNOWN",
   "value": null,
-  "seconds": 5.1,
-  "solution": null
- },
- {
-  "placed": [
-   0,
-   3,
-   7,
-   10,
-   11,
-   12,
-   14
-  ],
-  "relaxed_bound": 1996,
-  "status": "INFEASIBLE",
-  "value": null,
-  "seconds": 5.2,
-  "solution": null
- },
- {
-  "placed": [
-   0,
-   3,
-   6,
-   7,
-   11,
-   12,
-   14
-  ],
-  "relaxed_bound": 1996,
-  "status": "INFEASIBLE",
-  "value": null,
-  "seconds": 5.1,
-  "solution": null
- },
- {
-  "placed": [
-   0,
-   3,
-   7,
-   8,
-   11,
-   12,
-   14
-  ],
-  "relaxed_bound": 1995,
-  "status": "INFEASIBLE",
-  "value": null,
-  "seconds": 5.1,
-  "solution": null
- },
- {
-  "placed": [
-   0,
-   3,
-   4,
-   7,
-   9,
-   11,
-   14
-  ],
-  "relaxed_bound": 1995,
-  "status": "INFEASIBLE",
-  "value": null,
-  "seconds": 5.1,
+  "seconds": 884.4,
   "solution": null
  },
  {
@@ -134,29 +22,13 @@
    3,
    7,
    11,
-   12,
+   13,
    14
   ],
-  "relaxed_bound": 1995,
+  "relaxed_bound": 1788.0,
   "status": "UNKNOWN",
   "value": null,
-  "seconds": 301.9,
-  "solution": null
- },
- {
-  "placed": [
-   0,
-   3,
-   4,
-   5,
-   7,
-   11,
-   14
-  ],
-  "relaxed_bound": 1994,
-  "status": "INFEASIBLE",
-  "value": null,
-  "seconds": 4.8,
+  "seconds": 887.3,
   "solution": null
  }
 ]

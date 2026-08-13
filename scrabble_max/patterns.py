@@ -213,6 +213,73 @@ def prove_patterns_split(lexicon, survivors, uppers, threshold=1786,
     return results
 
 
+def prove_pattern_by_configs(lexicon, S, threshold=1786,
+                             enum_time_limit=1800.0, check_time_limit=600.0,
+                             out_dir='results/pattern_configs', log=print):
+    """Tier 3c.  Refute one pattern by enumerating *its* configurations.
+
+    The global configuration enumeration in `finalize.py` never terminates
+    because it ranges over every placed set at once.  Restricted to a
+    single placed set the blocking loop closes: the easiest survivor has
+    just 16 configurations and exhausts in 8 minutes.
+
+    Sound and exhaustive: any legal board with this placed set scoring
+    above `threshold` realises some configuration, and its row-1-exact
+    relaxed score is at least its true score, so it appears in the list.
+    `complete=True` means the loop ended in INFEASIBLE, i.e. the list is
+    the whole of it; refuting every entry then refutes the pattern.
+    """
+    import os
+    from .finalize import check_configs, enumerate_configs
+    os.makedirs(out_dir, exist_ok=True)
+    tag = ''.join(f'{c:02d}' for c in S)
+
+    t0 = time.time()
+    cfgs, complete = enumerate_configs(
+        lexicon, threshold=threshold, time_limit=enum_time_limit,
+        fix_placed=set(S), log=lambda *a, **k: None)
+    t_enum = time.time() - t0
+    log(f'    enumerated {len(cfgs)} configs, complete={complete} '
+        f'({t_enum:.0f}s)', flush=True)
+    if not complete:
+        return {'placed': list(S), 'complete': False,
+                'n_configs': len(cfgs), 'refuted': False,
+                'enum_seconds': round(t_enum, 1)}
+
+    t1 = time.time()
+    res = check_configs(lexicon, cfgs, threshold=threshold,
+                        time_limit=check_time_limit,
+                        out_path=f'{out_dir}/{tag}.json',
+                        log=lambda *a, **k: None)
+    t_check = time.time() - t1
+    left = [r for r in res if r['status'] != 'INFEASIBLE']
+    log(f'    refuted {len(res) - len(left)}/{len(res)} configs '
+        f'({t_check:.0f}s)', flush=True)
+    return {'placed': list(S), 'complete': True, 'n_configs': len(cfgs),
+            'refuted': not left, 'enum_seconds': round(t_enum, 1),
+            'check_seconds': round(t_check, 1),
+            'survivors': [r['config'] for r in left]}
+
+
+def prove_patterns_by_configs(lexicon, survivors, threshold=1786,
+                              enum_time_limit=1800.0, check_time_limit=600.0,
+                              out_path='results/pattern_proof_configs.json',
+                              log=print):
+    """Tier 3c driver over every surviving pattern."""
+    results = []
+    for i, (upper, S) in enumerate(survivors):
+        log(f'[{i + 1}/{len(survivors)}] {S} ceiling={upper:.0f}', flush=True)
+        rec = prove_pattern_by_configs(
+            lexicon, S, threshold=threshold, enum_time_limit=enum_time_limit,
+            check_time_limit=check_time_limit, log=log)
+        rec['row1_ceiling'] = upper
+        results.append(rec)
+        log(f'    -> {"REFUTED" if rec["refuted"] else "OPEN"}', flush=True)
+        with open(out_path, 'w') as f:
+            json.dump(results, f, indent=1, default=str)
+    return results
+
+
 def load_row1_uppers(path='results/pattern_row1.json'):
     """Proven per-pattern upper bounds produced by tier 2."""
     recs = json.load(open(path))
@@ -229,6 +296,12 @@ def main():
     ap.add_argument('--row1-time-limit', type=float, default=300.0)
     ap.add_argument('--tableau-time-limit', type=float, default=3600.0)
     ap.add_argument('--stop-after-row1', action='store_true')
+    ap.add_argument('--tier3', choices=('configs', 'tableau'),
+                    default='configs',
+                    help='configs: per-pattern configuration enumeration '
+                         '(terminates); tableau: single free-cross-word '
+                         'solve per pattern (does not scale)')
+    ap.add_argument('--enum-time-limit', type=float, default=1800.0)
     ap.add_argument('--resume-row1', default=None,
                     help='skip tiers 1-2 and take survivors from this JSON')
     ap.add_argument('--out', default='results/pattern_proof.json')
@@ -262,13 +335,26 @@ def main():
     for b, S in survivors:
         print(f'    {b:.0f}  {S}', flush=True)
 
-    res = prove_patterns(lex, survivors, threshold=args.threshold,
-                         time_limit=args.tableau_time_limit,
-                         out_path=args.out)
-    bad = [r for r in res if r['status'] != 'INFEASIBLE']
-    print(f'\ntier 3: {len(res)} patterns decided; {len(bad)} not refuted')
-    for r in bad:
-        print('  ', r['status'], r['value'], tuple(r['placed']))
+    if args.tier3 == 'configs':
+        res = prove_patterns_by_configs(
+            lex, survivors, threshold=args.threshold,
+            enum_time_limit=args.enum_time_limit,
+            check_time_limit=args.tableau_time_limit)
+        bad = [r for r in res if not r['refuted']]
+        n_cfg = sum(r['n_configs'] for r in res)
+        print(f'\ntier 3: {len(res)} patterns, {n_cfg} configurations '
+              f'enumerated and refuted; {len(bad)} patterns still open')
+        for r in bad:
+            print('  open:', tuple(r['placed']),
+                  'complete' if r['complete'] else 'ENUMERATION INCOMPLETE')
+    else:
+        res = prove_patterns(lex, survivors, threshold=args.threshold,
+                             time_limit=args.tableau_time_limit,
+                             out_path=args.out)
+        bad = [r for r in res if r['status'] != 'INFEASIBLE']
+        print(f'\ntier 3: {len(res)} patterns decided; {len(bad)} not refuted')
+        for r in bad:
+            print('  ', r['status'], r['value'], tuple(r['placed']))
     if not bad:
         print(f'\nCOMPLETE: no legal play in this geometry beats '
               f'{args.threshold}.')

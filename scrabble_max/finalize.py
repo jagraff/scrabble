@@ -30,7 +30,7 @@ LETTERS = [chr(ord('A') + i) for i in range(26)]
 
 def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
                       threshold=1786, time_limit=900.0, max_configs=100000,
-                      known_configs=(), log=print):
+                      known_configs=(), log=print, fix_placed=None):
     """All (placed, crosses) configs with row-1-exact relaxed score
     > threshold, for the all-TWs mask."""
     # Build the same model as tighten_candidate(row1_exact=True) for
@@ -110,7 +110,7 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
         lexicon, word, row, opts_cache=opts_cache, adj_pairs=adj,
         row1_exact=True, dawg=dawg, mask_filter=[7],
         pairwise_all_rows=True, enumerate_above=threshold,
-        enumerate_cb=block_and_collect)
+        enumerate_cb=block_and_collect, fix_placed=fix_placed)
     return configs, complete
 
 
