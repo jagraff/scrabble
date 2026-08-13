@@ -134,5 +134,2674 @@
   "proved_optimal": false,
   "kept": false,
   "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1995,
+  "row1_bound": 1785.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": false,
+  "seconds": 16.2
+ },
+ {
+  "placed": [
+   0,
+   3,
+   4,
+   5,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1994,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.7
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1994,
+  "row1_bound": 1785.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": false,
+  "seconds": 17.8
+ },
+ {
+  "placed": [
+   0,
+   3,
+   4,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1993,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.7
+ },
+ {
+  "placed": [
+   0,
+   3,
+   4,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1993,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   3,
+   4,
+   6,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1993,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   3,
+   5,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1992,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   3,
+   4,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1992,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   4,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1992,
+  "row1_bound": 1791.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 21.5
+ },
+ {
+  "placed": [
+   0,
+   3,
+   7,
+   9,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1991,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.8
+ },
+ {
+  "placed": [
+   0,
+   3,
+   7,
+   9,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1991,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   3,
+   6,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1991,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   4,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1991,
+  "row1_bound": 1788.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 33.1
+ },
+ {
+  "placed": [
+   0,
+   3,
+   7,
+   8,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1990,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.8
+ },
+ {
+  "placed": [
+   0,
+   3,
+   5,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1990,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   3,
+   5,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1990,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   3,
+   5,
+   6,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1990,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1990,
+  "row1_bound": 1794.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 22.2
+ },
+ {
+  "placed": [
+   0,
+   3,
+   7,
+   10,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1989,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.7
+ },
+ {
+  "placed": [
+   0,
+   3,
+   6,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1989,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   3,
+   6,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1989,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   3,
+   5,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1989,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1989,
+  "row1_bound": 1791.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 19.9
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   5,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1989,
+  "row1_bound": 1792.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 17.4
+ },
+ {
+  "placed": [
+   0,
+   3,
+   7,
+   8,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1988,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.8
+ },
+ {
+  "placed": [
+   0,
+   3,
+   7,
+   8,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1988,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   3,
+   6,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1988,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   5,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1988,
+  "row1_bound": 1780.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": false,
+  "seconds": 25.7
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1988,
+  "row1_bound": 1788.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 23.0
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1988,
+  "row1_bound": 1794.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 23.6
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   6,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1988,
+  "row1_bound": 1792.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 20.8
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1987,
+  "row1_bound": 1787.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 22.6
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1987,
+  "row1_bound": 1791.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 21.8
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   6,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1987,
+  "row1_bound": 1792.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 20.7
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1987,
+  "row1_bound": 1790.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 19.9
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1986,
+  "row1_bound": 1790.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 20.4
+ },
+ {
+  "placed": [
+   0,
+   1,
+   2,
+   3,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1986,
+  "row1_bound": 1791.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": true,
+  "seconds": 20.8
+ },
+ {
+  "placed": [
+   0,
+   4,
+   7,
+   9,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1914,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.8
+ },
+ {
+  "placed": [
+   0,
+   4,
+   5,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1913,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   4,
+   7,
+   11,
+   12,
+   13,
+   14
+  ],
+  "stage_a_bound": 1912,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   4,
+   7,
+   10,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1912,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   4,
+   6,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1912,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   5,
+   7,
+   9,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1911,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   4,
+   7,
+   8,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1911,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   1,
+   4,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1911,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   7,
+   9,
+   11,
+   12,
+   13,
+   14
+  ],
+  "stage_a_bound": 1910,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   7,
+   9,
+   10,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1910,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   6,
+   7,
+   9,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1910,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   4,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1910,
+  "row1_bound": 1693.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": false,
+  "seconds": 17.6
+ },
+ {
+  "placed": [
+   0,
+   7,
+   8,
+   9,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1909,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.8
+ },
+ {
+  "placed": [
+   0,
+   5,
+   7,
+   11,
+   12,
+   13,
+   14
+  ],
+  "stage_a_bound": 1909,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   5,
+   7,
+   10,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1909,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   5,
+   6,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1909,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   7,
+   9,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1909,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   7,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "stage_a_bound": 1908,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   6,
+   7,
+   11,
+   12,
+   13,
+   14
+  ],
+  "stage_a_bound": 1908,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   6,
+   7,
+   10,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1908,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   5,
+   7,
+   8,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1908,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   5,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1908,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   7,
+   9,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1908,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   5,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1908,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   7,
+   8,
+   11,
+   12,
+   13,
+   14
+  ],
+  "stage_a_bound": 1907,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   7,
+   8,
+   10,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1907,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   6,
+   7,
+   8,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1907,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   7,
+   9,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1907,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   7,
+   9,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1907,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   6,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1907,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   5,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1907,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   7,
+   11,
+   12,
+   13,
+   14
+  ],
+  "stage_a_bound": 1907,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   7,
+   10,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1907,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   6,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1907,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   7,
+   8,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1906,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   5,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1906,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   5,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1906,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   5,
+   6,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1906,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   7,
+   11,
+   12,
+   13,
+   14
+  ],
+  "stage_a_bound": 1906,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   7,
+   10,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1906,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   6,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1906,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   7,
+   8,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1906,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   4,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1906,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   7,
+   10,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1905,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   6,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1905,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   6,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1905,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   5,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1905,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   7,
+   8,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1905,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   4,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1905,
+  "row1_bound": 1701.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": false,
+  "seconds": 17.2
+ },
+ {
+  "placed": [
+   0,
+   1,
+   4,
+   5,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1905,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   2,
+   7,
+   11,
+   12,
+   14
+  ],
+  "stage_a_bound": 1905,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   5,
+   7,
+   9,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1904,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   5,
+   7,
+   9,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1904,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   5,
+   6,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1904,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   7,
+   8,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1904,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   7,
+   8,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1904,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   4,
+   6,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1904,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   4,
+   5,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1904,
+  "row1_bound": 1689.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": false,
+  "seconds": 20.8
+ },
+ {
+  "placed": [
+   0,
+   1,
+   4,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1904,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.7
+ },
+ {
+  "placed": [
+   0,
+   1,
+   4,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1904,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   4,
+   6,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1904,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   7,
+   9,
+   10,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1903,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   6,
+   7,
+   9,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1903,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   6,
+   7,
+   9,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1903,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   5,
+   7,
+   8,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1903,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   4,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1903,
+  "row1_bound": 1695.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": false,
+  "seconds": 18.7
+ },
+ {
+  "placed": [
+   0,
+   2,
+   4,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1903,
+  "row1_bound": 1704.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": false,
+  "seconds": 18.3
+ },
+ {
+  "placed": [
+   0,
+   2,
+   4,
+   6,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1903,
+  "row1_bound": 1693.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": false,
+  "seconds": 17.3
+ },
+ {
+  "placed": [
+   0,
+   1,
+   5,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1903,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.7
+ },
+ {
+  "placed": [
+   0,
+   1,
+   4,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1903,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   7,
+   8,
+   9,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   7,
+   8,
+   9,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   6,
+   7,
+   8,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   5,
+   7,
+   10,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   5,
+   6,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   5,
+   6,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   5,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   4,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": 1699.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": false,
+  "seconds": 17.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   7,
+   9,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.8
+ },
+ {
+  "placed": [
+   0,
+   1,
+   7,
+   9,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   6,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   2,
+   4,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1902,
+  "row1_bound": 1698.0,
+  "infeasible": false,
+  "proved_optimal": true,
+  "kept": false,
+  "seconds": 17.9
+ },
+ {
+  "placed": [
+   0,
+   6,
+   7,
+   10,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1901,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.7
+ },
+ {
+  "placed": [
+   0,
+   5,
+   7,
+   8,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1901,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   5,
+   7,
+   8,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1901,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   5,
+   6,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1901,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   7,
+   9,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1901,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   7,
+   9,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1901,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.6
+ },
+ {
+  "placed": [
+   0,
+   2,
+   6,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1901,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   7,
+   8,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1901,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   5,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1901,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   5,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1901,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   5,
+   6,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1901,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   7,
+   8,
+   10,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   6,
+   7,
+   8,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   6,
+   7,
+   8,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   7,
+   8,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   5,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   5,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   5,
+   6,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   7,
+   10,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   6,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   6,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   5,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   2,
+   7,
+   9,
+   11,
+   14
+  ],
+  "stage_a_bound": 1900,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   7,
+   10,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1899,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 1.0
+ },
+ {
+  "placed": [
+   0,
+   2,
+   6,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1899,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   6,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1899,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   5,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1899,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   7,
+   8,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1899,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   7,
+   8,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1899,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   6,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1899,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   2,
+   5,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1899,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   7,
+   8,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1898,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   7,
+   8,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1898,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   2,
+   6,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1898,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   2,
+   7,
+   11,
+   13,
+   14
+  ],
+  "stage_a_bound": 1898,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   2,
+   7,
+   10,
+   11,
+   14
+  ],
+  "stage_a_bound": 1898,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   2,
+   6,
+   7,
+   11,
+   14
+  ],
+  "stage_a_bound": 1898,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
+ },
+ {
+  "placed": [
+   0,
+   1,
+   2,
+   7,
+   8,
+   11,
+   14
+  ],
+  "stage_a_bound": 1897,
+  "row1_bound": null,
+  "infeasible": true,
+  "proved_optimal": false,
+  "kept": false,
+  "seconds": 0.5
  }
 ]
