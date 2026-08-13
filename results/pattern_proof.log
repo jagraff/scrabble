@@ -1,3 +1,9 @@
-495 placed patterns with |S|=7 covering all three TWs; 165 can reach 1787 under the stage-A relaxation
-[1/165] (0, 3, 4, 7, 11, 12, 14) relaxed=2000 -> INFEASIBLE val=None (5s)
-[2/165] (0, 3, 7, 9, 11, 12, 14) relaxed=1998 -> INFEASIBLE val=None (5s)
+tier 1: 495 placed patterns with |S|=7 covering all three TWs; 165 can reach 1787 under the stage-A relaxation
+[1/165] (0, 3, 4, 7, 11, 12, 14) stageA=2000 row1=-inf -> eliminated (0s)
+[2/165] (0, 3, 7, 9, 11, 12, 14) stageA=1998 row1=-inf -> eliminated (0s)
+[3/165] (0, 3, 5, 7, 11, 12, 14) stageA=1997 row1=-inf -> eliminated (1s)
+[4/165] (0, 3, 7, 11, 12, 13, 14) stageA=1996 row1=-inf -> eliminated (0s)
+[5/165] (0, 3, 7, 10, 11, 12, 14) stageA=1996 row1=-inf -> eliminated (1s)
+[6/165] (0, 3, 6, 7, 11, 12, 14) stageA=1996 row1=-inf -> eliminated (1s)
+[7/165] (0, 3, 7, 8, 11, 12, 14) stageA=1995 row1=-inf -> eliminated (1s)
+[8/165] (0, 3, 4, 7, 9, 11, 14) stageA=1995 row1=-inf -> eliminated (0s)

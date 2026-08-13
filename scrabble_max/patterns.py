@@ -10,35 +10,44 @@ across row 0.  Within that case a play is determined by
 one at a time.  That axis is hopeless: cross words are freely
 substitutable (ZOOGAMETE / ZOOGAMETES, XYLEM / XYLEMS, ...), so a single
 pattern spawns hundreds of configurations that all fail for the same
-structural reason.
+structural reason -- 1300 configurations turned out to span just 14
+patterns.
 
-Here we quantify over S only.  Two facts make the set of S tiny:
+Here we quantify over S only, in three tiers of increasing cost:
 
-  * a rack holds 7 tiles and stage B caps |S| <= 6 at 1730, so |S| = 7;
-  * stage B caps every non-full TW mask at 784, so {0, 7, 14} subset S.
+  tier 1  `qualifying_patterns` -- pure arithmetic.  A rack holds 7 tiles
+          and stage B caps |S| <= 6 at 1730, so |S| = 7; stage B caps
+          every non-full TW mask at 784, so {0, 7, 14} is a subset of S.
+          That leaves C(12, 4) = 495 patterns, scored with the stage-A
+          relaxation; 165 survive.
 
-That leaves C(12, 4) = 495 patterns.  `qualifying_patterns` scores each
-one with the *same* one-directional relaxation stage A uses, discarding
-those that cannot reach the threshold even optimistically; only 165
-survive.  `prove_patterns` then hands each survivor to the full 15x15
-tableau model with the placed set pinned and the cross words left free,
-asking for any legal board scoring >= threshold + 1.
+  tier 2  `row1_filter` -- the stage-B row-1-exact model with the placed
+          set pinned (ceiling 1794 rather than stage A's 2000).  Tens of
+          seconds per pattern, and it disposes of most of the 165.
 
-If every survivor comes back INFEASIBLE, no legal play in this geometry
-beats the threshold, and -- since every other geometry died in stage A/B
--- the threshold is the global maximum.
+  tier 3  `prove_patterns` -- the full 15x15 tableau with the placed set
+          pinned and cross words free, asking for any legal board scoring
+          >= threshold + 1.
+
+If every survivor of tier 3 is INFEASIBLE then no legal play in this
+geometry beats the threshold, and -- every other geometry having died in
+stage A/B -- the threshold is the global maximum.
 
 Soundness notes:
 
-  * the pattern filter only ever *enlarges* the feasible set (it is the
-    stage-A relaxation, which ignores supports, glue and the tile bag),
-    so discarding a pattern below the threshold is safe;
-  * we deliberately do not pass `known_upper`.  That would add a hard
-    `total <= bound` constraint, making this proof depend on the
-    row-1-exact machinery; leaving it off keeps the chain short at the
-    cost of a slower search;
-  * `fixed_blank_loss` does not apply here (it needs pinned cross words),
-    so the model falls back to its own blank penalty, which
+  * tiers 1 and 2 are one-directional relaxations: they only ever enlarge
+    the feasible set, so dropping a pattern whose bound falls at or below
+    the threshold is safe;
+  * tier 2 eliminates only on a *proven* upper bound.  On a solver
+    timeout `tighten_candidate` returns `BestObjectiveBound()`, which is
+    still a valid upper bound for a maximisation; if the solver cannot
+    even produce that it raises, and we keep the pattern;
+  * tier 3 deliberately does not pass `known_upper`.  That would add a
+    hard `total <= bound` constraint and make the tableau step depend on
+    tier 2; leaving it off keeps the steps independent, and a probe
+    showed it does not speed the search up anyway;
+  * `fixed_blank_loss` does not apply at tier 3 (it needs pinned cross
+    words), so the model falls back to its own blank penalty, which
     under-estimates the loss and is therefore safe for refutation.
 """
 
@@ -72,7 +81,7 @@ def pattern_bound(S, word=WORD, row=ROW, cb=None) -> int:
 
 
 def qualifying_patterns(lexicon, word=WORD, row=ROW, threshold=1786):
-    """Every placed pattern that could still beat `threshold`.
+    """Tier 1.  Every placed pattern that could still beat `threshold`.
 
     Returns (survivors, n_total) where survivors is a list of
     (bound, S) sorted by descending bound."""
@@ -92,9 +101,49 @@ def qualifying_patterns(lexicon, word=WORD, row=ROW, threshold=1786):
     return out, n_total
 
 
+def row1_filter(lexicon, patterns, threshold=1786, time_limit=300.0,
+                out_path='results/pattern_row1.json', log=print):
+    """Tier 2.  Per-pattern row-1-exact bound; returns the survivors."""
+    from . import tighten as T
+    opts = {(ch, ROW): T.cross_options(lexicon, ch, ROW) for ch in set(WORD)}
+    adj = T.adjacent_pairs(lexicon)
+    dawg = T.build_line_dawg(lexicon)
+
+    survivors, records = [], []
+    for i, (a_bound, S) in enumerate(patterns):
+        t0 = time.time()
+        try:
+            (bound, detail), _ = T.tighten_candidate(
+                lexicon, WORD, ROW, opts_cache=opts, adj_pairs=adj,
+                row1_exact=True, dawg=dawg, mask_filter=[7],
+                pairwise_all_rows=True, fix_placed=set(S),
+                time_limit=time_limit, log=lambda s: None)
+            proved = bool(detail and detail.get('proved_optimal', False))
+        except RuntimeError:
+            # solver produced neither a solution nor a bound: keep it
+            bound, proved = float('inf'), False
+        dt = time.time() - t0
+        kept = bound > threshold
+        records.append({'placed': list(S), 'stage_a_bound': a_bound,
+                        'row1_bound': (None if bound in (float('inf'),
+                                                         float('-inf'))
+                                       else bound),
+                        'infeasible': bound == float('-inf'),
+                        'proved_optimal': proved,
+                        'kept': kept, 'seconds': round(dt, 1)})
+        log(f'[{i + 1}/{len(patterns)}] {S} stageA={a_bound} '
+            f'row1={bound} -> {"KEEP" if kept else "eliminated"} '
+            f'({dt:.0f}s)', flush=True)
+        if kept:
+            survivors.append((a_bound, S))
+        with open(out_path, 'w') as f:
+            json.dump(records, f, indent=1, default=str)
+    return survivors, records
+
+
 def prove_patterns(lexicon, patterns, threshold=1786, time_limit=300.0,
                    out_path='results/pattern_proof.json', log=print):
-    """Decide each pattern exactly with the pinned-placed-set tableau."""
+    """Tier 3.  Decide each pattern exactly with the pinned tableau."""
     from .cstage import solve_tableau
     results = []
     for i, (bound, S) in enumerate(patterns):
@@ -120,27 +169,33 @@ def main():
     from .lexicon import load
     ap = argparse.ArgumentParser()
     ap.add_argument('--threshold', type=int, default=1786)
-    ap.add_argument('--time-limit', type=float, default=300.0)
+    ap.add_argument('--row1-time-limit', type=float, default=300.0)
+    ap.add_argument('--tableau-time-limit', type=float, default=3600.0)
+    ap.add_argument('--stop-after-row1', action='store_true')
     ap.add_argument('--out', default='results/pattern_proof.json')
-    ap.add_argument('--only-unknown-from', default=None,
-                    help='re-run just the unresolved patterns of a prior run')
     args = ap.parse_args()
     lex = load()
-    pats, n_total = qualifying_patterns(lex, threshold=args.threshold)
-    print(f'{n_total} placed patterns with |S|=7 covering all three TWs; '
-          f'{len(pats)} can reach {args.threshold + 1} under the stage-A '
-          f'relaxation')
-    if args.only_unknown_from:
-        prior = json.load(open(args.only_unknown_from))
-        todo = {tuple(r['placed']) for r in prior
-                if r['status'] != 'INFEASIBLE'}
-        pats = [(b, S) for b, S in pats if S in todo]
-        print(f'  restricted to {len(pats)} unresolved patterns')
     os.makedirs('results', exist_ok=True)
-    res = prove_patterns(lex, pats, threshold=args.threshold,
-                         time_limit=args.time_limit, out_path=args.out)
+
+    pats, n_total = qualifying_patterns(lex, threshold=args.threshold)
+    print(f'tier 1: {n_total} placed patterns with |S|=7 covering all three '
+          f'TWs; {len(pats)} can reach {args.threshold + 1} under the '
+          f'stage-A relaxation', flush=True)
+
+    survivors, _ = row1_filter(lex, pats, threshold=args.threshold,
+                               time_limit=args.row1_time_limit)
+    print(f'\ntier 2: {len(survivors)} of {len(pats)} patterns survive the '
+          f'row-1-exact bound', flush=True)
+    for b, S in survivors:
+        print('   ', S)
+    if args.stop_after_row1:
+        return
+
+    res = prove_patterns(lex, survivors, threshold=args.threshold,
+                         time_limit=args.tableau_time_limit,
+                         out_path=args.out)
     bad = [r for r in res if r['status'] != 'INFEASIBLE']
-    print(f'\n{len(res)} patterns decided; {len(bad)} not refuted')
+    print(f'\ntier 3: {len(res)} patterns decided; {len(bad)} not refuted')
     for r in bad:
         print('  ', r['status'], r['value'], tuple(r['placed']))
     if not bad:
