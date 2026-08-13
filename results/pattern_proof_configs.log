@@ -33,3 +33,7 @@ resuming: 1 patterns already refuted
     refuted 27/27 configs (79s)
     -> REFUTED
 [6/14] (0, 1, 2, 3, 7, 11, 14) ceiling=1791
+    enumerated 396 configs, complete=True (7502s)
+    refuted 396/396 configs (1156s)
+    -> REFUTED
+[7/14] (0, 1, 3, 4, 7, 11, 14) ceiling=1791

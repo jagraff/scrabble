@@ -88,5 +88,23 @@
   "check_seconds": 79.1,
   "survivors": [],
   "row1_ceiling": 1790.0
+ },
+ {
+  "placed": [
+   0,
+   1,
+   2,
+   3,
+   7,
+   11,
+   14
+  ],
+  "complete": true,
+  "n_configs": 396,
+  "refuted": true,
+  "enum_seconds": 7502.0,
+  "check_seconds": 1155.5,
+  "survivors": [],
+  "row1_ceiling": 1791.0
  }
 ]
