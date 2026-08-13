@@ -229,24 +229,38 @@ def main():
     ap.add_argument('--row1-time-limit', type=float, default=300.0)
     ap.add_argument('--tableau-time-limit', type=float, default=3600.0)
     ap.add_argument('--stop-after-row1', action='store_true')
+    ap.add_argument('--resume-row1', default=None,
+                    help='skip tiers 1-2 and take survivors from this JSON')
     ap.add_argument('--out', default='results/pattern_proof.json')
     args = ap.parse_args()
     lex = load()
     os.makedirs('results', exist_ok=True)
 
-    pats, n_total = qualifying_patterns(lex, threshold=args.threshold)
-    print(f'tier 1: {n_total} placed patterns with |S|=7 covering all three '
-          f'TWs; {len(pats)} can reach {args.threshold + 1} under the '
-          f'stage-A relaxation', flush=True)
+    if args.resume_row1:
+        uppers = load_row1_uppers(args.resume_row1)
+        survivors = [(uppers[S], S) for S in uppers]
+        print(f'resumed {len(survivors)} tier-2 survivors from '
+              f'{args.resume_row1}', flush=True)
+    else:
+        pats, n_total = qualifying_patterns(lex, threshold=args.threshold)
+        print(f'tier 1: {n_total} placed patterns with |S|=7 covering all '
+              f'three TWs; {len(pats)} can reach {args.threshold + 1} under '
+              f'the stage-A relaxation', flush=True)
+        survivors, _ = row1_filter(lex, pats, threshold=args.threshold,
+                                   time_limit=args.row1_time_limit)
+        print(f'\ntier 2: {len(survivors)} of {len(pats)} patterns survive '
+              f'the row-1-exact bound', flush=True)
+        if args.stop_after_row1:
+            for b, S in survivors:
+                print('   ', S)
+            return
 
-    survivors, _ = row1_filter(lex, pats, threshold=args.threshold,
-                               time_limit=args.row1_time_limit)
-    print(f'\ntier 2: {len(survivors)} of {len(pats)} patterns survive the '
-          f'row-1-exact bound', flush=True)
+    # easiest first: a lower proven ceiling means fewer scores to rule out,
+    # so we bank cheap verdicts and isolate the genuinely hard residue.
+    survivors.sort(key=lambda bs: (bs[0], bs[1]))
+    print('tier 3 order (bound, pattern):', flush=True)
     for b, S in survivors:
-        print('   ', S)
-    if args.stop_after_row1:
-        return
+        print(f'    {b:.0f}  {S}', flush=True)
 
     res = prove_patterns(lex, survivors, threshold=args.threshold,
                          time_limit=args.tableau_time_limit,
