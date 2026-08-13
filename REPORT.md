@@ -236,25 +236,85 @@ scoring in one shot.
 
 Solving the tableau with everything free proved too slow (CP-SAT presolve
 of 45 automaton constraints over a free grid), so the final case is
-decided by decomposition (`scrabble_max/finalize.py`):
+decided by decomposition. Two decompositions were tried.
 
-1. **Enumerate scoring configurations.** A configuration is (placed set,
-   concrete cross word per placed column). Under the stage-B⁺ model these
-   determine the score. A CP-SAT blocking-clause loop enumerates every
-   configuration with relaxed score ≥ 1,787; when the loop ends in
-   INFEASIBLE, the list is provably complete. (A separate solve with
-   `Σ placed ≤ 6` shows any non-bingo play tops out at **1,730**, so only
-   7-tile placements need enumerating.)
-2. **Refute each configuration exactly.** For each configuration, the
-   full tableau model is solved with the cross columns pinned to the
-   chosen words and everything else (supports, glue, blanks,
-   connectivity) free, asking for a valid pre-move position scoring
-   ≥ 1,787. With the columns pinned, presolve collapses the automata and
-   each check takes seconds.
+### 7.1 First attempt — per-configuration refutation (abandoned)
 
-**Result: every enumerated configuration is INFEASIBLE — no legal static
-position realizes any of them.  [Final counts in
-results/config_checks.log / results/configs.json.]**
+`scrabble_max/finalize.py` enumerates *configurations*: a placed set
+together with a concrete cross word in each placed column. A blocking-clause
+loop emits every configuration whose stage-B⁺ relaxed score reaches 1,787,
+and each is then refuted by the tableau with those columns pinned — which
+makes presolve collapse, so a check takes seconds.
+
+This works per item but does not terminate. Cross words are freely
+substitutable (ZOOGAMETE/ZOOGAMETES, XYLEM/XYLEMS, …), so one board
+structure spawns hundreds of configurations that all fail for the same
+reason. After 21 hours the loop had emitted **1,300 configurations — all
+refuted, none surviving — spanning just 14 distinct placed sets**, at a
+steady ~57/hour with no sign of exhaustion. The enumeration was over the
+wrong equivalence class, and was stopped.
+
+Two findings from it are kept. First, it exercised the pinned tableau
+1,300 times without ever producing a legal position above 1,786. Second,
+it caught a modelling bug: one configuration solved to OPTIMAL 1,787 whose
+true score was 1,775, because blanks forced onto scored tiles were
+under-charged; `exact_fixed_blank_loss` fixed it and the configuration is
+INFEASIBLE under the corrected model.
+
+### 7.2 Second attempt — per-pattern refutation
+
+`scrabble_max/patterns.py` quantifies over the placed set alone, in three
+tiers of increasing cost.
+
+**Tier 1 (arithmetic).** A rack holds 7 tiles and stage B caps |S| ≤ 6 at
+1,730, so |S| = 7; stage B caps every non-full TW mask at 784, so
+{0, 7, 14} ⊆ S. That leaves exactly **C(12,4) = 495** placed patterns.
+Scoring each with the stage-A relaxation (ceiling 2,000) leaves **165**;
+the other 330 cannot reach 1,787 even optimistically.
+
+**Tier 2 (row-1-exact).** `tighten_candidate` gains `fix_placed=`, pinning
+the placed set inside the stage-B⁺ model (ceiling 1,794). This is both
+much tighter than tier 1 and far cheaper than a tableau solve: it decided
+all 165 patterns in **10 minutes**, leaving **14 survivors**. It
+disposes of cases the tableau cannot — `(0,1,3,7,11,12,14)` bounds at
+1,785 in 25 s where the tableau returned UNKNOWN twice at 300 s and 600 s.
+
+The 14 survivors and their proven upper bounds:
+
+| row-1-exact bound | placed columns |
+|---:|---|
+| 1794 | `(0, 1, 3, 7, 10, 11, 14)` |
+| 1794 | `(0, 1, 3, 7, 9, 11, 14)` |
+| 1792 | `(0, 2, 3, 6, 7, 11, 14)` |
+| 1792 | `(0, 1, 3, 6, 7, 11, 14)` |
+| 1792 | `(0, 1, 3, 5, 7, 11, 14)` |
+| 1791 | `(0, 2, 3, 7, 10, 11, 14)` |
+| 1791 | `(0, 2, 3, 7, 9, 11, 14)` |
+| 1791 | `(0, 1, 3, 4, 7, 11, 14)` |
+| 1791 | `(0, 1, 2, 3, 7, 11, 14)` |
+| 1790 | `(0, 2, 3, 7, 8, 11, 14)` |
+| 1790 | `(0, 1, 3, 7, 8, 11, 14)` |
+| 1788 | `(0, 2, 3, 4, 7, 11, 14)` |
+| 1788 | `(0, 1, 3, 7, 11, 13, 14)` |
+| 1787 | `(0, 2, 3, 7, 11, 13, 14)` |
+
+Independent confirmation: these 14 are **exactly** the 14 placed sets the
+abandoned per-configuration enumeration found in 21 hours across 1,300
+configurations. Two unrelated routes agree on the set, and it contains
+`(0, 1, 3, 6, 7, 11, 14)` — the placed set of the record play itself,
+which must survive any sound filter (`tests/test_patterns.py`).
+
+**Tier 3 (tableau).** Each survivor goes to the full tableau with the
+placed set pinned and cross words free, asking for a legal position
+scoring ≥ 1,787. `known_upper` is deliberately not passed, so this step
+does not inherit tier 2's ceiling as an assumption.
+
+Tier 3 is the open step. The `≥ 1,787` query is hard for CP-SAT on these
+patterns: `(0,1,3,7,10,11,14)` returned UNKNOWN at 600 s with and without
+the 1,794 ceiling. A sound case-split on the exact total
+(`total == v` for each v in [1,787, upper], exhaustive because `upper` is
+proven) was also tried and also returned UNKNOWN at `total == 1794` after
+419 s. Status is recorded in `results/pattern_proof.json`.
 
 ## 8. Question A vs. question B (reachability)
 
