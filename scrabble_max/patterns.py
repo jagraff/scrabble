@@ -163,6 +163,63 @@ def prove_patterns(lexicon, patterns, threshold=1786, time_limit=300.0,
     return results
 
 
+def prove_pattern_by_score(lexicon, S, upper, threshold=1786,
+                           time_limit=1800.0, log=print):
+    """Tier 3b.  Refute one pattern by case-splitting on the exact score.
+
+    `upper` must be a *proven* upper bound on the score achievable with
+    this placed set -- in practice the tier-2 row-1-exact bound.  Asking
+    `total == v` for each v in [threshold + 1, upper] prunes far harder
+    than the single `total >= threshold + 1` query, which the solver
+    struggles with on the surviving patterns.
+
+    Sound because the cases are exhaustive: any board scoring above the
+    threshold has some integer total in that closed range, `upper` being
+    an upper bound.  Returns a list of per-score records."""
+    from .cstage import solve_tableau
+    out = []
+    for v in range(threshold + 1, int(upper) + 1):
+        t0 = time.time()
+        name, val, ub, sol = solve_tableau(
+            lexicon, WORD, ROW, time_limit=time_limit,
+            fix_placed_exact=set(S), min_score=v, known_upper=v,
+            verbose=False, log=lambda s: None)
+        dt = time.time() - t0
+        log(f'    score={v}: {name} ({dt:.0f}s)', flush=True)
+        out.append({'score': v, 'status': name, 'value': val,
+                    'seconds': round(dt, 1), 'solution': sol})
+        if name != 'INFEASIBLE':
+            break
+    return out
+
+
+def prove_patterns_split(lexicon, survivors, uppers, threshold=1786,
+                         time_limit=1800.0,
+                         out_path='results/pattern_proof_split.json',
+                         log=print):
+    """Tier 3b driver: score-split refutation for every survivor."""
+    results = []
+    for i, (_, S) in enumerate(survivors):
+        upper = uppers[S]
+        log(f'[{i + 1}/{len(survivors)}] {S} upper={upper:.0f}', flush=True)
+        cases = prove_pattern_by_score(lexicon, S, upper, threshold=threshold,
+                                       time_limit=time_limit, log=log)
+        refuted = all(c['status'] == 'INFEASIBLE' for c in cases)
+        results.append({'placed': list(S), 'upper': upper,
+                        'refuted': refuted, 'cases': cases})
+        log(f'    -> {"refuted" if refuted else "NOT REFUTED"}', flush=True)
+        with open(out_path, 'w') as f:
+            json.dump(results, f, indent=1, default=str)
+    return results
+
+
+def load_row1_uppers(path='results/pattern_row1.json'):
+    """Proven per-pattern upper bounds produced by tier 2."""
+    recs = json.load(open(path))
+    return {tuple(r['placed']): r['row1_bound']
+            for r in recs if r['kept'] and r['row1_bound'] is not None}
+
+
 def main():
     import argparse
     import os
