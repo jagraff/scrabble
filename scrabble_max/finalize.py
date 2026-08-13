@@ -174,7 +174,7 @@ def check_configs(lexicon, configs, threshold=1786, time_limit=600.0,
             lexicon, 'OXYPHENBUTAZONE', 0, time_limit=time_limit,
             fix_placed_exact=placed, fix_crosses=crosses,
             min_score=threshold + 1, known_upper=1794,
-            fixed_blank_loss=fb, log=lambda s: None)
+            fixed_blank_loss=fb, log=lambda s: None, verbose=False)
         log(f"[{i+1}/{len(configs)}] relaxed={cfg['relaxed_score']} "
             f"placed={sorted(placed)} -> {name} "
             f"val={val} bound={bound} ({_t.time()-t0:.0f}s)", flush=True)

@@ -265,9 +265,24 @@ def prove_patterns_by_configs(lexicon, survivors, threshold=1786,
                               enum_time_limit=1800.0, check_time_limit=600.0,
                               out_path='results/pattern_proof_configs.json',
                               log=print):
-    """Tier 3c driver over every surviving pattern."""
-    results = []
+    """Tier 3c driver over every surviving pattern.
+
+    Resumes: patterns already recorded as refuted in `out_path` are kept
+    and skipped, so a restart does not redo finished enumerations."""
+    import os
+    results, done = [], {}
+    if os.path.exists(out_path):
+        for r in json.load(open(out_path)):
+            if r.get('refuted'):
+                done[tuple(r['placed'])] = r
+        if done:
+            log(f'resuming: {len(done)} patterns already refuted', flush=True)
     for i, (upper, S) in enumerate(survivors):
+        if S in done:
+            results.append(done[S])
+            log(f'[{i + 1}/{len(survivors)}] {S} already refuted, skipping',
+                flush=True)
+            continue
         log(f'[{i + 1}/{len(survivors)}] {S} ceiling={upper:.0f}', flush=True)
         rec = prove_pattern_by_configs(
             lexicon, S, threshold=threshold, enum_time_limit=enum_time_limit,

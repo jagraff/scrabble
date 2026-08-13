@@ -2,3 +2,11 @@
 __pycache__/
 *.pyc
 results/*.tmp
+
+# Raw CP-SAT search logs: hundreds of MB of solver internals with only a
+# few hundred meaningful lines.  Verdicts live in results/*.json and the
+# extracted results/config_checks_summary.txt; regenerate with the
+# commands in REPORT.md section 10.
+results/*.log
+!results/reachability.log
+!results/pattern_proof.log

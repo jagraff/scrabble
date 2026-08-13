@@ -1,0 +1,20 @@
+[
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   7,
+   11,
+   13,
+   14
+  ],
+  "complete": true,
+  "n_configs": 16,
+  "refuted": true,
+  "enum_seconds": 415.4,
+  "check_seconds": 55.5,
+  "survivors": [],
+  "row1_ceiling": 1787.0
+ }
+]
