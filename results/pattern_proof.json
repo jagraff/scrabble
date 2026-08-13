@@ -1,0 +1,34 @@
+[
+ {
+  "placed": [
+   0,
+   3,
+   4,
+   7,
+   11,
+   12,
+   14
+  ],
+  "relaxed_bound": 2000,
+  "status": "INFEASIBLE",
+  "value": null,
+  "seconds": 5.1,
+  "solution": null
+ },
+ {
+  "placed": [
+   0,
+   3,
+   7,
+   9,
+   11,
+   12,
+   14
+  ],
+  "relaxed_bound": 1998,
+  "status": "INFEASIBLE",
+  "value": null,
+  "seconds": 5.0,
+  "solution": null
+ }
+]

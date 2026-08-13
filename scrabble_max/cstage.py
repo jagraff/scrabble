@@ -44,7 +44,7 @@ def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
                   time_limit=3600.0, hint_grid=None, hint_placed=None,
                   min_score=None, known_upper=None, fix_hint=False,
                   fix_placed_exact=None, fix_crosses=None,
-                  fixed_blank_loss=None, log=print):
+                  fixed_blank_loss=None, log=print, verbose=True):
     """Maximize the score of playing `word` on row 0 with the given TW
     cells placed.  Returns (status_name, best_value, bound, solution)."""
     assert row == 0, "row-14 candidates were eliminated earlier"
@@ -282,8 +282,9 @@ def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
     solver = cp_model.CpSolver()
     solver.parameters.max_time_in_seconds = time_limit
     solver.parameters.num_search_workers = 12
-    solver.parameters.log_search_progress = True
-    solver.log_callback = lambda s: log('  ' + s)
+    solver.parameters.log_search_progress = verbose
+    if verbose:
+        solver.log_callback = lambda s: log('  ' + s)
     status = solver.Solve(m)
     name = solver.StatusName(status)
     sol = None
