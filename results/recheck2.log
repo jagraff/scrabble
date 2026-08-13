@@ -1,0 +1,198 @@
+
+Starting CP-SAT solver v9.15.6755
+Parameters: max_time_in_seconds: 5400 log_search_progress: true num_search_workers: 12
+
+Initial optimization model '': (model_fingerprint: 0x4720754e21076e00)
+#Variables: 12'910 (#ints: 1 in objective) (12'584 primary variables)
+  - 11'566 Booleans in [0,1]
+  - 52 in [0,2]
+  - 210 in [0,10]
+  - 225 in [0,26]
+  - 840 in [0,224]
+  - 1 in [0,225]
+  - 15 in [0,480]
+  - 1 in [0,3000]
+#kAutomaton: 45
+#kBoolAnd: 195 (#enforced: 195) (#literals: 585)
+#kBoolOr: 195 (#enforced: 195) (#literals: 390)
+#kLinear1: 11'492 (#enforced: 11'400)
+#kLinear2: 1'905
+#kLinear3: 5'670
+#kLinearN: 719 (#enforced: 15 #multi: 15) (#terms: 25'180)
+#kTable: 15
+
+Starting presolve at 0.28s
+INFEASIBLE: 'empty objective domain'
+  1.71e+01s  0.00e+00d  [PresolveToFixPoint] 
+
+Presolve summary:
+  - 40 affine relations were detected.
+  - rule 'affine: fixed' was applied 1 time.
+  - rule 'affine: new relation' was applied 40 times.
+  - rule 'at_most_one: removed literals' was applied 23 times.
+  - rule 'automaton: reduce variable domain' was applied 142 times.
+  - rule 'bool_and: always false' was applied 86 times.
+  - rule 'bool_and: fixed literals' was applied 8 times.
+  - rule 'bool_and: non-reified' was applied 7 times.
+  - rule 'bool_and: x => x' was applied 4 times.
+  - rule 'bool_or: always true' was applied 2'552 times.
+  - rule 'bool_or: implications' was applied 21 times.
+  - rule 'bool_or: only one literal' was applied 3'215 times.
+  - rule 'bool_or: removed enforcement literal' was applied 2 times.
+  - rule 'bool_or: singleton' was applied 8 times.
+  - rule 'enforcement: always false' was applied 18 times.
+  - rule 'enforcement: false literal' was applied 1'565 times.
+  - rule 'enforcement: literal not used' was applied 4 times.
+  - rule 'enforcement: true literal' was applied 4'656 times.
+  - rule 'linear1: always true' was applied 1'418 times.
+  - rule 'linear1: transformed to implication' was applied 6 times.
+  - rule 'linear1: x in domain' was applied 123 times.
+  - rule 'linear2: contains a boolean' was applied 1'268 times.
+  - rule 'linear2: convert ax + by != cte to clauses' was applied 160 times.
+  - rule 'linear2: implied ax + by = cte has only one solution' was applied 1 time.
+  - rule 'linear: always true' was applied 3'499 times.
+  - rule 'linear: divide by GCD' was applied 229 times.
+  - rule 'linear: doubleton free' was applied 1 time.
+  - rule 'linear: empty' was applied 2'478 times.
+  - rule 'linear: enforcement literal in expression' was applied 40 times.
+  - rule 'linear: extracted enforcement literal' was applied 317 times.
+  - rule 'linear: fixed or dup variables' was applied 7'988 times.
+  - rule 'linear: infeasible' was applied 594 times.
+  - rule 'linear: negative clause' was applied 3'617 times.
+  - rule 'linear: never in domain' was applied 2'305 times.
+  - rule 'linear: not satisfied after GCD' was applied 60 times.
+  - rule 'linear: positive at most one' was applied 9 times.
+  - rule 'linear: reduced variable domains' was applied 1'772 times.
+  - rule 'linear: remapped using affine relations' was applied 400 times.
+  - rule 'linear: simplified rhs' was applied 2'289 times.
+  - rule 'linear: singleton column' was applied 4'111 times.
+  - rule 'linear: singleton column define objective' was applied 1 time.
+  - rule 'linear: variable substitution 1' was applied 9 times.
+  - rule 'presolve: iteration' was applied 1 time.
+  - rule 'table: only one column!' was applied 15 times.
+  - rule 'table: reduce variable domain' was applied 15 times.
+  - rule 'variables with 2 values: fixed encoding' was applied 1 time.
+  - rule 'variables with 2 values: merge encoding literals' was applied 11 times.
+  - rule 'variables with 2 values: new affine relation' was applied 10 times.
+  - rule 'variables: both boolean and its negation fix the same variable' was applied 2 times.
+  - rule 'variables: canonicalize affine domain' was applied 4 times.
+  - rule 'variables: detect fully reified value encoding' was applied 3'762 times.
+  - rule 'variables: detect half reified value encoding' was applied 8'683 times.
+Problem closed by presolve.
+CpSolverResponse summary:
+status: INFEASIBLE
+objective: NA
+best_bound: NA
+integers: 0
+booleans: 0
+conflicts: 0
+branches: 0
+propagations: 0
+integer_propagations: 0
+restarts: 0
+lp_iterations: 0
+walltime: 17.4516
+usertime: 17.4516
+deterministic_time: 0
+gap_integral: 0
+
+re-checking the 2 non-INFEASIBLE records with current code
+[1/2] relaxed=1787 placed=[0, 1, 3, 7, 10, 11, 14] -> INFEASIBLE val=None bound=0.0 (20s)
+
+Starting CP-SAT solver v9.15.6755
+Parameters: max_time_in_seconds: 5400 log_search_progress: true num_search_workers: 12
+
+Initial optimization model '': (model_fingerprint: 0x180043e910c7f7d1)
+#Variables: 12'910 (#ints: 1 in objective) (12'584 primary variables)
+  - 11'566 Booleans in [0,1]
+  - 52 in [0,2]
+  - 210 in [0,10]
+  - 225 in [0,26]
+  - 840 in [0,224]
+  - 1 in [0,225]
+  - 15 in [0,480]
+  - 1 in [0,3000]
+#kAutomaton: 45
+#kBoolAnd: 195 (#enforced: 195) (#literals: 585)
+#kBoolOr: 195 (#enforced: 195) (#literals: 390)
+#kLinear1: 11'492 (#enforced: 11'400)
+#kLinear2: 1'905
+#kLinear3: 5'670
+#kLinearN: 719 (#enforced: 15 #multi: 15) (#terms: 25'180)
+#kTable: 15
+
+Starting presolve at 0.76s
+INFEASIBLE: 'empty objective domain'
+  1.32e+01s  0.00e+00d  [PresolveToFixPoint] 
+
+Presolve summary:
+  - 19 affine relations were detected.
+  - rule 'affine: fixed' was applied 1 time.
+  - rule 'affine: new relation' was applied 19 times.
+  - rule 'at_most_one: dominated singleton' was applied 41 times.
+  - rule 'at_most_one: removed literals' was applied 3 times.
+  - rule 'at_most_one: singleton' was applied 1 time.
+  - rule 'automaton: reduce variable domain' was applied 91 times.
+  - rule 'bool_and: always false' was applied 74 times.
+  - rule 'bool_and: fixed literals' was applied 4 times.
+  - rule 'bool_or: always true' was applied 1'103 times.
+  - rule 'bool_or: implications' was applied 6 times.
+  - rule 'bool_or: only one literal' was applied 3'168 times.
+  - rule 'bool_or: removed enforcement literal' was applied 1 time.
+  - rule 'bool_or: singleton' was applied 1 time.
+  - rule 'enforcement: always false' was applied 18 times.
+  - rule 'enforcement: false literal' was applied 120 times.
+  - rule 'enforcement: literal not used' was applied 1 time.
+  - rule 'enforcement: true literal' was applied 3'068 times.
+  - rule 'linear1: always true' was applied 65 times.
+  - rule 'linear1: x in domain' was applied 123 times.
+  - rule 'linear2: contains a boolean' was applied 1'265 times.
+  - rule 'linear2: convert ax + by != cte to clauses' was applied 150 times.
+  - rule 'linear: always true' was applied 3'319 times.
+  - rule 'linear: divide by GCD' was applied 134 times.
+  - rule 'linear: doubleton free' was applied 1 time.
+  - rule 'linear: empty' was applied 2'493 times.
+  - rule 'linear: extracted enforcement literal' was applied 287 times.
+  - rule 'linear: fixed or dup variables' was applied 7'865 times.
+  - rule 'linear: infeasible' was applied 584 times.
+  - rule 'linear: negative clause' was applied 3'614 times.
+  - rule 'linear: never in domain' was applied 2'322 times.
+  - rule 'linear: not satisfied after GCD' was applied 17 times.
+  - rule 'linear: positive at most one' was applied 18 times.
+  - rule 'linear: reduced variable domains' was applied 369 times.
+  - rule 'linear: remapped using affine relations' was applied 198 times.
+  - rule 'linear: simplified rhs' was applied 465 times.
+  - rule 'linear: singleton column' was applied 2'764 times.
+  - rule 'linear: singleton column define objective' was applied 1 time.
+  - rule 'linear: variable substitution 1' was applied 9 times.
+  - rule 'new_bool: var with 2 values' was applied 1 time.
+  - rule 'presolve: iteration' was applied 1 time.
+  - rule 'table: only one column!' was applied 15 times.
+  - rule 'table: reduce variable domain' was applied 15 times.
+  - rule 'variables with 2 values: create encoding literal' was applied 1 time.
+  - rule 'variables with 2 values: fixed encoding' was applied 1 time.
+  - rule 'variables with 2 values: merge encoding literals' was applied 2 times.
+  - rule 'variables with 2 values: new affine relation' was applied 2 times.
+  - rule 'variables: canonicalize affine domain' was applied 2 times.
+  - rule 'variables: detect fully reified value encoding' was applied 3'762 times.
+  - rule 'variables: detect half reified value encoding' was applied 8'679 times.
+Problem closed by presolve.
+CpSolverResponse summary:
+status: INFEASIBLE
+objective: NA
+best_bound: NA
+integers: 0
+booleans: 0
+conflicts: 0
+branches: 0
+propagations: 0
+integer_propagations: 0
+restarts: 0
+lp_iterations: 0
+walltime: 14.0949
+usertime: 14.0949
+deterministic_time: 0
+gap_integral: 0
+
+[2/2] relaxed=1787 placed=[0, 2, 3, 7, 10, 11, 14] -> INFEASIBLE val=None bound=0.0 (20s)
+NOT-REFUTED: 0
