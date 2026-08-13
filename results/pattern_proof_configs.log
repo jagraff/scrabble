@@ -17,3 +17,19 @@ tier 3 order (bound, pattern):
 resuming: 1 patterns already refuted
 [1/14] (0, 2, 3, 7, 11, 13, 14) already refuted, skipping
 [2/14] (0, 1, 3, 7, 11, 13, 14) ceiling=1788
+    enumerated 21 configs, complete=True (655s)
+    refuted 21/21 configs (62s)
+    -> REFUTED
+[3/14] (0, 2, 3, 4, 7, 11, 14) ceiling=1788
+    enumerated 26 configs, complete=True (829s)
+    refuted 26/26 configs (76s)
+    -> REFUTED
+[4/14] (0, 1, 3, 7, 8, 11, 14) ceiling=1790
+    enumerated 9 configs, complete=True (173s)
+    refuted 9/9 configs (31s)
+    -> REFUTED
+[5/14] (0, 2, 3, 7, 8, 11, 14) ceiling=1790
+    enumerated 27 configs, complete=True (482s)
+    refuted 27/27 configs (79s)
+    -> REFUTED
+[6/14] (0, 1, 2, 3, 7, 11, 14) ceiling=1791

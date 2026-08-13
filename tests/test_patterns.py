@@ -82,6 +82,44 @@ def test_tier_two_survivors_match_the_config_enumeration():
     assert KNOWN_PLACED in kept
 
 
+@pytest.mark.skipif(not os.path.exists('results/pattern_proof_configs.json'),
+                    reason='tier-3c results not present')
+def test_per_pattern_enumeration_covers_the_global_one():
+    """Every configuration the abandoned global enumeration found for a
+    pattern must reappear in that pattern's own enumeration -- otherwise
+    the per-pattern loop is missing cases and its completeness claim is
+    worthless.  It should be a strict superset: the global loop never ran
+    any single pattern to exhaustion."""
+    import ast
+    import re
+    old = {}
+    with open('results/configs.log') as f:
+        for line in f:
+            m = re.match(r'\s*config #\d+: \d+ placed=(\([^)]*\)) (\{.*\})',
+                         line)
+            if m:
+                S = ast.literal_eval(m.group(1))
+                crosses = {int(k): v
+                           for k, v in ast.literal_eval(m.group(2)).items()}
+                old.setdefault(S, set()).add(tuple(sorted(crosses.items())))
+
+    checked = 0
+    for rec in json.load(open('results/pattern_proof_configs.json')):
+        S = tuple(rec['placed'])
+        path = 'results/pattern_configs/%s.json' % ''.join(
+            f'{c:02d}' for c in S)
+        if not os.path.exists(path):
+            continue
+        new = set()
+        for r in json.load(open(path)):
+            cr = {int(k): v for k, v in dict(r['config']['crosses']).items()}
+            new.add(tuple(sorted(cr.items())))
+        assert old.get(S, set()) <= new, f'{S}: per-pattern list is missing '\
+            f'{len(old[S] - new)} configs the global enumeration found'
+        checked += 1
+    assert checked, 'no per-pattern config files to compare'
+
+
 @pytest.mark.skipif(not os.path.exists('results/pattern_row1.json'),
                     reason='tier-2 results not present')
 def test_tier_two_only_eliminates_on_a_proven_bound():
