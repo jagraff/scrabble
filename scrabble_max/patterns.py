@@ -234,10 +234,22 @@ def prove_pattern_by_configs(lexicon, S, threshold=1786,
     os.makedirs(out_dir, exist_ok=True)
     tag = ''.join(f'{c:02d}' for c in S)
 
+    # Stream the running configuration count.  Without it a pattern is a
+    # black box until it finishes, so there is no early warning that one is
+    # heading for millions rather than hundreds.
     t0 = time.time()
+    seen = [0]
+
+    def enum_log(msg='', **kw):
+        if 'config #' in str(msg):
+            seen[0] += 1
+            if seen[0] % 25 == 0 or seen[0] <= 5:
+                log(f'      ...{seen[0]} configs so far '
+                    f'({(time.time() - t0) / 60:.0f}m)', flush=True)
+
     cfgs, complete = enumerate_configs(
         lexicon, threshold=threshold, time_limit=enum_time_limit,
-        fix_placed=set(S), log=lambda *a, **k: None)
+        fix_placed=set(S), log=enum_log)
     t_enum = time.time() - t0
     log(f'    enumerated {len(cfgs)} configs, complete={complete} '
         f'({t_enum:.0f}s)', flush=True)
