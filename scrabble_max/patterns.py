@@ -320,6 +320,13 @@ def main():
     ap.add_argument('--resume-row1', default=None,
                     help='skip tiers 1-2 and take survivors from this JSON')
     ap.add_argument('--out', default='results/pattern_proof.json')
+    ap.add_argument('--only', default=None,
+                    help='semicolon-separated placed sets to run, e.g. '
+                         '"0,1,3,7,10,11,14;0,1,3,7,9,11,14".  Lets disjoint '
+                         'subsets run as parallel processes -- give each its '
+                         'own --configs-out.')
+    ap.add_argument('--configs-out',
+                    default='results/pattern_proof_configs.json')
     args = ap.parse_args()
     lex = load()
     os.makedirs('results', exist_ok=True)
@@ -343,6 +350,13 @@ def main():
                 print('   ', S)
             return
 
+    if args.only:
+        want = {tuple(int(c) for c in grp.split(','))
+                for grp in args.only.split(';') if grp.strip()}
+        survivors = [(b, S) for b, S in survivors if S in want]
+        missing = want - {S for _, S in survivors}
+        assert not missing, f'unknown patterns: {missing}'
+
     # easiest first: a lower proven ceiling means fewer scores to rule out,
     # so we bank cheap verdicts and isolate the genuinely hard residue.
     survivors.sort(key=lambda bs: (bs[0], bs[1]))
@@ -354,7 +368,8 @@ def main():
         res = prove_patterns_by_configs(
             lex, survivors, threshold=args.threshold,
             enum_time_limit=args.enum_time_limit,
-            check_time_limit=args.tableau_time_limit)
+            check_time_limit=args.tableau_time_limit,
+            out_path=args.configs_out)
         bad = [r for r in res if not r['refuted']]
         n_cfg = sum(r['n_configs'] for r in res)
         print(f'\ntier 3: {len(res)} patterns, {n_cfg} configurations '
