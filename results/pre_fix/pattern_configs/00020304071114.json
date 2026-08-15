@@ -1,0 +1,704 @@
+[
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNINGS",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEASTING",
+    "3": "PREQUALIFIED",
+    "4": "HEWER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEANLINGS",
+    "3": "PREQUALIFIED",
+    "4": "HEWER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNERS",
+    "3": "PREQUALIFIED",
+    "4": "HEWER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNED",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEANLINGS",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRANCHLIKE",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNING",
+    "3": "PREQUALIFIED",
+    "4": "HEWER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEASTING",
+    "3": "PREQUALIFIED",
+    "4": "HEWER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEANLINGS",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNED",
+    "3": "PREQUALIFIED",
+    "4": "HEWER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNING",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEANLINGS",
+    "3": "PREQUALIFIED",
+    "4": "HEWER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEASTING",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEANLING",
+    "3": "PREQUALIFIED",
+    "4": "HEWER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEW",
+    "3": "PREQUALIFIED",
+    "4": "HEXAMINES",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNED",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNINGS",
+    "3": "PREQUALIFIED",
+    "4": "HEWER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNINGS",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRANCHLIKE",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEANLING",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEASTING",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNER",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEANLING",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNING",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNERS",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNINGS",
+    "3": "PREQUALIFIED",
+    "4": "HEWER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YEARNERS",
+    "3": "PREQUALIFIED",
+    "4": "HEWERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ }
+]

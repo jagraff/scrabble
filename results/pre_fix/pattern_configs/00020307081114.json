@@ -1,0 +1,731 @@
+[
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKS",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "2": "YARROWS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAGERS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWING",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "8": "UPLINKING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1789
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1790
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROW",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "8": "UPLINKING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROW",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWED",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1789
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "8": "UPLINKING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINK",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWL",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "8": "UPLINKING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKS",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROW",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1789
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWLS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWLS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROW",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKS",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWED",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROW",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROW",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "8": "UPLINKED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ }
+]
