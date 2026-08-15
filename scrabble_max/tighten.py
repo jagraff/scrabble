@@ -160,7 +160,7 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
                       opts_cache=None, adj_pairs=None, log=print,
                       row1_exact=False, dawg=None, mask_filter=None,
                       pairwise_all_rows=False, enumerate_above=None,
-                      enumerate_cb=None, fix_placed=None):
+                      enumerate_cb=None, fix_placed=None, max_placed=None):
     """Return ((bound, detail), per_mask) for a full-row edge play.
 
     row1_exact adds the exact model of the next row inward: every tile in
@@ -218,6 +218,8 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
             for c in range(N):
                 model.Add(placed[c] == (1 if c in fix_placed else 0))
         model.Add(sum(placed) <= 7)
+        if max_placed is not None:
+            model.Add(sum(placed) <= max_placed)
         model.Add(sum(placed) >= 1)
         bingo = model.NewBoolVar('bingo')
         model.Add(sum(placed) >= 7 * bingo)
