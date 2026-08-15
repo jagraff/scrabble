@@ -34,9 +34,13 @@ Since 1,778 < 1,786, Theorem 2 gives the sharpest complete statement:
 Of the fourteen surviving patterns, **1,903 configurations have been
 enumerated exhaustively and every one refuted**. No legal position scoring
 above 1,786 has been found anywhere. Six patterns remain unrefuted, at
-ceilings 1,794 (×2), 1,792 (×3) and 1,791 (×1). No meaningful estimate of
-the remaining compute can be given — see PROOFS.md §8 for why the obvious
-bound is seven orders of magnitude too loose to be useful.
+ceilings 1,794 (×2), 1,792 (×3) and 1,791 (×1).
+
+The per-pattern method that closed the other eight **does not scale to
+these six and has been stopped** — cost grows steeply with the ceiling,
+and two workers ran ~32 h and ~25 h without finishing. Closing them needs
+a different approach; PROOFS.md §8 records the measured cost curve and two
+untried directions.
 
 ## Method
 

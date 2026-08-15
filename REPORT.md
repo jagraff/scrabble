@@ -355,10 +355,30 @@ Six patterns remain open:
 | 1792 | `(0, 2, 3, 6, 7, 11, 14)` |
 | 1791 | `(0, 2, 3, 7, 10, 11, 14)` |
 
-No useful bound on the remaining work can be given: the exact count of
-configurations per pattern is boundable, but that bound runs 10⁹–10¹⁰
-against actual counts of 9–824, because tile-bag scarcity and row-1 word
-validity do the real pruning and neither is expressible in the count.
+**This method does not scale to the remaining six, and the runs have been
+stopped.** Cost grows steeply with the pattern's ceiling — a higher
+ceiling admits configurations at more score levels, and the
+blocking-clause loop slows as clauses accumulate:
+
+| ceiling | configurations | enumeration |
+|---:|---:|---:|
+| 1787–1790 | 9–27 | 3–14 min |
+| 1791 | 396 / 584 / 824 | 2h 05m / 4h 24m / 7h 34m |
+
+The two workers stopped had reached ~32 h on `(0,2,3,7,10,11,14)` and
+1,900 configurations in ~25 h on `(0,1,3,7,10,11,14)` without finishing,
+with the discovery rate decaying only gently (1.61/min → 1.11/min) — the
+signature of rising per-solve cost rather than approaching exhaustion.
+Neither checkpoints inside a pattern, so both runs were discarded.
+
+Closing the six needs a different method; PROOFS.md §8 records two untried
+directions (combinatorial branch-and-bound over cross-word choices with
+incremental inventory bounds; or pinning cross-word *lengths* rather than
+words, to collapse the column automata). No useful bound on the remaining
+time can be given — the exact configuration count per pattern is
+boundable, but that bound runs 10⁹–10¹⁰ against actual counts of 9–824,
+since tile-bag scarcity and row-1 validity do the real pruning and neither
+is expressible in the count.
 
 ## 8. Question A vs. question B (reachability)
 
