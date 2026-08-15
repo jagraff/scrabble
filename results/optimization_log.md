@@ -118,6 +118,18 @@ against a loop measured in hours.
 Also worth recording: this machine has **4 performance + 4 efficiency
 cores**, not 8 equal ones, so any "×8" claim was optimistic regardless.
 
+## Not tried, and why — so the next pass does not assume these were ruled out
+
+These are open, not rejected. Nothing below has been measured.
+
+| idea | assessment |
+|---|---|
+| `AddDecisionStrategy` on the option variables | The `x[(c,oi)]` are the projection the enumeration is really searching over; branching on them first is the obvious hint. Cheap to test. Plausibly the best remaining single-solve idea. |
+| `linearization_level=0` | 160,952 LP iterations on one solve is a lot for what is a feasibility question. But the LP relaxation is probably what proves `total >= 1787` infeasible, and the closing proof is the part that must not regress — the same trap that caught probing-off and presolve-off. Test on a *complete* enumeration or not at all. |
+| cache `cross_options` + DAWG to disk for worker processes | `enumerate_configs` rebuilds them per call (~6s); under `partition.py` that is once per cell rather than once per process, so ~24 cells x 6s. Small against cells that run for minutes, and it needs a cache-invalidation story tied to the lexicon. |
+| reduce `pairwise_all_rows` depth | Would shrink the model, but weakens the relaxation and so emits more configurations. A trade, not a win; would need both sides measured. |
+| projected enumeration in one solve (`enumerate_all_solutions`) | Would presolve once instead of ~800 times and keep learned clauses across solutions — by far the biggest theoretical win. Blocked: CP-SAT enumerates over *all* variables, and supports, blanks and gap variables are free given a configuration, so one configuration would be emitted many times. No projection/model-counting support exists to fix this. |
+
 ## Two different blank savings, which had been conflated
 
 `blank_filter_probe.md` measures the **post-hoc** filter: for a *pinned*
