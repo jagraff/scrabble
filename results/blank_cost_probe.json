@@ -1,0 +1,212 @@
+[
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   7,
+   11,
+   13,
+   14
+  ],
+  "ceiling": 1787.0,
+  "charged": 0,
+  "exact": 0,
+  "true_ub": 1787.0
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   7,
+   11,
+   13,
+   14
+  ],
+  "ceiling": 1788.0,
+  "charged": 6,
+  "exact": 12,
+  "true_ub": 1782.0
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   4,
+   7,
+   11,
+   14
+  ],
+  "ceiling": 1788.0,
+  "charged": 4,
+  "exact": 10,
+  "true_ub": 1782.0
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   7,
+   8,
+   11,
+   14
+  ],
+  "ceiling": 1790.0,
+  "charged": 6,
+  "exact": 12,
+  "true_ub": 1784.0
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   7,
+   8,
+   11,
+   14
+  ],
+  "ceiling": 1790.0,
+  "charged": 6,
+  "exact": 12,
+  "true_ub": 1784.0
+ },
+ {
+  "placed": [
+   0,
+   1,
+   2,
+   3,
+   7,
+   11,
+   14
+  ],
+  "ceiling": 1791.0,
+  "charged": 3,
+  "exact": 9,
+  "true_ub": 1785.0
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   4,
+   7,
+   11,
+   14
+  ],
+  "ceiling": 1791.0,
+  "charged": 6,
+  "exact": 18,
+  "true_ub": 1779.0
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   7,
+   9,
+   11,
+   14
+  ],
+  "ceiling": 1791.0,
+  "charged": 3,
+  "exact": 9,
+  "true_ub": 1785.0
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   7,
+   10,
+   11,
+   14
+  ],
+  "ceiling": 1791.0,
+  "charged": 3,
+  "exact": 9,
+  "true_ub": 1785.0
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   5,
+   7,
+   11,
+   14
+  ],
+  "ceiling": 1792.0,
+  "charged": 6,
+  "exact": 12,
+  "true_ub": 1786.0
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   6,
+   7,
+   11,
+   14
+  ],
+  "ceiling": 1792.0,
+  "charged": 3,
+  "exact": 9,
+  "true_ub": 1786.0
+ },
+ {
+  "placed": [
+   0,
+   2,
+   3,
+   6,
+   7,
+   11,
+   14
+  ],
+  "ceiling": 1792.0,
+  "charged": 3,
+  "exact": 9,
+  "true_ub": 1786.0
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   7,
+   9,
+   11,
+   14
+  ],
+  "ceiling": 1794.0,
+  "charged": 3,
+  "exact": 9,
+  "true_ub": 1788.0
+ },
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   7,
+   10,
+   11,
+   14
+  ],
+  "ceiling": 1794.0,
+  "charged": 6,
+  "exact": 12,
+  "true_ub": 1788.0
+ }
+]
