@@ -61,6 +61,7 @@ def read_one(path):
     """Parse one checkpoint. Tolerates a torn final line -- the file may
     be being appended to as we read it."""
     n, timings, complete, corrupt, scales = 0, [], False, False, set()
+    started = None
     with open(path) as f:
         for line in f:
             line = line.strip()
@@ -71,13 +72,18 @@ def read_one(path):
             except json.JSONDecodeError:
                 corrupt = True          # almost certainly a live final line
                 continue
-            timings.append(e.get('seconds', 0.0))
             scales.add(e.get('blank_penalty'))
+            if 'started' in e:
+                # a work marker, not a solve: it carries no duration, and
+                # counting its 0.0 would drag the median toward zero
+                started = e['started']
+                continue
+            timings.append(e.get('seconds', 0.0))
             if e.get('complete'):
                 complete = True
             elif 'config' in e:
                 n += 1
-    return {'path': path, 'configs': n, 'timings': timings,
+    return {'path': path, 'configs': n, 'timings': timings, 'started': started,
             'complete': complete, 'corrupt': corrupt, 'scales': scales}
 
 
@@ -142,8 +148,16 @@ def render(rows, by_pattern=False):
         if 'cells' in r:
             state = ('done' if r['complete']
                      else f'{r["done"]}/{r["cells"]} cells')
+        elif r['complete']:
+            state = 'done'
+        elif r['configs'] == 0:
+            # started, nothing found yet. Distinguished from "running"
+            # because it is the state that used to be invisible: a cell
+            # can spend its whole life here and end with a bare
+            # infeasibility proof, having never found anything.
+            state = 'searching'
         else:
-            state = 'done' if r['complete'] else 'running'
+            state = 'running'
         out.append(
             f'{r["tag"].ljust(w)}  {cfg:>7}  {state:<9}  '
             f'{_fmt(r["spent"]):>8}  {_fmt(r["median"]):>6}  '
@@ -156,15 +170,28 @@ def render(rows, by_pattern=False):
     out.append('-' * len(head))
     out.append(f'{done}/{len(rows)} finished, {tot_cfg} configurations, '
                f'{_fmt(tot_spent)} of solver time')
-    stale = [r for r in rows if not r['complete'] and r['slowest']
-             and r['idle'] > 3 * r['slowest']]
+    # A cell that has not completed a solve yet has no yardstick of its
+    # own, so fall back to how long solves are taking everywhere else.
+    # Without this a cell that never finds anything is never flagged --
+    # precisely the case worth flagging.
+    all_solves = [t for r in rows for t in r.get('timings', [])]
+    fallback = 3 * statistics.median(all_solves) if all_solves else None
+    stale = []
+    for r in rows:
+        if r['complete']:
+            continue
+        bar = 3 * r['slowest'] if r['slowest'] else fallback
+        if bar and r['idle'] > bar:
+            stale.append(r)
     if stale:
         out.append('')
         out.append('running much longer than any solve so far -- a hard '
                    'solve, the closing proof, or stuck:')
         for r in stale:
+            yard = (f'slowest so far {_fmt(r["slowest"])}' if r['slowest']
+                    else 'no solve finished yet')
             out.append(f'  {r["tag"]}: {_fmt(r["idle"])} since last write, '
-                       f'slowest so far {_fmt(r["slowest"])}')
+                       f'{yard}')
     mixed = [r for r in rows if len(r.get('scales', set()) - {None}) > 1]
     if mixed:
         out.append('')

@@ -114,3 +114,46 @@ def test_mixed_charging_scales_are_called_out(tmp_path):
 
 def test_empty_directory_says_so_rather_than_printing_a_bare_table(tmp_path):
     assert 'no checkpoints yet' in render(collect(str(tmp_path)))
+
+
+def test_a_started_cell_that_has_found_nothing_is_visible(tmp_path):
+    """The gap this closes: a cell writes nothing until it finds a
+    configuration, and one that finds none writes nothing until it ends.
+    Four busy workers then look exactly like a run that never started."""
+    p = tmp_path / '00020307091114_p03c001.jsonl'
+    p.write_text(json.dumps({'seconds': 0.0, 'blank_penalty': True,
+                             'started': time.time()}) + '\n')
+    rows = collect(str(tmp_path))
+    assert rows[0]['configs'] == 0 and not rows[0]['complete']
+    out = render(rows)
+    assert 'searching' in out
+    assert 'no checkpoints yet' not in out
+
+
+def test_the_started_marker_does_not_count_as_a_solve(tmp_path):
+    """It carries no duration; averaging its 0.0 in would drag the median
+    toward zero and make solves look faster than they are."""
+    p = tmp_path / '00020307111314.jsonl'
+    lines = [json.dumps({'seconds': 0.0, 'started': time.time()})]
+    lines += [json.dumps(_entry(i, seconds=12.0)) for i in range(3)]
+    p.write_text(''.join(l + '\n' for l in lines))
+    r = read_one(str(p))
+    assert r['timings'] == [12.0, 12.0, 12.0]
+    assert r['configs'] == 3
+
+
+def test_a_silent_cell_with_no_finished_solve_is_still_flagged(tmp_path):
+    """It has no yardstick of its own, so the fallback is how long solves
+    are taking elsewhere -- otherwise the one cell that never finds
+    anything is the one that never gets flagged."""
+    import os
+    busy = tmp_path / '00020307091114_p03c000.jsonl'
+    _write(busy, 4, seconds=12.0)
+    quiet = tmp_path / '00020307091114_p03c001.jsonl'
+    quiet.write_text(json.dumps({'seconds': 0.0,
+                                 'started': time.time() - 3600}) + '\n')
+    old = time.time() - 3600
+    os.utime(quiet, (old, old))
+    out = render(collect(str(tmp_path)))
+    assert 'longer than any solve' in out
+    assert 'no solve finished yet' in out

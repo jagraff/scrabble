@@ -31,7 +31,7 @@ LETTERS = [chr(ord('A') + i) for i in range(26)]
 
 
 def _append_checkpoint(path, rec, seconds, complete=False,
-                       blank_penalty=None):
+                       blank_penalty=None, started=False):
     """Append one line of enumeration progress.
 
     Line-delimited JSON, appended and flushed per solve, so a kill at any
@@ -52,7 +52,9 @@ def _append_checkpoint(path, rec, seconds, complete=False,
     entry = {'seconds': round(seconds, 2)}
     if blank_penalty is not None:
         entry['blank_penalty'] = bool(blank_penalty)
-    if complete:
+    if started:
+        entry['started'] = _time.time()
+    elif complete:
         entry['complete'] = True
     else:
         entry['config'] = {'placed': list(rec['placed']),
@@ -228,6 +230,16 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
     dawg = T.build_line_dawg(lexicon)
 
     configs = []
+
+    # Mark the checkpoint the moment work starts, before any solving.
+    # Otherwise a cell that has not yet found a configuration writes
+    # nothing at all -- and a cell grinding through a long infeasibility
+    # proof may never find one -- so a directory of busy workers is
+    # indistinguishable from a run that never started. The whole point of
+    # the checkpoints as a progress record is that silence should be
+    # readable, and it is not readable if the file does not exist.
+    _append_checkpoint(checkpoint_path, None, 0.0, started=True,
+                       blank_penalty=blank_penalty)
 
     def block_and_collect(model, handles):
         solver = cp_model.CpSolver()
