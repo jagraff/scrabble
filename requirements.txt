@@ -1,0 +1,21 @@
+# Pinned for reproducibility of the computational proof.
+#
+# A machine-checked result is only as reproducible as its solver: CP-SAT's
+# presolve, search heuristics and time-limit behaviour all change between
+# OR-Tools releases, and a timeout-derived bound (BestObjectiveBound) can
+# differ across versions even when the underlying model does not.  The
+# proof stays *sound* under any version, since every elimination rests on
+# a proven upper bound, but the recorded numbers are only reproducible
+# under these.
+#
+# Verified with CPython 3.12.3 on macOS/arm64.
+# Run with PYTHONHASHSEED=0 (see PROVENANCE.json).
+
+ortools==9.15.6755
+pytest==9.1.1
+pillow==12.3.0
+
+# Transitive, pinned because OR-Tools' behaviour depends on them:
+absl-py==2.5.0
+numpy==2.5.2
+protobuf==6.33.6

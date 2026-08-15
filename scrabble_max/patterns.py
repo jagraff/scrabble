@@ -135,7 +135,10 @@ def row1_filter(lexicon, patterns, threshold=1786, time_limit=300.0,
             f'row1={bound} -> {"KEEP" if kept else "eliminated"} '
             f'({dt:.0f}s)', flush=True)
         if kept:
-            survivors.append((a_bound, S))
+            # the tier-2 bound, not the looser stage-A one: this value is
+            # reported as the pattern's ceiling and orders tier 3
+            # cheapest-first, so using a_bound here mislabelled both
+            survivors.append((bound, S))
         with open(out_path, 'w') as f:
             json.dump(records, f, indent=1, default=str)
     return survivors, records
@@ -342,6 +345,12 @@ def main():
     args = ap.parse_args()
     lex = load()
     os.makedirs('results', exist_ok=True)
+
+    from .provenance import write as write_provenance
+    prov = write_provenance()
+    print(f"provenance: commit {prov['git_commit']} "
+          f"ortools {prov['ortools']} seed {prov['pythonhashseed']} "
+          f"lexicon {prov['lexicon']['sha256'][:12]}", flush=True)
 
     if args.resume_row1:
         uppers = load_row1_uppers(args.resume_row1)
