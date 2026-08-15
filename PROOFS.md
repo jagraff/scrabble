@@ -302,40 +302,49 @@ fixing its grid to this board and recovering objective exactly 1,786.
 
 ---
 
-## 7. Theorem 6 — constructibility by legal board moves **(complete, and weaker than "reachable in a game")**
+## 7. Theorem 6 — reachability in a legal game **(complete)**
 
-> **Theorem 6.** The pre-move position of the record is reachable by a
-> sequence of 25 **legal board moves** from the empty board: each move
-> places between 1 and 7 tiles in a single line, contiguous and connected
-> as the rules require, and every intermediate position is valid. The
-> cumulative tile usage is consistent with the official tile set.
+> **Theorem 6.** The record is achievable in a legal two-player game.
+> There is a 26-move game from the empty board — 25 build-up moves plus
+> the record play — in which every move is board-legal, the players
+> alternate strictly, and every tile played is drawn from the standard
+> 100-tile bag into a rack of at most 7.
 
-*Proof.* By exhibition. A backwards "unplay" search (`reachability.py`)
-removes one move at a time while maintaining the invariant that the
-remaining position is valid and connected, terminating at the empty
-board; the forward sequence is then replayed through `apply_move`, which
-accepts every move (`results/reachability.log`).
+*Proof.* In two parts.
 
-Tile accounting over the 25 moves plus the final 1,786 play: 95 lettered
-tiles and both blanks, **97 of 100**, with **no letter exceeding its
-distribution** and at most 7 tiles per move. ∎
+**Board legality.** A backwards "unplay" search (`reachability.py`)
+removes one move at a time from the record's pre-move position while
+maintaining the invariant that what remains is valid and connected,
+terminating at the empty board. The forward sequence is replayed through
+`apply_move`, which accepts every move and reproduces the pre-move
+position exactly (`results/reachability.log`). The opening move covers
+the centre, as the rules require.
 
-**What this does not establish.** It is *not* proved that the sequence
-arises in a game with legal rack and bag mechanics. `reachability.py`
-treats draws as unconstrained — its docstring says so explicitly — and
-models no bag, no per-player racks, and no alternation. A full result
-would have to exhibit an assignment of the 25 moves to two alternating
-players together with a bag ordering such that each player holds the
-tiles they play in a rack of at most 7 at the moment they play them.
-The tile accounting above is a *necessary* condition for that and it
-passes, but it is not sufficient.
+**Rack and bag feasibility.** Deal the 26 moves to two players in strict
+alternation. Since any permutation of the bag is a legal shuffle, the
+draws are ours to choose, so this is an existence question, answered
+constructively (`racks.py`): each player draws 7 to start and refills to
+7 after each of their moves, taking the tiles their soonest upcoming move
+needs. Every move's tiles are then in the mover's hand when played. The
+schedule closes exactly:
 
-So the honest statement is **constructibility by legal board moves**, not
-reachability in a legal game. The distinction is worth keeping: the
-published construction is a static board, and neither "buildable by legal
-moves" nor "arises in a real game" follows from the other automatically.
-Closing the gap is tractable — it is a scheduling problem over a known
-move sequence — and is listed as open in §8.
+```
+97 tiles played, 3 left on racks, 0 left in bag   (= 100)
+```
+
+with no letter exceeding its distribution, both blanks used, and no rack
+ever above 7. The bag empties after move 25.
+
+The witness is re-checked by `verify_witness`, which replays the recorded
+draws against a fresh bag using independent logic and asserts every rule
+at each step, so the schedule is a self-contained certificate rather than
+a claim about the generator (`results/rack_schedule.json`,
+`tests/test_racks.py`). ∎
+
+This matters because the published construction is a *static* board.
+Neither "buildable by legal moves" nor "arises in a real game" follows
+automatically from the other, and the second is the one a player would
+care about. Both now hold.
 
 ---
 
@@ -369,10 +378,7 @@ anywhere.
 Six patterns are open: the two at ceiling 1,794, the three at 1,792, and
 one at 1,791. Two are being worked now.
 
-Also open, and independent of the above: **rack and bag feasibility** for
-the 25-move sequence of §7 (assign the moves to two alternating players
-and exhibit a bag ordering supplying each rack), which would upgrade
-Theorem 6 from constructibility to reachability in a legal game.
+This is the **only** open item. Everything in §2–§7 is complete.
 
 **No useful bound on the remaining time can be given.** The number of
 configurations per pattern is boundable exactly — it is a count over

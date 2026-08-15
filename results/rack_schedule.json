@@ -1,0 +1,648 @@
+{
+ "feasible": true,
+ "verified": true,
+ "detail": "97 played, 3 on racks, 0 in bag",
+ "n_moves": 26,
+ "tiles_played": 97,
+ "witness": {
+  "opening": [
+   {
+    "D": 1,
+    "E": 1,
+    "L": 1,
+    "N": 1,
+    "U": 1,
+    "?": 1,
+    "A": 1
+   },
+   {
+    "A": 1,
+    "G": 1,
+    "I": 1,
+    "O": 1,
+    "R": 2,
+    "W": 1
+   }
+  ],
+  "moves": [
+   {
+    "move": 1,
+    "player": 0,
+    "plays": {
+     "U": 1,
+     "N": 1,
+     "L": 1,
+     "E": 1,
+     "D": 1
+    },
+    "drew_after": {
+     "T": 1,
+     "E": 2,
+     "G": 1,
+     "M": 1
+    },
+    "rack_after": {
+     "?": 1,
+     "A": 1,
+     "T": 1,
+     "E": 2,
+     "G": 1,
+     "M": 1
+    },
+    "bag_left": 81
+   },
+   {
+    "move": 2,
+    "player": 1,
+    "plays": {
+     "A": 1,
+     "R": 2,
+     "O": 1,
+     "W": 1,
+     "I": 1,
+     "G": 1
+    },
+    "drew_after": {
+     "T": 1,
+     "U": 1,
+     "O": 1,
+     "W": 1,
+     "E": 1,
+     "L": 1,
+     "R": 1
+    },
+    "rack_after": {
+     "T": 1,
+     "U": 1,
+     "O": 1,
+     "W": 1,
+     "E": 1,
+     "L": 1,
+     "R": 1
+    },
+    "bag_left": 74
+   },
+   {
+    "move": 3,
+    "player": 0,
+    "plays": {
+     "A": 1,
+     "?": 1
+    },
+    "drew_after": {
+     "A": 1,
+     "O": 1
+    },
+    "rack_after": {
+     "T": 1,
+     "E": 2,
+     "G": 1,
+     "M": 1,
+     "A": 1,
+     "O": 1
+    },
+    "bag_left": 72
+   },
+   {
+    "move": 4,
+    "player": 1,
+    "plays": {
+     "U": 1,
+     "T": 1
+    },
+    "drew_after": {
+     "A": 1,
+     "Y": 1
+    },
+    "rack_after": {
+     "O": 1,
+     "W": 1,
+     "E": 1,
+     "L": 1,
+     "R": 1,
+     "A": 1,
+     "Y": 1
+    },
+    "bag_left": 70
+   },
+   {
+    "move": 5,
+    "player": 0,
+    "plays": {
+     "T": 1,
+     "A": 1
+    },
+    "drew_after": {
+     "A": 1,
+     "T": 1
+    },
+    "rack_after": {
+     "E": 2,
+     "G": 1,
+     "M": 1,
+     "O": 1,
+     "A": 1,
+     "T": 1
+    },
+    "bag_left": 68
+   },
+   {
+    "move": 6,
+    "player": 1,
+    "plays": {
+     "W": 1,
+     "O": 1
+    },
+    "drew_after": {
+     "O": 1,
+     "D": 1
+    },
+    "rack_after": {
+     "E": 1,
+     "L": 1,
+     "R": 1,
+     "A": 1,
+     "Y": 1,
+     "O": 1,
+     "D": 1
+    },
+    "bag_left": 66
+   },
+   {
+    "move": 7,
+    "player": 0,
+    "plays": {
+     "O": 1,
+     "G": 1,
+     "A": 1,
+     "M": 1,
+     "E": 2,
+     "T": 1
+    },
+    "drew_after": {
+     "A": 1,
+     "B": 1,
+     "H": 1,
+     "I": 1,
+     "S": 2,
+     "T": 1
+    },
+    "rack_after": {
+     "A": 1,
+     "B": 1,
+     "H": 1,
+     "I": 1,
+     "S": 2,
+     "T": 1
+    },
+    "bag_left": 59
+   },
+   {
+    "move": 8,
+    "player": 1,
+    "plays": {
+     "E": 1,
+     "R": 1,
+     "L": 1
+    },
+    "drew_after": {
+     "E": 1,
+     "R": 1,
+     "L": 1
+    },
+    "rack_after": {
+     "A": 1,
+     "Y": 1,
+     "O": 1,
+     "D": 1,
+     "E": 1,
+     "R": 1,
+     "L": 1
+    },
+    "bag_left": 56
+   },
+   {
+    "move": 9,
+    "player": 0,
+    "plays": {
+     "S": 2,
+     "T": 1,
+     "A": 1,
+     "B": 1,
+     "I": 1,
+     "H": 1
+    },
+    "drew_after": {
+     "?": 1,
+     "O": 1,
+     "V": 1,
+     "E": 1,
+     "F": 1,
+     "I": 1,
+     "Q": 1
+    },
+    "rack_after": {
+     "?": 1,
+     "O": 1,
+     "V": 1,
+     "E": 1,
+     "F": 1,
+     "I": 1,
+     "Q": 1
+    },
+    "bag_left": 49
+   },
+   {
+    "move": 10,
+    "player": 1,
+    "plays": {
+     "O": 1
+    },
+    "drew_after": {
+     "U": 1
+    },
+    "rack_after": {
+     "A": 1,
+     "Y": 1,
+     "D": 1,
+     "E": 1,
+     "R": 1,
+     "L": 1,
+     "U": 1
+    },
+    "bag_left": 48
+   },
+   {
+    "move": 11,
+    "player": 0,
+    "plays": {
+     "?": 1
+    },
+    "drew_after": {
+     "R": 1
+    },
+    "rack_after": {
+     "O": 1,
+     "V": 1,
+     "E": 1,
+     "F": 1,
+     "I": 1,
+     "Q": 1,
+     "R": 1
+    },
+    "bag_left": 47
+   },
+   {
+    "move": 12,
+    "player": 1,
+    "plays": {
+     "R": 1,
+     "E": 1
+    },
+    "drew_after": {
+     "E": 1,
+     "H": 1
+    },
+    "rack_after": {
+     "A": 1,
+     "Y": 1,
+     "D": 1,
+     "L": 1,
+     "U": 1,
+     "E": 1,
+     "H": 1
+    },
+    "bag_left": 45
+   },
+   {
+    "move": 13,
+    "player": 0,
+    "plays": {
+     "V": 1,
+     "O": 1
+    },
+    "drew_after": {
+     "U": 1,
+     "Y": 1
+    },
+    "rack_after": {
+     "E": 1,
+     "F": 1,
+     "I": 1,
+     "Q": 1,
+     "R": 1,
+     "U": 1,
+     "Y": 1
+    },
+    "bag_left": 43
+   },
+   {
+    "move": 14,
+    "player": 1,
+    "plays": {
+     "A": 1,
+     "L": 1
+    },
+    "drew_after": {
+     "A": 1,
+     "M": 1
+    },
+    "rack_after": {
+     "Y": 1,
+     "D": 1,
+     "U": 1,
+     "E": 1,
+     "H": 1,
+     "A": 1,
+     "M": 1
+    },
+    "bag_left": 41
+   },
+   {
+    "move": 15,
+    "player": 0,
+    "plays": {
+     "R": 1,
+     "E": 1,
+     "Q": 1,
+     "U": 1,
+     "I": 1,
+     "F": 1,
+     "Y": 1
+    },
+    "drew_after": {
+     "D": 1,
+     "E": 1,
+     "N": 1,
+     "O": 1,
+     "G": 1,
+     "I": 1,
+     "A": 1
+    },
+    "rack_after": {
+     "D": 1,
+     "E": 1,
+     "N": 1,
+     "O": 1,
+     "G": 1,
+     "I": 1,
+     "A": 1
+    },
+    "bag_left": 34
+   },
+   {
+    "move": 16,
+    "player": 1,
+    "plays": {
+     "Y": 1,
+     "A": 1
+    },
+    "drew_after": {
+     "N": 1,
+     "S": 1
+    },
+    "rack_after": {
+     "D": 1,
+     "U": 1,
+     "E": 1,
+     "H": 1,
+     "M": 1,
+     "N": 1,
+     "S": 1
+    },
+    "bag_left": 32
+   },
+   {
+    "move": 17,
+    "player": 0,
+    "plays": {
+     "E": 1,
+     "D": 1
+    },
+    "drew_after": {
+     "C": 2
+    },
+    "rack_after": {
+     "N": 1,
+     "O": 1,
+     "G": 1,
+     "I": 1,
+     "A": 1,
+     "C": 2
+    },
+    "bag_left": 30
+   },
+   {
+    "move": 18,
+    "player": 1,
+    "plays": {
+     "U": 1,
+     "D": 1
+    },
+    "drew_after": {
+     "T": 1,
+     "A": 1
+    },
+    "rack_after": {
+     "E": 1,
+     "H": 1,
+     "M": 1,
+     "N": 1,
+     "S": 1,
+     "T": 1,
+     "A": 1
+    },
+    "bag_left": 28
+   },
+   {
+    "move": 19,
+    "player": 0,
+    "plays": {
+     "O": 1,
+     "N": 1
+    },
+    "drew_after": {
+     "N": 1,
+     "F": 1
+    },
+    "rack_after": {
+     "G": 1,
+     "I": 1,
+     "A": 1,
+     "C": 2,
+     "N": 1,
+     "F": 1
+    },
+    "bag_left": 26
+   },
+   {
+    "move": 20,
+    "player": 1,
+    "plays": {
+     "H": 1,
+     "E": 1
+    },
+    "drew_after": {
+     "E": 1,
+     "I": 1
+    },
+    "rack_after": {
+     "M": 1,
+     "N": 1,
+     "S": 1,
+     "T": 1,
+     "A": 1,
+     "E": 1,
+     "I": 1
+    },
+    "bag_left": 24
+   },
+   {
+    "move": 21,
+    "player": 0,
+    "plays": {
+     "I": 1,
+     "N": 1,
+     "G": 1
+    },
+    "drew_after": {
+     "I": 2,
+     "P": 1
+    },
+    "rack_after": {
+     "A": 1,
+     "C": 2,
+     "F": 1,
+     "I": 2,
+     "P": 1
+    },
+    "bag_left": 21
+   },
+   {
+    "move": 22,
+    "player": 1,
+    "plays": {
+     "M": 1,
+     "E": 1,
+     "N": 1,
+     "T": 1,
+     "S": 1
+    },
+    "drew_after": {
+     "N": 1,
+     "O": 1,
+     "S": 1,
+     "T": 1,
+     "B": 1
+    },
+    "rack_after": {
+     "A": 1,
+     "I": 1,
+     "N": 1,
+     "O": 1,
+     "S": 1,
+     "T": 1,
+     "B": 1
+    },
+    "bag_left": 16
+   },
+   {
+    "move": 23,
+    "player": 0,
+    "plays": {
+     "P": 1,
+     "A": 1,
+     "C": 2,
+     "I": 2,
+     "F": 1
+    },
+    "drew_after": {
+     "D": 1,
+     "E": 2,
+     "I": 1,
+     "K": 1,
+     "L": 1,
+     "R": 1
+    },
+    "rack_after": {
+     "D": 1,
+     "E": 2,
+     "I": 1,
+     "K": 1,
+     "L": 1,
+     "R": 1
+    },
+    "bag_left": 9
+   },
+   {
+    "move": 24,
+    "player": 1,
+    "plays": {
+     "A": 1,
+     "T": 1,
+     "I": 1,
+     "O": 1,
+     "N": 1,
+     "S": 1
+    },
+    "drew_after": {
+     "E": 1,
+     "N": 1,
+     "O": 1,
+     "P": 1,
+     "X": 1,
+     "Z": 1
+    },
+    "rack_after": {
+     "B": 1,
+     "E": 1,
+     "N": 1,
+     "O": 1,
+     "P": 1,
+     "X": 1,
+     "Z": 1
+    },
+    "bag_left": 3
+   },
+   {
+    "move": 25,
+    "player": 0,
+    "plays": {
+     "L": 1,
+     "D": 1,
+     "E": 2,
+     "R": 1,
+     "I": 1,
+     "K": 1
+    },
+    "drew_after": {
+     "I": 1,
+     "J": 1,
+     "V": 1
+    },
+    "rack_after": {
+     "I": 1,
+     "J": 1,
+     "V": 1
+    },
+    "bag_left": 0
+   },
+   {
+    "move": 26,
+    "player": 1,
+    "plays": {
+     "O": 1,
+     "X": 1,
+     "P": 1,
+     "N": 1,
+     "B": 1,
+     "Z": 1,
+     "E": 1
+    },
+    "drew_after": {},
+    "rack_after": {},
+    "bag_left": 0
+   }
+  ]
+ }
+}
