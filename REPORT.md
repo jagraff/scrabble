@@ -16,15 +16,17 @@ that the best play is a 15-letter word on an outside row?
    and after CP-SAT tightening only **one case anywhere on the board**
    remains above 1,786: OXYPHENBUTAZONE across the top row with all three
    triple-word squares newly covered, bounded above by **1,794**.
-3. For that final case we solve the *complete static-position feasibility
-   problem* (a full 15×15 tableau CP-SAT model with dictionary automata,
-   connectivity, tile inventory and exact scoring) to determine the exact
-   maximum. **[RESULT — see §7.]**
+3. That final case splits into **14 explicit placed patterns**, attacked
+   with the *complete static-position feasibility problem* (a full 15×15
+   tableau CP-SAT model with dictionary automata, connectivity, tile
+   inventory and exact scoring). **8 of the 14 are refuted; 6 remain
+   open**, so the headline claim is *not* settled — see §7.3 and §9.
 4. Separately, we answered the reachability question constructively: an
-   explicit **25-move legal game** reaches the 1,786 pre-board from an
-   empty board (found by automated "unplay" search, replay-verified move
-   by move), so the 1,786 play is not merely statically legal but
-   realizable in a real (cooperative) game.
+   explicit **26-move legal game** (25 build-up moves plus the record
+   play) reaches and then plays the 1,786 board from an empty board, with
+   two **strictly alternating** players each drawing from the standard
+   bag into a rack of at most 7. So the 1,786 play is not merely
+   statically legal but realizable in an ordinary two-player game.
 
 We could not locate source code for Lucassen's own BSAT solver (the blog
 post links none), so nothing here relies on it; the 1,786 construction
@@ -298,11 +300,18 @@ The 14 survivors and their proven upper bounds:
 | 1788 | `(0, 1, 3, 7, 11, 13, 14)` |
 | 1787 | `(0, 2, 3, 7, 11, 13, 14)` |
 
-Independent confirmation: these 14 are **exactly** the 14 placed sets the
-abandoned per-configuration enumeration found in 21 hours across 1,300
-configurations. Two unrelated routes agree on the set, and it contains
+Two checks on the list, neither an independent proof of the count. First,
+every one of the 1,300 configurations found by the abandoned
+per-configuration enumeration (§7.1) lies in these 14 placed sets. That is
+evidence the 14 are not *too few* in the region that run explored, but it
+is **not** an independent verification that there are only 14: the run
+never terminated, so it sampled rather than exhausted. Had it finished it
+would have been a second derivation; it did not. Second, the list contains
 `(0, 1, 3, 6, 7, 11, 14)` — the placed set of the record play itself,
 which must survive any sound filter (`tests/test_patterns.py`).
+
+Exhaustiveness of the 14 rests on tiers 1 and 2 alone: 495 patterns
+enumerated combinatorially, each eliminated only on a proven upper bound.
 
 **Tier 3 (tableau).** Each survivor goes to the full tableau with the
 placed set pinned and cross words free, asking for a legal position
@@ -316,28 +325,87 @@ the 1,794 ceiling. A sound case-split on the exact total
 proven) was also tried and also returned UNKNOWN at `total == 1794` after
 419 s. Status is recorded in `results/pattern_proof.json`.
 
+### 7.3 Tier 3 by per-pattern configuration enumeration
+
+Attacking a pattern directly with the tableau stalls, so
+`prove_pattern_by_configs` reinstates the §7.1 idea *inside* a fixed
+placed set, which is what makes it terminate. For one pattern: enumerate
+by blocking-clause loop every configuration (a concrete cross word per
+placed column) whose stage-B⁺ relaxed score exceeds 1,786, until the model
+goes infeasible — at which point the list is provably exhaustive — then
+refute each with the pinned tableau. Any legal position beating the record
+realises some configuration and its relaxed score dominates its true
+score, so it must appear in the list; refuting every entry refutes the
+pattern. Restricting to one placed set bounds the search space, which is
+exactly what the global run of §7.1 lacked.
+
+**8 of the 14 patterns are closed this way: 1,903 configurations,
+every one INFEASIBLE, each enumeration proven exhaustive**
+(`results/pattern_configs/`, `results/config_checks_summary.txt`). Counts
+run from 9 to 824 configurations per pattern.
+
+Six patterns remain open:
+
+| ceiling | placed columns |
+|---:|---|
+| 1794 | `(0, 1, 3, 7, 9, 11, 14)` |
+| 1794 | `(0, 1, 3, 7, 10, 11, 14)` |
+| 1792 | `(0, 1, 3, 5, 7, 11, 14)` |
+| 1792 | `(0, 1, 3, 6, 7, 11, 14)` |
+| 1792 | `(0, 2, 3, 6, 7, 11, 14)` |
+| 1791 | `(0, 2, 3, 7, 10, 11, 14)` |
+
+No useful bound on the remaining work can be given: the exact count of
+configurations per pattern is boundable, but that bound runs 10⁹–10¹⁰
+against actual counts of 9–824, because tile-bag scarcity and row-1 word
+validity do the real pruning and neither is expressible in the count.
+
 ## 8. Question A vs. question B (reachability)
 
 Static feasibility (a legal position exists on which the move is legal)
 does not imply a legal game reaches that position. We answered
-reachability for the 1,786 construction **constructively**:
-`scrabble_max/reachability.py` runs a backwards "unplay" search — guess
-the last move, check that removing it leaves a valid connected position
-and that the move was legal on that smaller board, recurse — and found a
-complete **25-move legal game** from the empty board to the exact
-pre-board (first move UNLED through the center; both blanks entering as
-the h of HA and the s of RAS). The sequence is replayed forward through
-the rules engine and reproduces the pre-board tile-for-tile
-(`results/reachability.log`). Move 26 is OXYPHENBUTAZONE for 1,786.
+reachability for the 1,786 construction **constructively**, in two parts.
+
+**Board legality.** `scrabble_max/reachability.py` runs a backwards
+"unplay" search — guess the last move, check that removing it leaves a
+valid connected position and that the move was legal on that smaller
+board, recurse — and found a complete **25-move** build-up from the empty
+board to the exact pre-board (first move UNLED through the center; both
+blanks entering as the h of HA and the s of RAS). The sequence is replayed
+forward through the rules engine and reproduces the pre-board
+tile-for-tile (`results/reachability.log`). Move 26 is OXYPHENBUTAZONE for
+1,786.
+
+**Rack and bag feasibility.** Board legality alone still allows draws no
+real bag could supply, so `scrabble_max/racks.py` deals the 26 moves to
+two **strictly alternating** players and constructs the draws. Since any
+permutation of the bag is a legal shuffle, the draws are ours to choose
+and this is an existence question: each player draws 7 to start and
+refills to 7 after each of their moves, taking the tiles their soonest
+upcoming move needs. The schedule closes exactly — **97 tiles played, 3
+left on racks, 0 in bag** — with no letter over its distribution, both
+blanks used, and no rack ever above 7; the bag empties after move 25.
+
+`verify_witness` replays the recorded draws against a fresh bag with
+independent logic and asserts every rule at each step, so
+`results/rack_schedule.json` is a self-contained certificate rather than a
+claim about the generator (`tests/test_racks.py`).
+
+Together these upgrade the result from "buildable by legal board moves" to
+**reachable in an ordinary two-player game**. Neither follows
+automatically from the other, and the second is the one a player cares
+about.
 
 ## 9. What is proven, and how strongly
 
 | claim | status |
 |---|---|
-| 1,786 is achievable (static position + full legal game) | **proven constructively**, machine-verified |
-| no play ≥ 1,787 exists in any geometry other than OXYPHENBUTAZONE/top-row/3×TW | **proven** (stages A+B, sound relaxation chain) |
+| 1,786 is achievable as a static position | **proven constructively**, machine-verified (§3) |
+| 1,786 is reachable in a legal two-player game | **proven constructively** (§8, board legality + rack/bag witness) |
+| no play ≥ 1,787 exists in any geometry other than OXYPHENBUTAZONE/edge-row/3×TW | **proven** (stages A+B, sound relaxation chain) |
+| every other play scores ≤ 1,778 | **proven** (§4–§5; margin of 8 below the record) |
 | global upper bound 1,794 | **proven** (stage B⁺, solver-optimal) |
-| exact maximum for the last geometry | stage C tableau solve — see §7 / `results/tableau.json` |
+| **1,786 is the global maximum** | **OPEN** — 8 of 14 patterns refuted, 6 remain (§7.3) |
 
 Caveats and trust base: correctness rests on (a) the rules engine
 (unit-tested, including the independently hand-computed 1,786 breakdown),
@@ -356,7 +424,13 @@ python3.12 -m venv .venv && .venv/bin/pip install ortools pytest pillow
 .venv/bin/python -m scrabble_max.bounds --threshold 1786   # stage A  (~1 min)
 .venv/bin/python -m scrabble_max.tighten --time-limit 240  # stages B/B⁺ (~1 h)
 .venv/bin/python -m scrabble_max.cstage --time-limit 21600 --min-score 1786  # stage C
-.venv/bin/python -m scrabble_max.reachability        # 25-move game (~1 min)
+.venv/bin/python -m scrabble_max.patterns --tier3 configs   # §7.3 per-pattern refutation
+.venv/bin/python -m scrabble_max.reachability        # 25-move build-up (~1 min)
+.venv/bin/python -m scrabble_max.racks               # rack/bag witness (~1 s)
 ```
+
+`patterns` takes `--only` to run a subset of placed sets, so open patterns
+can be worked in parallel, and `--configs-out` to record the enumerated
+configurations.
 
 Logs and machine-readable results live in `results/`.
