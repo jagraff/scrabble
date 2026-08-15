@@ -45,7 +45,8 @@ import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 from . import tighten as T
-from .finalize import enumerate_configs, read_checkpoint, repair_checkpoint
+from .finalize import (checkpoint_scales, enumerate_configs, read_checkpoint,
+                       repair_checkpoint)
 from .lexicon import load
 from .rules import N
 
@@ -140,6 +141,16 @@ def _run_cell(args):
             if ckpt_dir else None)
     if path:
         repair_checkpoint(path)
+        # cells resume through read_checkpoint rather than
+        # resume_enumeration, so the charging-scale guard has to be
+        # repeated here; a cell that silently crossed scales would put the
+        # mixed list straight into the union
+        scales = checkpoint_scales(path) - {None}
+        if scales and scales != {True}:
+            raise ValueError(
+                f'{path} was written with blank_penalty={sorted(scales)}; '
+                f'cells always enumerate with the penalty on, so this '
+                f'checkpoint cannot be resumed here')
         known, complete, _, corrupt = read_checkpoint(path)
         if complete and not corrupt:
             return cell_index, known, True, 0.0, True

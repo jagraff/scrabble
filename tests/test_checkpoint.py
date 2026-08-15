@@ -19,8 +19,8 @@ import os
 
 import pytest
 
-from scrabble_max.finalize import (read_checkpoint, repair_checkpoint,
-                                   resume_enumeration)
+from scrabble_max.finalize import (checkpoint_scales, read_checkpoint,
+                                   repair_checkpoint, resume_enumeration)
 
 
 def _record(i):
@@ -128,6 +128,77 @@ def test_complete_is_not_honoured_when_a_line_is_corrupt(tmp_path, monkeypatch):
                        checkpoint_dir=str(tmp_path), log=lambda *a, **k: None)
     assert called.get('ran'), ('resume trusted a complete marker on a file '
                                'with a lost line')
+
+
+def _write_scaled(path, n, penalty, complete=False):
+    lines = []
+    for i in range(n):
+        r = _record(i)
+        r['blank_penalty'] = penalty
+        lines.append(json.dumps(r))
+    if complete:
+        lines.append(json.dumps({'seconds': 2.0, 'complete': True,
+                                 'blank_penalty': penalty}))
+    path.write_text(''.join(l + '\n' for l in lines))
+
+
+def test_scales_are_recorded_and_read_back(tmp_path):
+    p = tmp_path / '00020307111314.jsonl'
+    _write_scaled(p, 3, penalty=True)
+    assert checkpoint_scales(str(p)) == {True}
+
+
+def test_unstamped_entries_read_as_unknown(tmp_path):
+    """Files written before the stamp existed cannot vouch for their own
+    scale, and must not be silently taken as matching."""
+    p = tmp_path / '00020307111314.jsonl'
+    _write(p, 3)
+    assert checkpoint_scales(str(p)) == {None}
+
+
+def test_resume_refuses_to_cross_charging_scales(tmp_path, monkeypatch):
+    """The failure this exists to prevent: resuming pre-blocks whatever it
+    reads, so a penalty-off checkpoint continued under the penalty-on
+    default would build one list out of two score scales. The scores are a
+    point or two apart, so nothing downstream would look wrong."""
+    p = tmp_path / '00020307111314.jsonl'
+    _write_scaled(p, 4, penalty=False)
+
+    def fail(*a, **k):
+        raise AssertionError('enumeration must not start on a mixed scale')
+
+    monkeypatch.setattr('scrabble_max.finalize.enumerate_configs', fail)
+    with pytest.raises(ValueError, match='blank_penalty'):
+        resume_enumeration(None, (0, 2, 3, 7, 11, 13, 14),
+                           checkpoint_dir=str(tmp_path), blank_penalty=True,
+                           log=lambda *a, **k: None)
+
+
+def test_resume_proceeds_when_the_scale_matches(tmp_path, monkeypatch):
+    p = tmp_path / '00020307111314.jsonl'
+    _write_scaled(p, 4, penalty=True)
+    called = {}
+
+    def fake(*a, **k):
+        called['ran'] = True
+        return [], True
+
+    monkeypatch.setattr('scrabble_max.finalize.enumerate_configs', fake)
+    cfgs, complete, resumed = resume_enumeration(
+        None, (0, 2, 3, 7, 11, 13, 14), checkpoint_dir=str(tmp_path),
+        blank_penalty=True, log=lambda *a, **k: None)
+    assert called.get('ran') and resumed == 4
+
+
+def test_a_completed_matching_checkpoint_needs_no_scale_argument_change(
+        tmp_path):
+    """A complete checkpoint on the same scale short-circuits, as before."""
+    p = tmp_path / '00020307111314.jsonl'
+    _write_scaled(p, 3, penalty=True, complete=True)
+    cfgs, complete, resumed = resume_enumeration(
+        None, (0, 2, 3, 7, 11, 13, 14), checkpoint_dir=str(tmp_path),
+        blank_penalty=True, log=lambda *a, **k: None)
+    assert complete and len(cfgs) == 3
 
 
 def test_missing_file_is_empty_not_an_error(tmp_path):

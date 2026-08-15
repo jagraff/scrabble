@@ -30,16 +30,28 @@ from . import tighten as T
 LETTERS = [chr(ord('A') + i) for i in range(26)]
 
 
-def _append_checkpoint(path, rec, seconds, complete=False):
+def _append_checkpoint(path, rec, seconds, complete=False,
+                       blank_penalty=None):
     """Append one line of enumeration progress.
 
     Line-delimited JSON, appended and flushed per solve, so a kill at any
     moment leaves a readable prefix -- a rewritten whole-file snapshot
-    could be truncated mid-write and lose everything."""
+    could be truncated mid-write and lose everything.
+
+    Each entry records `blank_penalty`, the charging scale that produced
+    it. Resuming pre-blocks whatever it reads, so a penalty-off checkpoint
+    picked up under the penalty-on default would continue one enumeration
+    from another's configurations, mixing two score scales in a single
+    list with nothing in the file to reveal it. The scores are only a
+    point or two apart, so the result would look entirely ordinary.
+    `read_checkpoint` reports the scales it saw and `resume_enumeration`
+    refuses to cross them."""
     if path is None:
         return
     os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
     entry = {'seconds': round(seconds, 2)}
+    if blank_penalty is not None:
+        entry['blank_penalty'] = bool(blank_penalty)
     if complete:
         entry['complete'] = True
     else:
@@ -108,6 +120,35 @@ def read_checkpoint(path):
     return configs, complete, timings, corrupt
 
 
+def checkpoint_scales(path):
+    """The set of charging scales recorded in a checkpoint.
+
+    Values are True (penalty on), False (penalty off), or None for an
+    entry written before the scale was stamped. A set with more than one
+    member means the file already mixes scales; `{None}` means the file
+    cannot vouch for itself. Either way it must not be resumed blind.
+
+    Kept separate from `read_checkpoint` rather than widening its tuple:
+    callers that only want the configurations should not have to know this
+    exists, and every one of them would otherwise need editing to keep
+    unpacking.
+    """
+    scales = set()
+    if not path or not os.path.exists(path):
+        return scales
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                e = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            scales.add(e.get('blank_penalty'))
+    return scales
+
+
 def resume_enumeration(lexicon, S, threshold=1786, time_limit=900.0,
                        checkpoint_dir='results/enum_ckpt', log=print,
                        workers=1, blank_penalty=True):
@@ -122,6 +163,18 @@ def resume_enumeration(lexicon, S, threshold=1786, time_limit=900.0,
     if repair_checkpoint(path):
         log('  repaired a torn final line in the checkpoint')
     known, complete, timings, corrupt = read_checkpoint(path)
+    scales = checkpoint_scales(path) - {None} if known or complete else set()
+    if scales and scales != {bool(blank_penalty)}:
+        # The recorded configurations were scored on a different scale, so
+        # pre-blocking them would continue this enumeration from another
+        # one's results and leave the list mixing two scales. The scores
+        # differ by only a point or two, so nothing downstream would look
+        # wrong.
+        raise ValueError(
+            f'{path} was written with blank_penalty={sorted(scales)} but '
+            f'this run uses blank_penalty={bool(blank_penalty)}; delete the '
+            f'checkpoint or re-run on the original scale rather than '
+            f'resuming across the two')
     if complete and corrupt:
         # a lost line may have been a configuration; re-run rather than
         # return a short list that claims to be exhaustive
@@ -222,7 +275,8 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
             _dt = _time.time() - _t0
             if status == cp_model.INFEASIBLE:
                 # the closing solve: its cost is the infeasibility proof
-                _append_checkpoint(checkpoint_path, None, _dt, complete=True)
+                _append_checkpoint(checkpoint_path, None, _dt, complete=True,
+                                   blank_penalty=blank_penalty)
                 return True
             if status not in (cp_model.OPTIMAL, cp_model.FEASIBLE):
                 log(f'  enumeration solver stalled: '
@@ -238,7 +292,8 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
             rec = {'placed': placed_cols, 'crosses': chosen,
                    'relaxed_score': val}
             configs.append(rec)
-            _append_checkpoint(checkpoint_path, rec, _dt)
+            _append_checkpoint(checkpoint_path, rec, _dt,
+                               blank_penalty=blank_penalty)
             log(f"  config #{len(configs)}: {val} placed={placed_cols} "
                 f"{chosen}", flush=True)
             # Blocking clause: the next solution must differ in some chosen
