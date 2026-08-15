@@ -58,6 +58,13 @@ against known-good outputs:
   would move a bound.
 * A complete enumeration of (0,2,3,7,11,13,14) pruned and unpruned emitted
   the **identical 14 configurations**, both terminating in INFEASIBLE.
+* The **union over 6 cells equals the unpartitioned enumeration** of
+  (0,2,3,7,11,13,14), every cell terminating, and the runtime disjointness
+  assertion never fired (`test_union_of_cells_equals_the_unpartitioned_
+  enumeration`, 8m53s). This is the one that completeness depends on: a
+  partition that merely looked tidy — every cell finishing, nothing
+  colliding — would still drop configurations if the cells failed to
+  cover.
 * `tests/test_dawg_trim.py` drives the full and trimmed automata over
   thousands of alphabet-respecting rows, including row 1 of the 1,786
   board, and requires the same verdict. It also guards against its own
