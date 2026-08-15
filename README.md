@@ -5,7 +5,7 @@ Is **1,786** — Bob Lucassen's OXYPHENBUTAZONE construction
 — the highest score a single turn can earn in North American Scrabble
 under NWL2023?
 
-## Status: open — and Theorems 2–4 are provisional
+## Status: open — and Theorem 4 is provisional
 
 **The headline claim is not proved.** What the argument shows is that the
 search space collapses to fourteen explicit configurations, of which eight
