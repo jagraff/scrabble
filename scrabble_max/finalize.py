@@ -149,6 +149,43 @@ def exact_fixed_blank_loss(word, placed, crosses):
     return total_forced, total_loss
 
 
+def blank_cost_gap(word, placed, crosses):
+    """How much the relaxation *under-charges* this configuration's blanks.
+
+    The stage-B⁺ objective subtracts only each blank's face value, but a
+    blank actually forfeits whatever it would have scored in place. For a
+    pinned configuration both quantities are determined, so the difference
+
+        (true minimum loss) − (face value charged)
+
+    is a constant that may be subtracted from the relaxed score to give a
+    still-valid upper bound on the true score. Returns that difference, or
+    None if the configuration needs more than 2 blanks (impossible).
+
+    Only the *excess* is subtractable. Taking the whole exact loss would
+    double-count the face value the relaxation already charged, and would
+    refute configurations that are not refutable.
+
+    Soundness of the face-value figure: the inventory constraint is
+    `scored usage <= distribution + bs[ch]`, and only `bs` (blanks on
+    scored cells) is charged, so an over-subscribed *scored* letter cannot
+    be covered by an uncharged blank. The optimiser therefore sets `bs` to
+    exactly the forced excess and pays `k · value` for it.
+    """
+    from .rules import VALUES as V, DISTRIBUTION as D
+    fb = exact_fixed_blank_loss(word, placed, crosses)
+    if fb is None:
+        return None
+    _, exact = fb
+    copies = Counter(word)
+    for _, w in crosses.items():
+        for ch in w[1:]:
+            copies[ch] += 1
+    charged = sum((n - D[ch]) * V[ch] for ch, n in copies.items()
+                  if n > D[ch])
+    return exact - charged
+
+
 def check_configs(lexicon, configs, threshold=1786, time_limit=600.0,
                   out_path='results/config_checks.json', log=print):
     """Decide each configuration exactly with the pinned tableau model."""
@@ -167,6 +204,25 @@ def check_configs(lexicon, configs, threshold=1786, time_limit=600.0,
             results.append({'config': cfg, 'status': 'INFEASIBLE',
                             'value': None, 'bound': None, 'solution': None,
                             'reason': 'needs more than 2 blanks'})
+            with open(out_path, 'w') as f:
+                json.dump(results, f, indent=1, default=str)
+            continue
+        # Cheap exact-blank filter before the solver.  The relaxation
+        # charges blanks only face value; subtracting the excess of their
+        # true cost keeps the bound valid, and on the archived runs this
+        # disposes of ~95% of configurations with no tableau solve at all.
+        gap = blank_cost_gap('OXYPHENBUTAZONE', placed, crosses)
+        if gap is not None and cfg['relaxed_score'] - gap <= threshold:
+            log(f"[{i+1}/{len(configs)}] relaxed={cfg['relaxed_score']} "
+                f"-blank_gap={gap} -> {cfg['relaxed_score'] - gap} "
+                f"<= {threshold}: INFEASIBLE (no solve)")
+            results.append({'config': cfg, 'status': 'INFEASIBLE',
+                            'value': None, 'bound': cfg['relaxed_score'] - gap,
+                            'solution': None,
+                            'reason': f'exact blank cost exceeds the charge by '
+                                      f'{gap}; corrected bound '
+                                      f'{cfg["relaxed_score"] - gap} '
+                                      f'<= {threshold}'})
             with open(out_path, 'w') as f:
                 json.dump(results, f, indent=1, default=str)
             continue
