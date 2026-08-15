@@ -375,10 +375,53 @@ infeasible**, each enumeration proven exhaustive. Adding the 1,300 from
 the abandoned global run, no legal position above 1,786 has been found
 anywhere.
 
-Six patterns are open: the two at ceiling 1,794, the three at 1,792, and
-one at 1,791. Two are being worked now.
+Six patterns are open:
+
+| ceiling | placed columns |
+|---:|---|
+| 1794 | (0, 1, 3, 7, 9, 11, 14) |
+| 1794 | (0, 1, 3, 7, 10, 11, 14) |
+| 1792 | (0, 1, 3, 5, 7, 11, 14) |
+| 1792 | (0, 1, 3, 6, 7, 11, 14) |
+| 1792 | (0, 2, 3, 6, 7, 11, 14) |
+| 1791 | (0, 2, 3, 7, 10, 11, 14) |
 
 This is the **only** open item. Everything in §2–§7 is complete.
+
+**The per-pattern method does not scale to these six, and has been
+stopped.** Its cost grows steeply with the pattern's ceiling, because a
+higher ceiling admits configurations at more score levels, and because
+the blocking-clause loop slows as clauses accumulate:
+
+| ceiling | configurations | enumeration |
+|---:|---:|---:|
+| 1787–1790 | 9–27 | 3–14 min |
+| 1791 | 396 | 2h 05m |
+| 1791 | 584 | 4h 24m |
+| 1791 | 824 | 7h 34m |
+
+The two runs stopped had reached ~32 h on `(0,2,3,7,10,11,14)` (count
+unknown — it predates the progress logging) and 1,900 configurations in
+~25 h on `(0,1,3,7,10,11,14)`, neither finished, and the discovery rate
+was decaying only gently (1.61/min → 1.11/min), which is the signature of
+rising per-solve cost rather than approaching exhaustion. Neither run
+checkpoints inside a pattern, so both were discarded.
+
+Closing the remaining six needs a different method. Two directions, both
+untried:
+
+* **Enumerate configurations combinatorially rather than by CP-SAT.**
+  Tile-bag scarcity and row-1 validity do essentially all the pruning
+  (they cut 10⁹–10¹⁰ candidate tuples to a few hundred), so a
+  branch-and-bound over cross-word choices with incremental inventory and
+  score bounds should be far cheaper per configuration than a fresh solve.
+  A naive Python prototype was too slow — the per-node cost of copying
+  letter counts swamped the pruning — and it would need array-based
+  incremental state to be worth it.
+* **Attack the pattern directly with better structure**, e.g. pinning
+  cross-word *lengths* (which fixes board occupancy and collapses the
+  column automata) rather than the words themselves, giving a split far
+  coarser than enumerating words but still tractable for the tableau.
 
 **No useful bound on the remaining time can be given.** The number of
 configurations per pattern is boundable exactly — it is a count over
