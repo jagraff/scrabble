@@ -12,7 +12,7 @@ construction scoring **1,786**.
 
 ---
 
-> ## ⚠ Status: Theorems 2, 3 and 4 are provisional pending recomputation
+> ## ⚠ Status: Theorem 4 provisional; Theorems 2 and 3 reconfirmed
 >
 > A soundness bug was found in `tighten.cross_options` after these
 > theorems were written. It deduplicated cross-word options by the
@@ -30,24 +30,43 @@ construction scoring **1,786**.
 > | | status |
 > |---|---|
 > | Theorem 1 (geometry, ≤1656) | **unaffected** — stage A uses `best_rest_table`, not `cross_options` |
-> | Theorem 2 (≤1778) | provisional: 1,778 and the ≤784 per-mask figures come from stage B |
-> | Theorem 3 (7 tiles) | provisional: 1,730 / 1,706 come from stage B |
-> | Theorem 4 (14 patterns) | provisional: tier 2 calls `tighten_candidate` per pattern |
+> | Theorem 2 (≤1778) | **reconfirmed** — stage B recomputed, every bound identical |
+> | Theorem 3 (7 tiles) | **reconfirmed** — 1,730 / 1,706 recomputed, both identical |
+> | Theorem 4 (14 patterns) | **provisional** — tier 2 calls `tighten_candidate` per pattern; not yet recomputed |
 > | Theorem 5 (record = 1786) | **unaffected** — rules engine only |
 > | Theorem 6 (reachability) | **unaffected** — `reachability.py`, `racks.py` |
 > | §8 (8 of 14 refuted) | see §8: the refutations stand, exhaustiveness does not |
 >
-> The fix is in hand and stage B is being recomputed. Whether any of
-> 1,778 / 784 / 1,730 / 1,706 actually moves is not yet known; the
-> theorems may survive unchanged, but they are not currently proved.
+> **Recomputation so far** (commit `d9420e9`, `PYTHONHASHSEED=0`,
+> OR-Tools 9.15.6755). All 17 stage-B candidates returned bounds
+> identical to the pre-fix run, in all 136 per-mask cells: still exactly
+> one entry above 1,786 (OXYPHENBUTAZONE row 0, stage B⁺ 1,794), and the
+> largest of the rest still 1,778. The `|S| ≤ 6` optima are still 1,730
+> and 1,706. So Theorems 2 and 3 stand as written.
 >
-> Two things are *not* in question. Every tier-2 verdict was either a
-> model infeasibility (140 of 165) or a proved optimum (25 of 165), with
-> no timeouts, so the 165 → 14 reduction does not rest on any
-> search-order-dependent bound. And a separate determinism defect in
+> The bug was not inert, though. In the `|S| ≤ 6` model eight per-mask
+> cells moved **up** and none moved down — row 0 mask 3 from 714 to 717,
+> mask 6 from 716 to 718, and similarly on row 14. The mask that
+> Theorem 3 rests on, `{0,7,14}`, was not among them. The pattern is
+> mechanical: the old dedup kept the highest-scoring representative of
+> each anagram class, so an unconstrained optimum usually landed on a
+> surviving option, and the deleted ones only bind once other constraints
+> force a structurally compatible but lower-scoring cross word. Tier 2
+> pins the placed set, a tighter constraint still, so it is where numbers
+> are likeliest to move — and Theorem 4 is stated below as if they have
+> not.
+>
+> One clarification on scope. A separate determinism defect in
 > `build_line_dawg` — unsorted trie construction, giving seed-dependent
-> state numbering — affects reproducibility of the emitted models but not
-> the value of any infeasibility or proved optimum.
+> state numbering — changes which model is emitted but not the feasible
+> region it describes, so it does not alter the value of any
+> infeasibility or proved optimum. The dedup bug is different in kind:
+> it deletes legal options and so shrinks the region itself. A proved
+> optimum over a too-small region is still a wrong upper bound, and an
+> infeasibility is exactly the verdict a missing option can manufacture.
+> All 165 tier-2 verdicts — the 140 infeasibilities included — are
+> therefore suspect, and the 165 → 14 reduction must be recomputed in
+> full.
 
 ---
 
@@ -210,6 +229,11 @@ The 18th-largest is **1,777 ≤ 1,778**, and stage-A bounds are valid upper
 bounds by Lemma 1, so every untightened candidate is also at most 1,778.
 Combining: `max(1778, 1777) = 1778`. ∎
 
+*Recomputed after the `cross_options` fix (commit `d9420e9`): all 17
+stage-B bounds returned identical, so the table above is post-fix data.
+The stage-A ranking is untouched by the bug — `bounds.py` never calls
+`cross_options`.*
+
 > **Corollary 2.1 (the main result so far).** *The record play's own
 > geometry is the only one in the game that can beat it.* Any play
 > scoring more than 1,786 is OXYPHENBUTAZONE placed across row 0 — up to
@@ -255,9 +279,17 @@ takes the bingo bonus.
 structure enforced by stage B — hook validity, run structure, inventory —
 is what closes the gap from 1,912 to 1,730.)* ∎
 
+*Recomputed after the `cross_options` fix (commit `d9420e9`,
+`tighten --six-tiles`): 1,730 and 1,706 both returned identical, as did
+the ≤784 per-mask figure above. Eight of the other `|S| ≤ 6` per-mask
+cells did move — all upward, none down, e.g. row 0 mask `{0,7}` from 714
+to 717 — which is the fix behaving as it must, since enlarging the
+feasible region can only raise an optimum. None of the moved cells is one
+the theorem rests on.*
+
 ---
 
-## 5. Theorem 4 — reduction to 14 placed patterns **(complete)**
+## 5. Theorem 4 — reduction to 14 placed patterns **(provisional — awaiting tier-2 recomputation)**
 
 > **Theorem 4.** A play beating the record has its placed set among 14
 > explicitly listed 7-subsets of `{0..14}`, and scores at most **1,794**.
@@ -492,6 +524,24 @@ completion time is genuinely unknown, not merely uncertain.
 Commands and result files for every computation above are listed in
 `REPORT.md` §10. The tests in `tests/` re-check the load-bearing claims:
 the record's score, the pattern counts (495 / 165), the soundness of the
-tier-1 filter against the record's own placed set, the agreement between
-the two independent derivations of the 14, and that the per-pattern
-enumeration covers the global one.
+tier-1 filter against the record's own placed set, that the 14 are
+consistent with the abandoned global enumeration, that the per-pattern
+enumeration covers the global one, and — since the `cross_options` bug —
+that no two order-distinct cross words are ever merged into one option.
+
+Dependencies are pinned in `requirements.txt` and runs set
+`PYTHONHASHSEED=0`. Soundness does not depend on either: every
+elimination rests on a proven upper bound, which stays an upper bound
+under any solver version or iteration order. What they buy is
+*reproducibility* of the particular numbers quoted above. Each pipeline
+entry point records `results/PROVENANCE.json` — commit, OR-Tools
+version, interpreter, platform, hash seed, and the lexicon's SHA-256 and
+word count — so any figure here can be traced to the run behind it.
+
+The pre-fix result files are kept under `results/pre_fix/` so the
+recomputation can be checked against them rather than merely replacing
+them. The fix only enlarges the models' feasible region, so every
+recomputed bound must come back **greater than or equal to** its pre-fix
+value, and every surviving set must be a **superset** of its pre-fix
+counterpart. A bound that moved down, or a case that disappeared, would
+indict the fix rather than the old data.

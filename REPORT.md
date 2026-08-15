@@ -174,6 +174,34 @@ over the placed set and one **concrete** cross word per placed cell:
 - word multiplier handled exactly by solving all 8 subsets of the three
   TW squares.
 
+**A soundness bug in the option lists (fixed 2026-08-15).** For the
+relaxation to bound anything, every legal play must satisfy its
+constraints — the option list for a hook letter has to contain *every*
+valid cross word. `cross_options` originally deduplicated options by the
+letter *multiset* of the cross word's remainder, keeping one
+representative per anagram class. But callers read the representative's
+**ordered** letters: `o[4]` supplies the row-1 inward letter, and
+`rest_letter_at_depth` supplies the letters the pairwise-adjacency
+constraints compare. Anagrams are not interchangeable there. NWL2023
+contains both YARE and YEAR — both valid Y-hooks, both with remainder
+multiset {A, E, R}, but with inward letters A and E respectively; only
+one survived. EARS/ERAS is the same story.
+
+The direction of the error is the dangerous one. Deleting options
+*shrinks* the feasible region, so the model's optimum can fall *below*
+the true maximum — and those optima are used as upper bounds, so any
+case eliminated on "bound ≤ 1786" may have been eliminated wrongly. The
+bug was also nondeterministic: the lexicon is a frozenset, so which of
+YARE/YEAR survived depended on `PYTHONHASHSEED`.
+
+The fix keys options on the full ordered remainder, i.e. one option per
+valid cross word. Hook validity already prunes anagrams heavily, so this
+costs only ~3% more options (11,670 → 11,965 across both edge rows for
+the letters of OXYPHENBUTAZONE). Regression tests in
+`tests/test_tighten.py` pin YARE/YEAR and EARS/ERAS, assert that every
+valid cross word appears as its own option, and check that the option
+list is byte-identical across hash seeds.
+
 The real 1,786 play satisfies every one of these constraints, giving the
 soundness regression `test_tight_bound_dominates_known_1786` (bound must
 be ≥ 1,786 — it is).
@@ -228,8 +256,10 @@ empty-pre-move hook cells via an auxiliary symbol — consists of valid
 maximal runs; center-connectivity by a flow model; global inventory with
 blanks (scored-blank losses lower-bounded as in stage B); and the exact
 score expression (contiguous cross-run depth per column, premiums,
-bingo). Maximizing the score answers question A exactly for this
-geometry.
+bingo). Maximizing the score *would* answer question A exactly for this
+geometry — the model is faithful, not a relaxation. Whether it can be
+solved is a separate matter, and in practice it cannot be solved directly;
+§7.3 records where that leaves things.
 
 Model validation: hard-fixing the grid to the transcribed 1,786 board
 makes the model feasible with objective **exactly 1,786** in 10 s
@@ -422,10 +452,28 @@ about.
 |---|---|
 | 1,786 is achievable as a static position | **proven constructively**, machine-verified (§3) |
 | 1,786 is reachable in a legal two-player game | **proven constructively** (§8, board legality + rack/bag witness) |
-| no play ≥ 1,787 exists in any geometry other than OXYPHENBUTAZONE/edge-row/3×TW | **proven** (stages A+B, sound relaxation chain) |
-| every other play scores ≤ 1,778 | **proven** (§4–§5; margin of 8 below the record) |
-| global upper bound 1,794 | **proven** (stage B⁺, solver-optimal) |
+| no play outside a full edge row reaches 1,786 | **proven** (stage A only — §4, unaffected by the §5 bug) |
+| no play ≥ 1,787 exists in any geometry other than OXYPHENBUTAZONE/edge-row/3×TW | **proven** — stage B recomputed post-fix, identical |
+| every other play scores ≤ 1,778 | **proven** — recomputed post-fix, identical |
+| global upper bound 1,794 | **proven** — stage B⁺ recomputed post-fix, identical |
+| the 14-pattern reduction | **provisional** — tier 2 not yet recomputed |
 | **1,786 is the global maximum** | **OPEN** — 8 of 14 patterns refuted, 6 remain (§7.3) |
+
+After the `cross_options` fix of §5, stage B and B⁺ were rerun over all 17
+candidates (commit `d9420e9`, `PYTHONHASHSEED=0`, OR-Tools 9.15.6755) and
+every bound returned identical, in all 136 per-mask cells. The `|S| ≤ 6`
+bounds behind Theorem 3 are likewise unchanged at 1,730 and 1,706.
+
+That is not evidence the bug was harmless. In the `|S| ≤ 6` model eight
+per-mask cells moved **up** and none moved down (row 0 mask 3: 714 → 717;
+mask 6: 716 → 718; row 14 mask 6: 705 → 706, and others). The mask
+Theorem 3 depends on was not among them. The old dedup kept the
+highest-scoring representative of each anagram class, so an unconstrained
+optimum usually landed on a surviving option; the deleted ones bind only
+once other constraints force a structurally compatible but lower-scoring
+cross word. Tier 2, which pins the placed set, is a tighter constraint
+still and is where numbers are likeliest to move — so the 165 → 14
+reduction is not yet reconfirmed.
 
 Caveats and trust base: correctness rests on (a) the rules engine
 (unit-tested, including the independently hand-computed 1,786 breakdown),
@@ -438,11 +486,14 @@ Blank-designation subtleties are handled conservatively throughout
 ## 10. Reproduction
 
 ```
-python3.12 -m venv .venv && .venv/bin/pip install ortools pytest pillow
+python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt
+export PYTHONHASHSEED=0
 .venv/bin/python -m pytest tests/ -q                 # fast tests
 .venv/bin/python -m pytest tests/ -q -m slow         # solver validation tests
 .venv/bin/python -m scrabble_max.bounds --threshold 1786   # stage A  (~1 min)
 .venv/bin/python -m scrabble_max.tighten --time-limit 240  # stages B/B⁺ (~1 h)
+.venv/bin/python -m scrabble_max.tighten --max-placed 6 --word OXYPHENBUTAZONE \
+    --out results/bound_six_tiles.json        # Theorem 3's |S| <= 6 bound
 .venv/bin/python -m scrabble_max.cstage --time-limit 21600 --min-score 1786  # stage C
 .venv/bin/python -m scrabble_max.patterns --tier3 configs   # §7.3 per-pattern refutation
 .venv/bin/python -m scrabble_max.reachability        # 25-move build-up (~1 min)
@@ -452,5 +503,31 @@ python3.12 -m venv .venv && .venv/bin/pip install ortools pytest pillow
 `patterns` takes `--only` to run a subset of placed sets, so open patterns
 can be worked in parallel, and `--configs-out` to record the enumerated
 configurations.
+
+### Reproducibility
+
+Dependencies are pinned in `requirements.txt`. This matters more than
+usual here: every elimination rests on a *proven* upper bound, so the
+argument stays sound under any solver version, but the recorded numbers
+are only reproducible under the pinned one — CP-SAT's presolve and search
+heuristics move between releases, and a timeout-derived
+`BestObjectiveBound` moves with them.
+
+`PYTHONHASHSEED=0` is not decoration. `lexicon.load()` returns a
+frozenset, and two places once let its iteration order reach the emitted
+model: `cross_options` (fixed — see §5) and `build_line_dawg`, whose trie
+insertion order decided how `intern` allocated automaton state ids. The
+minimal DAWG is canonical up to renaming, so the automaton was always
+*correct*, but each hash seed produced a different numbering and hence a
+different CP-SAT model. Both now sort their input, and the automaton
+hashes identically across seeds; the environment variable is belt and
+braces, so that any residual order-dependence shows up as a diff rather
+than hiding.
+
+Every pipeline entry point writes `results/PROVENANCE.json` — git commit,
+OR-Tools version, interpreter, platform, hash seed, and the lexicon's
+SHA-256 and word count — so a result file can be traced to the run that
+produced it. It is a sidecar rather than a field inside each result file,
+to avoid changing structures that `tests/` already parse.
 
 Logs and machine-readable results live in `results/`.
