@@ -177,12 +177,85 @@ def build_line_dawg(lexicon):
     return transitions, root, sorted(finals)
 
 
+_TRIM_CACHE = {}
+
+
+def trim_line_dawg(transitions, start, finals, allowed_sets):
+    """Drop states and transitions no 15-cell row can use.
+
+    `build_line_dawg` accepts runs of every length, so it carries 59,710
+    states and 149,039 transitions. The row is exactly `N` cells and each
+    cell's letter is already confined to `allowed_sets[c]`, so most of
+    that automaton cannot lie on any accepted path.
+
+    Forward reachability from `start` and backward reachability from the
+    accepting states are intersected layer by layer; a state or transition
+    is kept only if it lies on some accepted path of exactly `N` steps
+    under those per-position alphabets. Nothing else is removed, so the
+    language restricted to N-cell rows -- the only thing the model asks
+    about -- is unchanged. Measured: 149,039 -> 59,602 transitions and
+    59,710 -> 25,465 states.
+
+    CP-SAT derives this itself; the point is that it derives it inside
+    every `Solve()`, and the enumeration loop solves hundreds of times per
+    pattern. Doing it once here moves the work off the per-solve path.
+
+    The result depends only on the alphabets, and those turn out not to
+    vary with the placed set -- a cross word's inward letter is by
+    construction a letter that can follow the edge letter, so `inw` is
+    always a subset of `sec` -- hence the cache hits across patterns.
+    """
+    key = (start, tuple(allowed_sets))
+    hit = _TRIM_CACHE.get(key)
+    if hit is not None:
+        return hit
+
+    n = len(allowed_sets)
+    by_state = {}
+    for s, l, t in transitions:
+        by_state.setdefault(s, []).append((l, t))
+    final_set = set(finals)
+
+    fwd = [set() for _ in range(n + 1)]
+    fwd[0] = {start}
+    for i in range(n):
+        nxt = set()
+        for s in fwd[i]:
+            for l, t in by_state.get(s, ()):
+                if l in allowed_sets[i]:
+                    nxt.add(t)
+        fwd[i + 1] = nxt
+
+    bwd = [set() for _ in range(n + 1)]
+    bwd[n] = fwd[n] & final_set
+    for i in range(n - 1, -1, -1):
+        cur = set()
+        for s in fwd[i]:
+            for l, t in by_state.get(s, ()):
+                if l in allowed_sets[i] and t in bwd[i + 1]:
+                    cur.add(s)
+                    break
+        bwd[i] = cur
+
+    live = [fwd[i] & bwd[i] for i in range(n + 1)]
+    kept = set()
+    for i in range(n):
+        for s in live[i]:
+            for l, t in by_state.get(s, ()):
+                if l in allowed_sets[i] and t in live[i + 1]:
+                    kept.add((s, l, t))
+    out = (sorted(kept), sorted(live[n]))
+    _TRIM_CACHE[key] = out
+    return out
+
+
 def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
                       opts_cache=None, adj_pairs=None, log=print,
                       row1_exact=False, dawg=None, mask_filter=None,
                       pairwise_all_rows=False, enumerate_above=None,
                       enumerate_cb=None, fix_placed=None, max_placed=None,
-                      blank_penalty=False):
+                      blank_penalty=False, prune_unplaced=True,
+                      partition=None):
     """Return ((bound, detail), per_mask) for a full-row edge play.
 
     row1_exact adds the exact model of the next row inward: every tile in
@@ -257,11 +330,27 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
             model.AddBoolOr(clause)
 
         # cross-word option choice per column
+        #
+        # A column pinned unplaced can carry no cross word: `x <= placed`
+        # forces every one of its option variables to 0, and `has_cross`
+        # with it.  Building them anyway leaves CP-SAT to rediscover that
+        # on every solve of the enumeration loop, and the dead weight is
+        # not small -- for a 7-column pattern it is 46% of the 6,576
+        # option variables, plus their z-variables and the quadratic
+        # adjacency clauses between neighbouring columns.  Presolve is
+        # over half of each solve and is re-paid ~800 times per pattern,
+        # so omitting them is worth far more than it looks.
+        #
+        # `has_cross[c]` is still created for such a column, as a variable
+        # pinned to 0 by the empty sum, so downstream code can index it
+        # uniformly.
+        cross_cols = (set(range(N)) if (fix_placed is None or not prune_unplaced)
+                      else set(fix_placed))
         x = {}
         opt_lists = {}
         has_cross = {}
         for c in range(N):
-            opts = opts_cache[(word[c], row)]
+            opts = opts_cache[(word[c], row)] if c in cross_cols else []
             opt_lists[c] = opts
             cvars = []
             for oi in range(len(opts)):
@@ -305,12 +394,14 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
 
             e = [model.NewIntVar(0, 26, f'e{c}') for c in range(N)]
             nz, sup, eq = [], [], {}
+            allowed_sets = []
             for c in range(N):
                 # sorted, not raw set iteration: variable creation order
                 # would otherwise depend on PYTHONHASHSEED
                 inw = sorted({o[4] for o in opt_lists[c]})
                 sec = sorted(second[word[c]])
                 allowed = sorted({0} | {code(a) for a in set(inw) | set(sec)})
+                allowed_sets.append(frozenset(allowed))
                 model.AddAllowedAssignments([e[c]],
                                             [(v,) for v in allowed])
                 # cross columns: e fixed to the chosen option's inward letter
@@ -345,7 +436,8 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
                                     ).OnlyEnforceIf(ind.Not())
                     eq[(c, a)] = ind
             # row-1 maximal runs must be lexicon words (or singles)
-            model.AddAutomaton(e, start, finals, transitions)
+            tr, fin = trim_line_dawg(transitions, start, finals, allowed_sets)
+            model.AddAutomaton(e, start, fin, tr)
             # every pre-existing run needs at least one support tile below
             for a in range(N):
                 for bcol in range(a, N):
@@ -462,6 +554,23 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
             total_var = model.NewIntVar(0, 3000, 'total')
             model.Add(total_var == sum(terms) + const)
             model.Add(total_var >= enumerate_above + 1)
+            if partition is not None:
+                # Restrict this run to one cell of a partition of the
+                # solution space, so that disjoint cells can be enumerated
+                # concurrently.  Every configuration either gives column
+                # `pc` no cross word (block None) or gives it exactly one
+                # option, and the option-index blocks are disjoint and
+                # cover every index -- so the cells partition the feasible
+                # set and their union is the whole enumeration.
+                pc, block = partition
+                if not opt_lists[pc]:
+                    raise ValueError(
+                        f'partition pivot {pc} has no cross options; it must '
+                        f'be a placed column of fix_placed')
+                if block is None:
+                    model.Add(has_cross[pc] == 0)
+                else:
+                    model.Add(sum(x[(pc, oi)] for oi in block) == 1)
             return enumerate_cb(model,
                                 (placed, x, opt_lists, has_cross, total_var))
 
