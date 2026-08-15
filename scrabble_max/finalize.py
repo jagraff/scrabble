@@ -110,7 +110,7 @@ def read_checkpoint(path):
 
 def resume_enumeration(lexicon, S, threshold=1786, time_limit=900.0,
                        checkpoint_dir='results/enum_ckpt', log=print,
-                       workers=1):
+                       workers=1, blank_penalty=True):
     """Enumerate one pattern's configurations, resuming if interrupted.
 
     Returns (configs, complete, resumed_from). Safe to call repeatedly:
@@ -137,14 +137,16 @@ def resume_enumeration(lexicon, S, threshold=1786, time_limit=900.0,
     new, done = enumerate_configs(
         lexicon, threshold=threshold, time_limit=time_limit,
         fix_placed=set(S), known_configs=known, log=log,
-        checkpoint_path=path, workers=workers)
+        checkpoint_path=path, workers=workers,
+        blank_penalty=blank_penalty)
     return known + new, done, len(known)
 
 
 def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
                       threshold=1786, time_limit=900.0, max_configs=100000,
                       known_configs=(), log=print, fix_placed=None,
-                      checkpoint_path=None, workers=1):
+                      checkpoint_path=None, workers=1,
+                      blank_penalty=True):
     """All (placed, crosses) configs with row-1-exact relaxed score
     > threshold, for the all-TWs mask.
 
@@ -238,17 +240,28 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
             _append_checkpoint(checkpoint_path, rec, _dt)
             log(f"  config #{len(configs)}: {val} placed={placed_cols} "
                 f"{chosen}", flush=True)
-            # blocking clause: differ in some chosen x, some cross-less
-            # column gaining a cross, or the placed pattern
+            # Blocking clause: the next solution must differ in some chosen
+            # option, or give a cross word to a column that had none, or
+            # change the placed pattern.
+            #
+            # When `fix_placed` pins the pattern, every `placed[c]` literal
+            # is a fixed constant that can never satisfy the clause, and
+            # `has_cross[c]` for an unplaced column is forced to 0 for the
+            # same reason.  Emitting them adds ~30 dead literals per clause
+            # -- roughly 24,000 over an 800-configuration run -- for
+            # propagation to chew through and discard.
             clause = []
             for (c, oi), v in x.items():
                 if solver.Value(v):
                     clause.append(v.Not())
             for c in range(N):
+                if fix_placed is not None and c not in fix_placed:
+                    continue          # placed[c]=0 pinned; both literals dead
                 if not solver.Value(has_cross[c]):
                     clause.append(has_cross[c])
-                clause.append(placed[c].Not() if solver.Value(placed[c])
-                              else placed[c])
+                if fix_placed is None:
+                    clause.append(placed[c].Not() if solver.Value(placed[c])
+                                  else placed[c])
             model.AddBoolOr(clause)
         return False
 
@@ -256,7 +269,8 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
         lexicon, word, row, opts_cache=opts_cache, adj_pairs=adj,
         row1_exact=True, dawg=dawg, mask_filter=[7],
         pairwise_all_rows=True, enumerate_above=threshold,
-        enumerate_cb=block_and_collect, fix_placed=fix_placed)
+        enumerate_cb=block_and_collect, fix_placed=fix_placed,
+        blank_penalty=blank_penalty)
     return configs, complete
 
 
