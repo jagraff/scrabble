@@ -146,7 +146,8 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
                       threshold=1786, time_limit=900.0, max_configs=100000,
                       known_configs=(), log=print, fix_placed=None,
                       checkpoint_path=None, workers=1,
-                      blank_penalty=True):
+                      blank_penalty=True, prune_unplaced=True,
+                      partition=None):
     """All (placed, crosses) configs with row-1-exact relaxed score
     > threshold, for the all-TWs mask.
 
@@ -270,8 +271,24 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
         row1_exact=True, dawg=dawg, mask_filter=[7],
         pairwise_all_rows=True, enumerate_above=threshold,
         enumerate_cb=block_and_collect, fix_placed=fix_placed,
-        blank_penalty=blank_penalty)
+        blank_penalty=blank_penalty, prune_unplaced=prune_unplaced,
+        partition=partition)
     return configs, complete
+
+
+TW_COLS = (0, 7, 14)
+DL_COLS = (3, 11)
+
+
+def _normalise(placed, crosses):
+    """(placed set, crosses with int keys), with the model's own invariant
+    -- a cross word exists only where a tile was newly placed (`x <=
+    placed` in `tighten_candidate`) -- checked rather than assumed."""
+    placed = set(placed)
+    crosses = {int(c): w for c, w in crosses.items()}
+    assert set(crosses) <= placed, (
+        f'cross words at unplaced columns {sorted(set(crosses) - placed)}')
+    return placed, crosses
 
 
 def exact_fixed_blank_loss(word, placed, crosses):
@@ -279,21 +296,34 @@ def exact_fixed_blank_loss(word, placed, crosses):
     *fixed, scored* tiles is a constant, and so is the minimum score loss:
     every copy of an over-subscribed letter sits in a known word with a
     known multiplier.  Returns (num_forced, min_loss) or None if the
-    configuration needs more than 2 blanks and is impossible outright."""
+    configuration needs more than 2 blanks and is impossible outright.
+
+    `placed` is load-bearing: a double-letter square only doubles a tile
+    the mover *places*, so a main-word copy at column 3 or 11 loses
+    `2 x value x WM` when placed and `value x WM` when it is a
+    pre-existing board tile.  Charging the doubled figure unconditionally
+    over-states the loss, and an over-stated loss is the unsound
+    direction -- it lowers the ceiling and can refute a configuration
+    that is not refutable."""
     from .rules import VALUES as V, DISTRIBUTION as D
+    placed, crosses = _normalise(placed, crosses)
+    wm_prod = 1
+    for c in TW_COLS:
+        if c in placed:
+            wm_prod *= 3
     copies = Counter(word)
     loss_opts = {ch: [] for ch in copies}
-    # main-word copies: value x letter-mult x 27, plus the cross word's
+    # main-word copies: value x letter-mult x WM, plus the cross word's
     # share if the cell is a hook with a cross word
     for c, ch in enumerate(word):
-        lm = 2 if c in (3, 11) else 1
-        wm = 3 if c in (0, 7, 14) else 1
-        loss = V[ch] * lm * 27
+        lm = 2 if (c in DL_COLS and c in placed) else 1
+        wm = 3 if c in TW_COLS else 1
+        loss = V[ch] * lm * wm_prod
         if c in crosses:
             loss += wm * V[ch] * lm
         loss_opts.setdefault(ch, []).append(loss)
     for c, w in crosses.items():
-        wm = 3 if c in (0, 7, 14) else 1
+        wm = 3 if c in TW_COLS else 1
         for ch in w[1:]:
             copies[ch] += 1
             loss_opts.setdefault(ch, []).append(V[ch] * wm)
@@ -309,41 +339,128 @@ def exact_fixed_blank_loss(word, placed, crosses):
     return total_forced, total_loss
 
 
-def blank_cost_gap(word, placed, crosses):
+def config_ceiling(word, placed, crosses):
+    """A proven upper bound on the true score of a pinned configuration,
+    computed in closed form.  Returns None if it needs more than 2 blanks.
+
+    This is what the pre-tableau filter compares against the threshold,
+    and it deliberately does *not* read the `relaxed_score` the
+    enumeration recorded, for two independent reasons:
+
+      * that value comes from a *feasibility* solve.  The enumeration
+        model asserts `total >= threshold + 1` and sets no objective, so
+        the solver is free to return any feasible point -- including one
+        with `bs` above the forced minimum, whose `total` sits strictly
+        below the configuration's ceiling.  Measured on the archived
+        lists: 47 of 1903 configurations recorded a value 1 point low.
+        Treating a non-maximal value as a ceiling is unsound.
+      * the recorded value is on whichever charging scale the enumeration
+        used.  With `blank_penalty=True` the model already subtracts face
+        value *and* the 2x shortfall, so subtracting the full excess
+        again double-charges the same blanks -- 1581 of those 1903
+        configurations sit in the region where both fire.
+
+    Recomputing from (placed set, cross words) alone is immune to both:
+    every term is determined by the configuration, and the blank loss
+    subtracted is the exact minimum from `exact_fixed_blank_loss` rather
+    than any relaxed proxy.  Cheaper than a solve, and strictly tighter
+    than the value it replaces.
+    """
+    from .rules import VALUES as V
+    placed, crosses = _normalise(placed, crosses)
+    fb = exact_fixed_blank_loss(word, placed, crosses)
+    if fb is None:
+        return None
+    _, loss = fb
+    wm_prod = 1
+    for c in TW_COLS:
+        if c in placed:
+            wm_prod *= 3
+    # main word: letter premiums apply at placed cells only
+    total = wm_prod * sum(
+        V[ch] * (2 if (c in DL_COLS and c in placed) else 1)
+        for c, ch in enumerate(word))
+    # cross words: hook tile scored with its own premiums, remainder raw
+    for c, w in crosses.items():
+        wm = 3 if c in TW_COLS else 1
+        lm = 2 if c in DL_COLS else 1
+        total += wm * (V[word[c]] * lm + sum(V[ch] for ch in w[1:]))
+    if len(placed) == 7:
+        total += 50
+    return total - loss
+
+
+def model_blank_charge(word, placed, crosses, *, blank_penalty=False):
+    """What the stage-B⁺ objective already subtracted for forced blanks.
+
+    Face value per blank, and -- when the enumeration ran with
+    `blank_penalty=True` -- a further `2 x value` for any letter with no
+    "cheap cell", i.e. no copy in a cross-word remainder outside a
+    triple-word column.  That mirrors `tighten_candidate`'s penalty term
+    exactly; for a pinned configuration its `cheap` indicator is
+    determined rather than chosen, since the cross words are fixed.
+
+    Soundness of the face-value figure: the inventory constraint is
+    `scored usage <= distribution + bs[ch]`, and only `bs` (blanks on
+    scored cells) is charged, so an over-subscribed *scored* letter cannot
+    be covered by an uncharged blank.  The optimiser therefore sets `bs`
+    to exactly the forced excess and pays for it.
+    """
+    from .rules import VALUES as V, DISTRIBUTION as D
+    placed, crosses = _normalise(placed, crosses)
+    copies = Counter(word)
+    for _, w in crosses.items():
+        for ch in w[1:]:
+            copies[ch] += 1
+    total = 0
+    for ch, n in copies.items():
+        k = n - D[ch]
+        if k <= 0:
+            continue
+        per_blank = V[ch]
+        if blank_penalty:
+            cheap = any(c not in TW_COLS and ch in w[1:]
+                        for c, w in crosses.items())
+            if not cheap:
+                per_blank += 2 * V[ch]
+        total += k * per_blank
+    return total
+
+
+def blank_cost_gap(word, placed, crosses, *, blank_penalty=False):
     """How much the relaxation *under-charges* this configuration's blanks.
 
-    The stage-B⁺ objective subtracts only each blank's face value, but a
-    blank actually forfeits whatever it would have scored in place. For a
-    pinned configuration both quantities are determined, so the difference
+    A blank forfeits whatever it would have scored in place, but the
+    stage-B⁺ objective subtracts less than that. For a pinned
+    configuration both quantities are determined, so the difference
 
-        (true minimum loss) − (face value charged)
+        (true minimum loss) − (what the model already charged)
 
     is a constant that may be subtracted from the relaxed score to give a
     still-valid upper bound on the true score. Returns that difference, or
     None if the configuration needs more than 2 blanks (impossible).
 
     Only the *excess* is subtractable. Taking the whole exact loss would
-    double-count the face value the relaxation already charged, and would
-    refute configurations that are not refutable.
+    double-count what the relaxation already charged, and would refute
+    configurations that are not refutable. `blank_penalty` says which
+    charge the score being corrected was produced under, and getting it
+    wrong is exactly that double-count: with the penalty on, the model
+    subtracts face value *and* the 2x shortfall, so passing the default
+    here would deduct the same points a second time.
 
-    Soundness of the face-value figure: the inventory constraint is
-    `scored usage <= distribution + bs[ch]`, and only `bs` (blanks on
-    scored cells) is charged, so an over-subscribed *scored* letter cannot
-    be covered by an uncharged blank. The optimiser therefore sets `bs` to
-    exactly the forced excess and pays `k · value` for it.
+    Prefer `config_ceiling`, which needs no such coordination -- it
+    recomputes the whole bound rather than correcting a recorded one.
     """
-    from .rules import VALUES as V, DISTRIBUTION as D
     fb = exact_fixed_blank_loss(word, placed, crosses)
     if fb is None:
         return None
     _, exact = fb
-    copies = Counter(word)
-    for _, w in crosses.items():
-        for ch in w[1:]:
-            copies[ch] += 1
-    charged = sum((n - D[ch]) * V[ch] for ch, n in copies.items()
-                  if n > D[ch])
-    return exact - charged
+    charged = model_blank_charge(word, placed, crosses,
+                                 blank_penalty=blank_penalty)
+    # The model's charge is a lower bound on the true loss, so this is
+    # non-negative; clamped rather than asserted so a future over-charge
+    # degrades the filter instead of silently raising a bound.
+    return max(0, exact - charged)
 
 
 def check_configs(lexicon, configs, threshold=1786, time_limit=600.0,
@@ -367,22 +484,23 @@ def check_configs(lexicon, configs, threshold=1786, time_limit=600.0,
             with open(out_path, 'w') as f:
                 json.dump(results, f, indent=1, default=str)
             continue
-        # Cheap exact-blank filter before the solver.  The relaxation
-        # charges blanks only face value; subtracting the excess of their
-        # true cost keeps the bound valid, and on the archived runs this
-        # disposes of ~95% of configurations with no tableau solve at all.
-        gap = blank_cost_gap('OXYPHENBUTAZONE', placed, crosses)
-        if gap is not None and cfg['relaxed_score'] - gap <= threshold:
+        # Cheap exact-blank filter before the solver.  The ceiling is
+        # recomputed from the configuration itself rather than corrected
+        # from the recorded `relaxed_score`, which is neither maximal nor
+        # of a known charging scale -- see `config_ceiling`.  On the
+        # archived runs this disposes of ~95% of configurations with no
+        # tableau solve at all.
+        ceiling = config_ceiling('OXYPHENBUTAZONE', placed, crosses)
+        if ceiling is not None and ceiling <= threshold:
             log(f"[{i+1}/{len(configs)}] relaxed={cfg['relaxed_score']} "
-                f"-blank_gap={gap} -> {cfg['relaxed_score'] - gap} "
-                f"<= {threshold}: INFEASIBLE (no solve)")
+                f"-> exact ceiling {ceiling} <= {threshold}: "
+                f"INFEASIBLE (no solve)")
             results.append({'config': cfg, 'status': 'INFEASIBLE',
-                            'value': None, 'bound': cfg['relaxed_score'] - gap,
+                            'value': None, 'bound': ceiling,
                             'solution': None,
-                            'reason': f'exact blank cost exceeds the charge by '
-                                      f'{gap}; corrected bound '
-                                      f'{cfg["relaxed_score"] - gap} '
-                                      f'<= {threshold}'})
+                            'reason': f'exact blank cost puts this '
+                                      f'configuration\'s ceiling at '
+                                      f'{ceiling} <= {threshold}'})
             with open(out_path, 'w') as f:
                 json.dump(results, f, indent=1, default=str)
             continue
