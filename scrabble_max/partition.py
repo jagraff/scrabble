@@ -221,6 +221,66 @@ def enumerate_pattern(S, n_blocks=24, threshold=1786, max_workers=4,
     return found, complete
 
 
+def enumerate_many(patterns, n_blocks=8, threshold=1786, max_workers=4,
+                   ckpt_dir='results/enum_cells', time_limit=3600.0,
+                   log=print):
+    """Enumerate several patterns through one flat queue of cells.
+
+    Running `enumerate_pattern` per pattern would give each its own pool
+    and either oversubscribe the machine or serialise the patterns. Every
+    (pattern, cell) pair is independent, so they all go into a single
+    queue instead: the cores stay busy until the very last cell, and a
+    pattern that turns out to be enormous cannot strand the others behind
+    it.
+
+    Returns {pattern: (configs, complete)}. A pattern is complete only if
+    every one of its cells finished.
+    """
+    lexicon = load()
+    os.makedirs(ckpt_dir, exist_ok=True)
+    jobs, cells_of = [], {}
+    for S in patterns:
+        S = tuple(sorted(S))
+        pivot, n_options = choose_pivot(lexicon, S)
+        cells = make_cells(n_options, n_blocks)
+        cells_of[S] = len(cells)
+        for i, block in enumerate(cells):
+            jobs.append((S, pivot, i, block, threshold, ckpt_dir, time_limit))
+    log(f'{len(patterns)} patterns -> {len(jobs)} cells, '
+        f'{max_workers} workers')
+
+    found = {S: [] for S in cells_of}
+    seen = {S: {} for S in cells_of}
+    incomplete = {S: [] for S in cells_of}
+    t0 = time.time()
+    with ProcessPoolExecutor(max_workers=max_workers) as ex:
+        futs = {ex.submit(_run_cell, j): (j[0], j[2]) for j in jobs}
+        for n, fut in enumerate(as_completed(futs), 1):
+            S, _ = futs[fut]
+            i, cfgs, complete, dt, cached = fut.result()
+            if not complete:
+                incomplete[S].append(i)
+            for cfg in cfgs:
+                k = _key(cfg)
+                if k in seen[S]:
+                    raise AssertionError(
+                        f'{S}: cells {seen[S][k]} and {i} both emitted {k}')
+                seen[S][k] = i
+                found[S].append(cfg)
+            log(f'[{n}/{len(jobs)}] {S} cell {i}: {len(cfgs)} cfgs '
+                f'complete={complete} '
+                f'{"(cached)" if cached else f"{dt:.0f}s"} '
+                f'| {time.time() - t0:.0f}s elapsed', flush=True)
+
+    out = {}
+    for S in cells_of:
+        ok = not incomplete[S]
+        out[S] = (found[S], ok)
+        log(f'{S}: {len(found[S])} configs, complete={ok}'
+            + ('' if ok else f' UNFINISHED cells {incomplete[S]}'))
+    return out
+
+
 def main():
     import argparse
     ap = argparse.ArgumentParser()
