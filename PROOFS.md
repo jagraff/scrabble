@@ -165,7 +165,7 @@ complete case analysis with 1,778 < 1,786 as the margin.
 
 ---
 
-## 4. Theorem 3 — structure of a record-beating play **(complete modulo one running computation)**
+## 4. Theorem 3 — structure of a record-beating play **(complete)**
 
 > **Theorem 3.** A play beating the record covers all three triple-word
 > squares of row 0 (columns 0, 7, 14) and places exactly 7 tiles, hence
@@ -182,18 +182,26 @@ complete case analysis with 1,778 < 1,786 as the margin.
 (`results/tight_bounds.json`, field `per_mask`). So all three TWs are
 covered.
 
-For the tile count: the model with `Σ placed ≤ 6` (which forces the bingo
-variable to 0) is being computed now; the claim is that its optimum is
-below 1,786. **Status: running** (`results/bound_six_tiles.json`). Until
-it lands, Theorem 3's second clause is *not* established, and §5–§6
-should be read as conditional on it.
+For the tile count, run the same model with `Σ placed ≤ 6`, which forces
+the bingo variable to 0 (`tighten.py`, `max_placed=`). The optima
+(`results/bound_six_tiles.json`) are
 
-*(A weaker arithmetic-only version does not suffice: the stage-A bound for
-`|S| ≤ 6` is 1,912, which is why the stage-B computation is needed.)* ∎
+| row | `|S| ≤ 6` bound |
+|---|---:|
+| 0 | **1730** |
+| 14 | 1706 |
+
+Both are below 1,786, so a record-beating play places all 7 tiles and
+takes the bingo bonus.
+
+*(The arithmetic-only version does not suffice here: the stage-A bound for
+`|S| ≤ 6` is 1,912, i.e. it eliminates nothing. The interlocking
+structure enforced by stage B — hook validity, run structure, inventory —
+is what closes the gap from 1,912 to 1,730.)* ∎
 
 ---
 
-## 5. Theorem 4 — reduction to 14 placed patterns **(complete, conditional on Thm 3)**
+## 5. Theorem 4 — reduction to 14 placed patterns **(complete)**
 
 > **Theorem 4.** A play beating the record has its placed set among 14
 > explicitly listed 7-subsets of `{0..14}`, and scores at most **1,794**.
