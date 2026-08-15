@@ -12,6 +12,45 @@ construction scoring **1,786**.
 
 ---
 
+> ## ⚠ Status: Theorems 2, 3 and 4 are provisional pending recomputation
+>
+> A soundness bug was found in `tighten.cross_options` after these
+> theorems were written. It deduplicated cross-word options by the
+> remainder's letter *multiset*, but callers read the remainder's
+> *order* — the row-1 inward letter and the adjacency constraints both
+> depend on it. YARE and YEAR are both valid Y-hooks with remainder
+> multiset {A,E,R} but inward letters A and E; only one survived.
+>
+> The direction is the unsafe one. Fewer options means a smaller
+> feasible region, so `tighten_candidate`'s optimum can come out **below**
+> the true maximum — and these values are used as upper bounds. Anything
+> eliminated because its bound fell at or below 1,786 may have been
+> eliminated wrongly, so the surviving set can only **grow**.
+>
+> | | status |
+> |---|---|
+> | Theorem 1 (geometry, ≤1656) | **unaffected** — stage A uses `best_rest_table`, not `cross_options` |
+> | Theorem 2 (≤1778) | provisional: 1,778 and the ≤784 per-mask figures come from stage B |
+> | Theorem 3 (7 tiles) | provisional: 1,730 / 1,706 come from stage B |
+> | Theorem 4 (14 patterns) | provisional: tier 2 calls `tighten_candidate` per pattern |
+> | Theorem 5 (record = 1786) | **unaffected** — rules engine only |
+> | Theorem 6 (reachability) | **unaffected** — `reachability.py`, `racks.py` |
+> | §8 (8 of 14 refuted) | see §8: the refutations stand, exhaustiveness does not |
+>
+> The fix is in hand and stage B is being recomputed. Whether any of
+> 1,778 / 784 / 1,730 / 1,706 actually moves is not yet known; the
+> theorems may survive unchanged, but they are not currently proved.
+>
+> Two things are *not* in question. Every tier-2 verdict was either a
+> model infeasibility (140 of 165) or a proved optimum (25 of 165), with
+> no timeouts, so the 165 → 14 reduction does not rest on any
+> search-order-dependent bound. And a separate determinism defect in
+> `build_line_dawg` — unsorted trie construction, giving seed-dependent
+> state numbering — affects reproducibility of the emitted models but not
+> the value of any infeasibility or proved optimum.
+
+---
+
 ## 0. Setup
 
 **Board.** 15×15. Premium squares: 8 triple-word (TW), 17 double-word
@@ -371,9 +410,23 @@ enumeration terminates per pattern (it did not globally) because
 restricting to one placed set bounds the search space.
 
 Result so far: **1,903 configurations across 8 patterns, every one
-infeasible**, each enumeration proven exhaustive. Adding the 1,300 from
-the abandoned global run, no legal position above 1,786 has been found
-anywhere.
+infeasible**. Adding the 1,300 from the abandoned global run, no legal
+position above 1,786 has been found anywhere.
+
+**The exhaustiveness of those enumerations does not survive the
+`cross_options` bug, though the refutations do.** Each of the 1,903
+configurations was independently refuted by the tableau, and those
+refutations stand on their own — the tableau does not use
+`cross_options`. What fails is step 1's completeness claim, and it fails
+in a precisely identifiable way: the blocking loop stops when the
+stage-B⁺ model goes infeasible, and a *missing* cross-word option makes
+it go infeasible **earlier**. So `complete=True` is exactly the flag that
+cannot be trusted, and each pattern's true configuration list can only be
+longer than the one recorded.
+
+That gives a free check on the rerun: for every pattern already done, the
+recomputed list must be a **superset** of the old one. If it ever isn't,
+something other than this bug is wrong.
 
 Six patterns are open:
 
