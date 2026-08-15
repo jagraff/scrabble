@@ -124,12 +124,28 @@ def row1_filter(lexicon, patterns, threshold=1786, time_limit=300.0,
             bound, proved = float('inf'), False
         dt = time.time() - t0
         kept = bound > threshold
+
+        # How the verdict was reached, recorded explicitly.  `proved_optimal`
+        # alone is not readable: `detail` is None on INFEASIBLE too, so an
+        # infeasibility and a timed-out solve both record False, and a
+        # summary that counts them together reports definitive eliminations
+        # as if they rested on weak bounds.  The three cases differ in
+        # strength -- infeasible and proved_optimum are exact, timeout_bound
+        # is only an upper bound -- so name them.
+        if bound == float('-inf'):
+            verdict = 'infeasible'
+        elif proved:
+            verdict = 'proved_optimum'
+        else:
+            verdict = 'timeout_bound'
+
         records.append({'placed': list(S), 'stage_a_bound': a_bound,
                         'row1_bound': (None if bound in (float('inf'),
                                                          float('-inf'))
                                        else bound),
                         'infeasible': bound == float('-inf'),
                         'proved_optimal': proved,
+                        'verdict': verdict,
                         'kept': kept, 'seconds': round(dt, 1)})
         log(f'[{i + 1}/{len(patterns)}] {S} stageA={a_bound} '
             f'row1={bound} -> {"KEEP" if kept else "eliminated"} '

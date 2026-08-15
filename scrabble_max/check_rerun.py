@@ -161,12 +161,14 @@ def verdict_breakdown(path):
     recs = _load(path)
     out = {'infeasible': 0, 'proved_optimum': 0, 'timeout_bound': 0}
     for r in recs:
-        if r['infeasible']:
-            out['infeasible'] += 1
-        elif r['proved_optimal']:
-            out['proved_optimum'] += 1
-        else:
-            out['timeout_bound'] += 1
+        # `verdict` is recorded directly by newer runs; derive it for
+        # results written before that field existed.
+        v = r.get('verdict')
+        if v is None:
+            v = ('infeasible' if r['infeasible']
+                 else 'proved_optimum' if r['proved_optimal']
+                 else 'timeout_bound')
+        out[v] += 1
     return out, len(recs), sum(r['kept'] for r in recs)
 
 
