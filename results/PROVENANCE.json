@@ -1,6 +1,6 @@
 {
- "git_commit": "abb16c1a1af76738d00e914d44d796b4868cef4f",
- "git_dirty": true,
+ "git_commit": "5ba050af26aa7903fdb5e00b9925abe6810291e6",
+ "git_dirty": false,
  "python": "3.12.3",
  "platform": "Darwin/arm64",
  "ortools": "9.15.6755",
