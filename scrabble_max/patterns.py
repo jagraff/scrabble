@@ -249,7 +249,7 @@ def prove_pattern_by_configs(lexicon, S, threshold=1786,
     the whole of it; refuting every entry then refutes the pattern.
     """
     import os
-    from .finalize import check_configs, enumerate_configs
+    from .finalize import check_configs, resume_enumeration
     os.makedirs(out_dir, exist_ok=True)
     tag = ''.join(f'{c:02d}' for c in S)
 
@@ -266,10 +266,12 @@ def prove_pattern_by_configs(lexicon, S, threshold=1786,
                 log(f'      ...{seen[0]} configs so far '
                     f'({(time.time() - t0) / 60:.0f}m)', flush=True)
 
-    cfgs, complete = enumerate_configs(
-        lexicon, threshold=threshold, time_limit=enum_time_limit,
-        fix_placed=set(S), log=enum_log)
+    cfgs, complete, resumed = resume_enumeration(
+        lexicon, S, threshold=threshold, time_limit=enum_time_limit,
+        log=enum_log if seen else log)
     t_enum = time.time() - t0
+    if resumed:
+        log(f'    (resumed from {resumed} checkpointed configs)', flush=True)
     log(f'    enumerated {len(cfgs)} configs, complete={complete} '
         f'({t_enum:.0f}s)', flush=True)
     if not complete:

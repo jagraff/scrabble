@@ -18,6 +18,8 @@ the threshold in this geometry — closing the last open case.
 from __future__ import annotations
 
 import json
+import os
+import time as _time
 from collections import Counter
 
 from ortools.sat.python import cp_model
@@ -28,11 +30,137 @@ from . import tighten as T
 LETTERS = [chr(ord('A') + i) for i in range(26)]
 
 
+def _append_checkpoint(path, rec, seconds, complete=False):
+    """Append one line of enumeration progress.
+
+    Line-delimited JSON, appended and flushed per solve, so a kill at any
+    moment leaves a readable prefix -- a rewritten whole-file snapshot
+    could be truncated mid-write and lose everything."""
+    if path is None:
+        return
+    os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
+    entry = {'seconds': round(seconds, 2)}
+    if complete:
+        entry['complete'] = True
+    else:
+        entry['config'] = {'placed': list(rec['placed']),
+                           'crosses': {str(k): v
+                                       for k, v in rec['crosses'].items()},
+                           'relaxed_score': rec['relaxed_score']}
+    with open(path, 'a') as f:
+        f.write(json.dumps(entry) + '\n')
+        f.flush()
+
+
+def repair_checkpoint(path):
+    """Drop a trailing partial line so the next append starts cleanly.
+
+    Without this, appending after a torn write concatenates the new record
+    onto the broken one, producing a single unparseable line that swallows
+    *both* -- the torn record and a perfectly good one after it. Observed:
+    a 17-line file yielding 15 configurations. Returns True if it repaired
+    anything."""
+    if not path or not os.path.exists(path) or os.path.getsize(path) == 0:
+        return False
+    with open(path, 'rb') as f:
+        f.seek(-1, os.SEEK_END)
+        if f.read(1) == b'\n':
+            return False
+        f.seek(0)
+        data = f.read()
+    cut = data.rfind(b'\n')
+    with open(path, 'wb') as f:
+        f.write(data[:cut + 1] if cut >= 0 else b'')
+    return True
+
+
+def read_checkpoint(path):
+    """(configs, complete, timings, corrupt) from a checkpoint file.
+
+    `corrupt` is True if any line failed to parse. A caller must not
+    honour `complete` when it is set: a lost line could have been a
+    configuration, and returning a short list while claiming exhaustiveness
+    is the one failure mode that would make checkpointing worse than not
+    having it. Re-running the closing infeasibility proof is cheap
+    insurance against that."""
+    configs, complete, timings, corrupt = [], False, [], False
+    if not path or not os.path.exists(path):
+        return configs, complete, timings, corrupt
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                e = json.loads(line)
+            except json.JSONDecodeError:
+                corrupt = True
+                continue
+            timings.append(e.get('seconds', 0.0))
+            if e.get('complete'):
+                complete = True
+            elif 'config' in e:
+                c = e['config']
+                configs.append({'placed': tuple(c['placed']),
+                                'crosses': {int(k): v
+                                            for k, v in c['crosses'].items()},
+                                'relaxed_score': c['relaxed_score']})
+    return configs, complete, timings, corrupt
+
+
+def resume_enumeration(lexicon, S, threshold=1786, time_limit=900.0,
+                       checkpoint_dir='results/enum_ckpt', log=print,
+                       workers=1):
+    """Enumerate one pattern's configurations, resuming if interrupted.
+
+    Returns (configs, complete, resumed_from). Safe to call repeatedly:
+    if the checkpoint already records completion it does no solving at
+    all, and otherwise it pre-blocks what is already known so no work is
+    repeated."""
+    tag = ''.join(f'{c:02d}' for c in sorted(S))
+    path = f'{checkpoint_dir}/{tag}.jsonl'
+    if repair_checkpoint(path):
+        log('  repaired a torn final line in the checkpoint')
+    known, complete, timings, corrupt = read_checkpoint(path)
+    if complete and corrupt:
+        # a lost line may have been a configuration; re-run rather than
+        # return a short list that claims to be exhaustive
+        log('  checkpoint claims complete but has an unparseable line: '
+            're-verifying instead of trusting it')
+        complete = False
+    if complete:
+        log(f'  checkpoint complete: {len(known)} configs, no solving needed')
+        return known, True, len(known)
+    if known:
+        log(f'  resuming from {len(known)} checkpointed configs '
+            f'({sum(timings) / 60:.0f} min already spent)')
+    new, done = enumerate_configs(
+        lexicon, threshold=threshold, time_limit=time_limit,
+        fix_placed=set(S), known_configs=known, log=log,
+        checkpoint_path=path, workers=workers)
+    return known + new, done, len(known)
+
+
 def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
                       threshold=1786, time_limit=900.0, max_configs=100000,
-                      known_configs=(), log=print, fix_placed=None):
+                      known_configs=(), log=print, fix_placed=None,
+                      checkpoint_path=None, workers=1):
     """All (placed, crosses) configs with row-1-exact relaxed score
-    > threshold, for the all-TWs mask."""
+    > threshold, for the all-TWs mask.
+
+    `checkpoint_path` makes the loop killable. Each configuration is
+    appended to that file as it is found, together with the seconds the
+    solve took, and a terminal `complete` marker is written when the model
+    finally goes infeasible. Resuming means loading the file and passing
+    its configurations back as `known_configs`, which pre-blocks them so
+    the loop continues from where it stopped rather than rediscovering
+    them. `resume_enumeration` does both halves.
+
+    The per-solve timings exist to answer where the time goes: whether the
+    cost is spread over many solves or concentrated in the final
+    infeasibility proof. That determines which optimisation is worth
+    doing, and the loop was previously silent about it.
+    """
     # Build the same model as tighten_candidate(row1_exact=True) for
     # mask 7, but as a feasibility enumeration.  We reuse
     # tighten_candidate by monkey-scoping: simplest is to rebuild here
@@ -48,7 +176,19 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
     def block_and_collect(model, handles):
         solver = cp_model.CpSolver()
         solver.parameters.max_time_in_seconds = time_limit
-        solver.parameters.num_search_workers = 8
+        # One worker, deliberately.  Measured on pattern (0,2,3,7,11,13,14),
+        # four seeds each: median 14.6s at 1 worker against 24.2s at 8 and
+        # 30.1s at 4 -- single-threaded is faster in absolute terms, not
+        # merely cheaper, and its spread is far tighter (13.7-17.4 against
+        # 18.2-36.9).  CP-SAT's portfolio does not help this model, so the
+        # extra workers duplicate effort and pay coordination cost.
+        # Parallelism belongs at the pattern level instead: eight
+        # single-worker patterns on eight cores is ~13x the throughput of
+        # one eight-worker pattern.  The enumeration loop within a pattern
+        # is inherently sequential -- each solve depends on the blocking
+        # clauses added by the previous one -- so this is the only axis
+        # available.
+        solver.parameters.num_search_workers = workers
         placed, x, opt_lists, has_cross, total = handles
 
         def add_block(placed_cols, crosses):
@@ -74,8 +214,12 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
             log(f'  pre-blocked {len(known_configs)} known configs')
 
         while len(configs) < max_configs:
+            _t0 = _time.time()
             status = solver.Solve(model)
+            _dt = _time.time() - _t0
             if status == cp_model.INFEASIBLE:
+                # the closing solve: its cost is the infeasibility proof
+                _append_checkpoint(checkpoint_path, None, _dt, complete=True)
                 return True
             if status not in (cp_model.OPTIMAL, cp_model.FEASIBLE):
                 log(f'  enumeration solver stalled: '
@@ -88,8 +232,10 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
             placed_cols = tuple(c for c in range(N)
                                 if solver.Value(placed[c]))
             val = solver.Value(total)
-            configs.append({'placed': placed_cols, 'crosses': chosen,
-                            'relaxed_score': val})
+            rec = {'placed': placed_cols, 'crosses': chosen,
+                   'relaxed_score': val}
+            configs.append(rec)
+            _append_checkpoint(checkpoint_path, rec, _dt)
             log(f"  config #{len(configs)}: {val} placed={placed_cols} "
                 f"{chosen}", flush=True)
             # blocking clause: differ in some chosen x, some cross-less
