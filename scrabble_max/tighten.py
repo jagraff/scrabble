@@ -181,7 +181,8 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
                       opts_cache=None, adj_pairs=None, log=print,
                       row1_exact=False, dawg=None, mask_filter=None,
                       pairwise_all_rows=False, enumerate_above=None,
-                      enumerate_cb=None, fix_placed=None, max_placed=None):
+                      enumerate_cb=None, fix_placed=None, max_placed=None,
+                      blank_penalty=False):
     """Return ((bound, detail), per_mask) for a full-row edge play.
 
     row1_exact adds the exact model of the next row inward: every tile in
@@ -422,6 +423,39 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
             terms.append(score * v)
         for ch in LETTERS:
             terms.append(-VALUES[ch] * bs[ch])
+
+        if blank_penalty:
+            # The charge above is face value, which under-states what a
+            # blank really forfeits.  A blank standing in for `ch` costs:
+            #   * face value, if some copy of `ch` sits in a cross-word
+            #     remainder in a NON-word-multiplier column;
+            #   * three times face, if every copy sits in a TW column;
+            #   * value x letter-mult x 27, if it must go in the main word.
+            # So `2 * VALUES[ch]` extra per blank is a valid *lower* bound
+            # on the shortfall whenever no cheap cell exists, and zero
+            # otherwise.  Subtracting a lower bound on a loss keeps the
+            # objective an upper bound on the true score (Lemma 1).
+            #
+            # Deliberately conservative in two places: it charges 2x even
+            # when the blank would land in the main word and cost ~27x, and
+            # it charges nothing when a single cheap cell exists even if a
+            # second blank for the same letter must go somewhere dearer.
+            # Both under-charge, so both stay sound.
+            for ch in LETTERS:
+                cheap_lits = [x[(c, oi)]
+                              for c in range(N) if c not in T
+                              for oi in range(len(opt_lists.get(c, [])))
+                              if opt_lists[c][oi][2].get(ch, 0) > 0]
+                gap = model.NewIntVar(0, 4 * VALUES[ch], f'blankgap_{ch}')
+                if cheap_lits:
+                    cheap = model.NewBoolVar(f'cheapcell_{ch}')
+                    model.AddMaxEquality(cheap, cheap_lits)
+                    # bs[ch] <= 2, so 4*V dominates 2*V*bs[ch]
+                    model.Add(gap >= 2 * VALUES[ch] * bs[ch]
+                              - 4 * VALUES[ch] * cheap)
+                else:
+                    model.Add(gap >= 2 * VALUES[ch] * bs[ch])
+                terms.append(-gap)
 
         if enumerate_above is not None:
             # feasibility enumeration mode: hand the model to the caller
