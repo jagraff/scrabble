@@ -1,0 +1,13 @@
+{
+ "git_commit": "abb16c1a1af76738d00e914d44d796b4868cef4f",
+ "git_dirty": true,
+ "python": "3.12.3",
+ "platform": "Darwin/arm64",
+ "ortools": "9.15.6755",
+ "pythonhashseed": "0",
+ "lexicon": {
+  "path": "data/NWL2023.txt",
+  "sha256": "7ced912101628ad7f80a38553fa79a5e6c2a163dd871d7251ca4cef10b12b97f",
+  "words": 196601
+ }
+}

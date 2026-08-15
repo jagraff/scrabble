@@ -65,28 +65,32 @@
     1,
     3,
     7,
-    10,
+    9,
     11,
     14
    ],
    "crosses": {
     "0": "OPACIFICATIONS",
     "1": "XEROSES",
-    "3": "PREQUALIFYING",
-    "7": "BRANCHLIKE",
-    "10": "AMELIORATIVE",
-    "11": "ZOOGAMETES",
-    "14": "EJACULATING"
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
    },
    "blanks(bs,bu)": {
     "C": [
-     2,
+     1,
      0
+    ],
+    "H": [
+     0,
+     1
     ]
    },
    "bingo": true,
    "proved_optimal": true,
-   "row1": "PEER.TURR.MOD.J"
+   "row1": "PEER.HARDWOOD.V"
   },
   "row1_exact_per_mask": {
    "7": 1794.0
@@ -180,8 +184,8 @@
    "crosses": {
     "0": "PREMANUFACTURED",
     "1": "SEXPLOITATION",
-    "3": "CHEWABLE",
-    "6": "AWAKENING",
+    "3": "CHARKING",
+    "6": "ABRIDGEABLE",
     "7": "NETIQUETTES",
     "10": "YOURSELF",
     "14": "GIZZARDS"
@@ -274,20 +278,20 @@
    "WM": 27,
    "placed": [
     0,
+    1,
     3,
     7,
     8,
     11,
-    13,
     14
    ],
    "crosses": {
     "0": "VENTRILOQUIZED",
-    "3": "PERAMBULATORY",
+    "1": "PROFESSORIATE",
+    "3": "BOOKBINDERY",
     "7": "CONJUNCTIVAL",
     "8": "EXPRESSO",
     "11": "WAREZ",
-    "13": "FOREKNOWN",
     "14": "HIGHFALUTING"
    },
    "blanks(bs,bu)": {
@@ -595,11 +599,11 @@
    ],
    "crosses": {
     "0": "EXTEMPORIZER",
-    "3": "EQUILIBRATORY",
+    "3": "BOOKBINDERY",
     "7": "CONJUNCTIVAL",
     "9": "AUTOLYSING",
-    "11": "WAREZ",
-    "13": "FOREKNOWN",
+    "11": "QUARTZ",
+    "13": "WIREDRAWN",
     "14": "HIGHFALUTING"
    },
    "blanks(bs,bu)": {
@@ -649,8 +653,8 @@
    ],
    "crosses": {
     "0": "HARQUEBUSES",
-    "1": "YAWNING",
-    "2": "PREINTERVIEWED",
+    "1": "YAFF",
+    "2": "PREINTERVIEWING",
     "3": "EJACULATING",
     "7": "METHOXYL",
     "11": "ZOOSPORIC",
@@ -748,7 +752,7 @@
     14
    ],
    "crosses": {
-    "0": "REJECTABLE",
+    "0": "REJECTIVE",
     "3": "YATAGHAN",
     "5": "HARQUEBUSES",
     "7": "LIONIZATIONS",
@@ -797,17 +801,17 @@
     1,
     3,
     7,
-    9,
     11,
+    13,
     14
    ],
    "crosses": {
     "0": "DJELLABAH",
-    "1": "VINDICATORY",
+    "1": "INVESTIGATORY",
     "3": "PYRIDOXINE",
     "7": "BUCKRAM",
-    "9": "OVERFLOWN",
     "11": "QUARTZ",
+    "13": "OVERFLOWN",
     "14": "HIGHFALUTING"
    },
    "blanks(bs,bu)": {
@@ -853,10 +857,10 @@
    ],
    "crosses": {
     "0": "DENUMERABILITY",
-    "2": "CROQUETING",
+    "2": "CROQUETED",
     "3": "HARUSPEX",
     "7": "OPACIFICATIONS",
-    "8": "BRAINWASHED",
+    "8": "BRAINWASHING",
     "11": "ZOOGAMETES",
     "14": "EVOCATIVELY"
    },
@@ -897,21 +901,21 @@
     2,
     6,
     7,
-    8,
+    9,
     11,
     14
    ],
    "crosses": {
-    "0": "OPACIFYING",
-    "2": "EQUALITIES",
-    "6": "PREINTERVIEWED",
+    "0": "OPACIFICATIONS",
+    "2": "EVAGINATED",
+    "6": "PREQUALIFIED",
     "7": "HEXARCHY",
-    "8": "AWAKENED",
-    "11": "ZOOGAMETES",
-    "14": "GIZZARDS"
+    "9": "SLOWDOWN",
+    "11": "ZUKES",
+    "14": "GASTRONOMICALLY"
    },
    "blanks(bs,bu)": {
-    "Z": [
+    "C": [
      2,
      0
     ]

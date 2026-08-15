@@ -56,12 +56,28 @@ LETTERS = [ch for ch in DISTRIBUTION if ch != '?']
 
 
 def cross_options(lexicon, letter: str, row: int):
-    """Deduplicated cross-word options for a hook tile `letter` at an edge
-    row, honouring hook validity (remainder must be a word when len >= 3).
+    """Cross-word options for a hook tile `letter` at an edge row,
+    honouring hook validity (remainder must be a word when len >= 3).
 
     Returns list of (raw_rest, rest_len, rest_counts_dict, example_word,
     inward_letter) where inward_letter is the cross word's letter in the
-    next row inward (row 1 resp. row 13)."""
+    next row inward (row 1 resp. row 13).
+
+    Keyed by the *ordered* remainder, i.e. one option per valid cross
+    word.  An earlier version keyed by the remainder's letter multiset,
+    which was unsound: callers inspect the retained representative's
+    ordered letters (`rest_letter_at_depth` for the adjacency
+    constraints, `o[4]` for the row-1 inward letter), so collapsing
+    anagrams silently deleted legal cross-word choices from the
+    relaxation.  YARE and YEAR are both valid Y-hooks with remainder
+    multiset {A,E,R} but inward letters A and E; dropping either breaks
+    the "every legal play satisfies these constraints" property that
+    Lemma 1 depends on.  Hook validity already prunes anagrams heavily,
+    so keying on the full remainder costs only ~3% more options.
+
+    Sorted by (-raw_rest, rest), not -raw_rest alone: `lexicon` is a
+    frozenset, so ties broken by iteration order would make the emitted
+    model depend on PYTHONHASHSEED."""
     assert row in (0, N - 1)
     seen = {}
     for w in lexicon:
@@ -76,11 +92,10 @@ def cross_options(lexicon, letter: str, row: int):
             continue  # remainder would be an invalid pre-move run
         inward = rest[0] if row == 0 else rest[-1]
         counts = Counter(rest)
-        key = frozenset(counts.items())
         raw_rest = sum(VALUES[ch] for ch in rest)
-        if key not in seen or seen[key][0] < raw_rest:
-            seen[key] = (raw_rest, m - 1, dict(counts), w, inward)
-    return sorted(seen.values(), key=lambda t: -t[0])
+        seen[rest] = (raw_rest, m - 1, dict(counts), w, inward)
+    return [v for _, v in sorted(seen.items(),
+                                 key=lambda kv: (-kv[1][0], kv[0]))]
 
 
 def adjacent_pairs(lexicon) -> set[tuple[str, str]]:
@@ -117,7 +132,13 @@ def build_line_dawg(lexicon):
     # legal maximal run when supported perpendicularly)
     trie = {}
     END = '$'
-    words = [w for w in lexicon if 2 <= len(w) <= N]
+    # sorted: `lexicon` is a frozenset, and trie insertion order decides
+    # the order `intern` allocates state ids.  The minimal DAWG is
+    # canonical up to renaming, so an unsorted build stays *correct* but
+    # emits a differently-numbered automaton — and hence a different
+    # CP-SAT model — on every PYTHONHASHSEED, which makes
+    # timeout-derived bounds irreproducible.
+    words = sorted(w for w in lexicon if 2 <= len(w) <= N)
     words += [chr(ord('A') + i) for i in range(26)]
     for w in words:
         t = trie
@@ -284,9 +305,11 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
             e = [model.NewIntVar(0, 26, f'e{c}') for c in range(N)]
             nz, sup, eq = [], [], {}
             for c in range(N):
-                inw = {o[4] for o in opt_lists[c]}
-                sec = second[word[c]]
-                allowed = sorted({0} | {code(a) for a in inw | sec})
+                # sorted, not raw set iteration: variable creation order
+                # would otherwise depend on PYTHONHASHSEED
+                inw = sorted({o[4] for o in opt_lists[c]})
+                sec = sorted(second[word[c]])
+                allowed = sorted({0} | {code(a) for a in set(inw) | set(sec)})
                 model.AddAllowedAssignments([e[c]],
                                             [(v,) for v in allowed])
                 # cross columns: e fixed to the chosen option's inward letter
@@ -458,9 +481,52 @@ def main():
     ap.add_argument('--out', default='results/tight_bounds.json')
     ap.add_argument('--time-limit', type=float, default=300.0)
     ap.add_argument('--threshold', type=int, default=1786)
+    ap.add_argument('--max-placed', type=int, default=None,
+                    help='cap |S|.  --max-placed 6 forces the bingo '
+                         'variable to 0 and produces the bound behind '
+                         'Theorem 3 (results/bound_six_tiles.json).')
+    ap.add_argument('--word', default=None,
+                    help='comma-separated words to restrict to, e.g. '
+                         'OXYPHENBUTAZONE')
+    ap.add_argument('--six-tiles', action='store_true',
+                    help="regenerate results/bound_six_tiles.json: the "
+                         "|S| <= 6 optimum for OXYPHENBUTAZONE on both "
+                         "edge rows, which is what forces Theorem 3's "
+                         "'exactly 7 tiles'.  Writes that file's own "
+                         "schema rather than the --out list format.")
     args = ap.parse_args()
+    from .provenance import write as write_provenance
+    prov = write_provenance()
+    print(f"provenance: commit {prov['git_commit']} "
+          f"ortools {prov['ortools']} seed {prov['pythonhashseed']} "
+          f"lexicon {prov['lexicon']['sha256'][:12]}", flush=True)
     lex = load()
+
+    if args.six_tiles:
+        # Theorem 3: with |S| <= 6 the bingo variable is forced to 0.  Both
+        # optima must come out below 1786 for "places exactly 7 tiles".
+        word, out = 'OXYPHENBUTAZONE', 'results/bound_six_tiles.json'
+        opts_cache, adj = {}, adjacent_pairs(lex)
+        payload = {}
+        for r in (0, N - 1):
+            t1 = time.time()
+            (b, _), pm = tighten_candidate(
+                lex, word, r, opts_cache=opts_cache, adj_pairs=adj,
+                time_limit=args.time_limit, max_placed=6)
+            payload[f'row{r}_max6'] = b
+            payload[f'row{r}_max6_per_mask'] = pm
+            print(f'{word} row={r} |S|<=6: {b:.0f}  '
+                  f'({time.time() - t1:.1f}s)', flush=True)
+        with open(out, 'w') as f:
+            json.dump(payload, f, indent=1, default=str)
+        print(f'-> {out}')
+        return
+
     cands = json.load(open(args.candidates))['candidates']
+    if args.word:
+        want = {w.upper() for w in args.word.split(',')}
+        cands = [c for c in cands if c['word'] in want]
+        assert cands, f'no candidate matches {sorted(want)}'
     opts_cache = {}
     adj = adjacent_pairs(lex)
     dawg = None
@@ -471,7 +537,7 @@ def main():
         t1 = time.time()
         (bound, detail), per_mask = tighten_candidate(
             lex, w, r, opts_cache=opts_cache, adj_pairs=adj,
-            time_limit=args.time_limit)
+            time_limit=args.time_limit, max_placed=args.max_placed)
         entry = {'word': w, 'row': r, 'relaxed_max': cand['relaxed_max'],
                  'tight_bound': bound, 'per_mask': per_mask,
                  'detail': detail}
@@ -487,7 +553,8 @@ def main():
             (b2, d2), pm2 = tighten_candidate(
                 lex, w, r, opts_cache=opts_cache, adj_pairs=adj,
                 time_limit=args.time_limit * 4, row1_exact=True,
-                dawg=dawg, mask_filter=live_masks, pairwise_all_rows=True)
+                dawg=dawg, mask_filter=live_masks, pairwise_all_rows=True,
+                max_placed=args.max_placed)
             print(f"  row1-exact: {bound:.0f} -> {b2:.0f} "
                   f"({time.time()-t2:.1f}s)", flush=True)
             entry['row1_exact_bound'] = b2
