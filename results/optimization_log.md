@@ -9,7 +9,7 @@ pattern `(0,2,3,7,11,13,14)` unless stated, PYTHONHASHSEED=0.
 |---|---|
 | `num_search_workers=1` | median solve 14.6s vs 24.2s at 8 workers, and a tighter spread (13.7–17.4 vs 18.2–36.9). One thread is faster in wall-clock, not merely cheaper. Complete enumeration 274s vs 415s at 8 workers. |
 | pattern-level parallelism | enumeration within a pattern is sequential (each solve depends on the previous blocking clause), so the only axis is running patterns concurrently: ~8× on 8 cores. |
-| in-model blank penalty | 4 of 14 patterns die at tier 2 outright; the rest keep lower ceilings. Per-solve cost rises ~17%. ~~It pays where the configuration count falls a lot — the expensive patterns (824 → ~43).~~ **That parenthesis was a misattribution; see "Two different blank savings" below.** |
+| in-model blank penalty | 4 of 14 patterns die at tier 2 outright; the rest keep lower ceilings. Per-solve cost rises ~17%. It pays where the configuration count falls a lot — the expensive patterns (824 → 43). The 824 → 43 figure is **correct for the in-model penalty**; see "Two different blank savings" below for what was genuinely wrong. |
 | lean blocking clauses | under `fix_placed` the 15 `placed` literals and the unplaced `has_cross` literals are fixed constants that can never satisfy the clause: ~30 dead literals per clause, ~24,000 over an 800-configuration run. |
 
 ## Rejected, with the measurement
@@ -45,6 +45,24 @@ nobody asked *which* C++ phase, and the phase that was over half the cost
 was one the loop was repeating unnecessarily.
 
 ## Round 3
+
+Every change below only *removes* things the model has already forced, so
+each is sound by construction. That is an argument, and arguments of that
+shape have been wrong in this project before, so they were also measured
+against known-good outputs:
+
+* **All 28 tier-2 bounds re-derived — 14 patterns x both charging modes —
+  against `results/blank_penalty_tier2.json`: 0 mismatches.** Tier 2 runs
+  under `fix_placed` too, so it exercises both the column pruning and the
+  automaton trim on 14 independent instances. A change to the feasible set
+  would move a bound.
+* A complete enumeration of (0,2,3,7,11,13,14) pruned and unpruned emitted
+  the **identical 14 configurations**, both terminating in INFEASIBLE.
+* `tests/test_dawg_trim.py` drives the full and trimmed automata over
+  thousands of alphabet-respecting rows, including row 1 of the 1,786
+  board, and requires the same verdict. It also guards against its own
+  vacuity: the first version of that sample contained only *accepted*
+  rows, so the agreement test compared nothing but `True`s.
 
 | change | effect |
 |---|---|
@@ -114,21 +132,46 @@ every configuration the model might build, so it charges a conservative
 `2 x value` per blank and nothing at all when one cheap cell exists. It
 shrinks what the enumeration *emits*.
 
-The two were merged into one claim, and the enumeration was credited with
-the refutation phase's 95%. Measured, on the one pattern where both
-numbers exist:
+The two were merged into one claim, and the same "95%" was quoted for
+both. They are not the same number.
 
-| pattern | archived configs | post-hoc filter kills | in-model penalty kills |
+The counts are settled, not estimated. `charge_penalty <= exact_loss`
+always — with a cheap non-TW cell the in-model charge is face value and so
+is the exact loss; with none it is `3 x value` against an exact loss of
+`3 x value` or `27 x value` — so the in-model survivors strictly contain
+the post-hoc survivors, and both are subsets of the archived lists.
+Counting over those lists is therefore exact arithmetic, no solving
+(computed in the other session, via `config_ceiling`):
+
+| pattern | archived | in-model (enumerated) | post-hoc (need tableau) |
 |---|---:|---:|---:|
-| (0,2,3,7,11,13,14) | 16 | 2 | 2 (16 → 14, measured) |
+| (0,1,2,3,7,11,14) | 396 | 95 | 11 |
+| (0,1,3,4,7,11,14) | 584 | 165 | 56 |
+| (0,1,3,7,8,11,14) | 9 | 0 | 0 |
+| (0,1,3,7,11,13,14) | 21 | 5 | 5 |
+| (0,2,3,4,7,11,14) | 26 | 0 | 0 |
+| (0,2,3,7,8,11,14) | 27 | 0 | 0 |
+| (0,2,3,7,9,11,14) | **824** | **43** | 6 |
+| (0,2,3,7,11,13,14) | 16 | 14 | 14 |
+| **total** | **1903** | **322** | **92** |
 
-On this pattern the two agree exactly. Whether they still agree on the
-824-configuration pattern — where the post-hoc filter kills 818 of 824 —
-is **unmeasured**, and the enumeration's cost for that pattern swings by
-two orders of magnitude on the answer (6 solves or 824). It should be
-measured, not assumed, and the partitioned enumerator is the way to
-measure it.
+So `824 -> 43` was right for the enumeration all along, and the error was
+only in equating it with the refutation phase's 95%, which gives 6 on that
+pattern. The two agree on the five small patterns and diverge on the three
+large ones — precisely where the cost is.
 
-Consequence to state plainly: any estimate of the remaining run that
-assumed the enumeration emits ~43 configurations for that pattern was
-resting on this conflation.
+Independent cross-check: the in-model column predicts 14 for
+(0,2,3,7,11,13,14), and a complete enumeration of that pattern run here
+emitted exactly 14. The prediction and the measurement were made
+separately.
+
+**I had this backwards for a while.** Told that the 95% belonged to the
+post-hoc filter, I concluded the enumeration therefore still emits all 824
+and that the cost "swings two orders of magnitude". Both wrong: the
+in-model count is determined, and it is 43. The conflation was real; the
+consequence I drew from it was not.
+
+Standing caveat: the counts are exact *given* the archived lists are the
+true enumerations, and those lists predate the `cross_options` dedup fix.
+Re-deriving them is exactly what the tier-3 re-run is for, so 43 is a
+well-founded expectation rather than a proved figure.

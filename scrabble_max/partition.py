@@ -52,6 +52,24 @@ from .rules import N
 WORD = 'OXYPHENBUTAZONE'
 
 
+def _check_passthrough():
+    """Fail early and legibly if `enumerate_configs` cannot take a cell.
+
+    Without this the first failure is a TypeError raised inside a
+    ProcessPoolExecutor worker, surfacing as an opaque BrokenProcessPool
+    or a traceback with no obvious connection to the missing argument."""
+    import inspect
+
+    from .finalize import enumerate_configs
+    params = inspect.signature(enumerate_configs).parameters
+    missing = [p for p in ('partition', 'prune_unplaced') if p not in params]
+    if missing:
+        raise RuntimeError(
+            f'finalize.enumerate_configs is missing {missing}; partitioned '
+            f'enumeration needs those arguments passed through to '
+            f'tighten_candidate')
+
+
 def choose_pivot(lexicon, S, word=WORD):
     """The placed column with the most cross options.
 
@@ -150,6 +168,7 @@ def enumerate_pattern(S, n_blocks=24, threshold=1786, max_workers=4,
     Returns (configs, complete). `complete` is True only if every cell
     finished -- a single unfinished cell means the enumeration is not
     exhaustive and no completeness claim may be made from it."""
+    _check_passthrough()
     lexicon = load()
     pivot, n_options = choose_pivot(lexicon, S)
     cells = make_cells(n_options, n_blocks)
