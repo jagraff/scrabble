@@ -152,7 +152,24 @@ bounds (`results/tight_bounds.json`):
 | NEPHRECTOMIZING | 0 | 1642 |
 | *(9 more, all ≤ 1639)* | | |
 
-Exactly one entry exceeds 1,786. The largest of the rest is 1,778. ∎
+Exactly one entry exceeds 1,786. The largest of the rest is 1,778.
+
+**The candidates that were never tightened.** The 17 are exactly those
+whose *stage-A* bound exceeds 1,786; the others were dropped at stage A
+and never passed to stage B, so for them we hold only the stage-A bound.
+For the theorem as stated we need those bounds to be at most 1,778 too —
+otherwise a candidate bounded at, say, 1,780 would be unaccounted for.
+Ranking every candidate by stage-A bound (`results/stage_a_ranking.json`):
+
+| rank | word | row | stage-A bound |
+|---:|---|---:|---:|
+| 17 | OVEREMPHASIZING | 0 | 1789 |
+| **18** | **PROVINCIALIZING** | **0** | **1777** |
+| 19 | COMMERCIALIZING | 0 | 1772 |
+
+The 18th-largest is **1,777 ≤ 1,778**, and stage-A bounds are valid upper
+bounds by Lemma 1, so every untightened candidate is also at most 1,778.
+Combining: `max(1778, 1777) = 1778`. ∎
 
 > **Corollary 2.1 (the main result so far).** *The record play's own
 > geometry is the only one in the game that can beat it.* Any play
@@ -243,17 +260,26 @@ pattern is kept. **14** survive, with these ceilings
 
 The maximum ceiling is 1,794. ∎
 
-**Two independent confirmations.**
+**Two checks on the list** (neither is an independent proof of the
+count).
 
-1. An earlier, abandoned approach enumerated *(placed set, cross-word
-   assignment)* configurations globally, without ever quantifying over
-   placed sets. In 21 hours it produced 1,300 configurations — and they
-   span **exactly these 14 placed sets**, no more and no fewer
-   (`tests/test_patterns.py`). Two unrelated procedures agreeing on the
-   set is strong evidence against an error in either.
-2. The list contains `(0, 1, 3, 6, 7, 11, 14)`, the placed set of the
-   record play itself. It must, since that play scores 1,786; a filter
-   that dropped it would be unsound. This is asserted as a test.
+1. *Consistency check.* An earlier, abandoned approach enumerated
+   *(placed set, cross-word assignment)* configurations globally, without
+   quantifying over placed sets. In 21 hours it produced 1,300
+   configurations, and every one lies in these 14 placed sets
+   (`tests/test_patterns.py`). This is evidence the 14 are not *too few*
+   in the region that run explored — but it is **not** an independent
+   verification that there are only 14, because that run never
+   terminated. It sampled; it did not exhaust. Had it run to completion
+   it would have been an independent derivation; it did not, so it is a
+   sanity check and nothing stronger.
+2. *Soundness check.* The list contains `(0, 1, 3, 6, 7, 11, 14)`, the
+   placed set of the record play itself. It must, since that play scores
+   1,786 and any sound filter must retain it; a filter that dropped it
+   would be provably wrong. Asserted as a test.
+
+The exhaustiveness of the 14 rests on tiers 1 and 2 alone: 495 patterns
+enumerated combinatorially, each eliminated only on a proven upper bound.
 
 ---
 
@@ -276,22 +302,40 @@ fixing its grid to this board and recovering objective exactly 1,786.
 
 ---
 
-## 7. Theorem 6 — reachability **(complete)**
+## 7. Theorem 6 — constructibility by legal board moves **(complete, and weaker than "reachable in a game")**
 
 > **Theorem 6.** The pre-move position of the record is reachable by a
-> legal game: there is a 25-move sequence from the empty board to it,
-> every move legal and every intermediate position valid.
+> sequence of 25 **legal board moves** from the empty board: each move
+> places between 1 and 7 tiles in a single line, contiguous and connected
+> as the rules require, and every intermediate position is valid. The
+> cumulative tile usage is consistent with the official tile set.
 
-*Proof.* By exhibition. A backwards "unplay" search
-(`reachability.py`) removes one move at a time while maintaining the
-invariant that the remaining position is valid and connected, terminating
-at the empty board; the resulting forward sequence is then replayed move
-by move through `apply_move`, which accepts every one
-(`results/reachability.log`). ∎
+*Proof.* By exhibition. A backwards "unplay" search (`reachability.py`)
+removes one move at a time while maintaining the invariant that the
+remaining position is valid and connected, terminating at the empty
+board; the forward sequence is then replayed through `apply_move`, which
+accepts every move (`results/reachability.log`).
 
-This matters because the published construction is a *static* board. That
-a position can be built by hand does not imply any legal game reaches it,
-and the two questions come apart in general. Here they do not.
+Tile accounting over the 25 moves plus the final 1,786 play: 95 lettered
+tiles and both blanks, **97 of 100**, with **no letter exceeding its
+distribution** and at most 7 tiles per move. ∎
+
+**What this does not establish.** It is *not* proved that the sequence
+arises in a game with legal rack and bag mechanics. `reachability.py`
+treats draws as unconstrained — its docstring says so explicitly — and
+models no bag, no per-player racks, and no alternation. A full result
+would have to exhibit an assignment of the 25 moves to two alternating
+players together with a bag ordering such that each player holds the
+tiles they play in a rack of at most 7 at the moment they play them.
+The tile accounting above is a *necessary* condition for that and it
+passes, but it is not sufficient.
+
+So the honest statement is **constructibility by legal board moves**, not
+reachability in a legal game. The distinction is worth keeping: the
+published construction is a static board, and neither "buildable by legal
+moves" nor "arises in a real game" follows from the other automatically.
+Closing the gap is tractable — it is a scheduling problem over a known
+move sequence — and is listed as open in §8.
 
 ---
 
@@ -324,6 +368,11 @@ anywhere.
 
 Six patterns are open: the two at ceiling 1,794, the three at 1,792, and
 one at 1,791. Two are being worked now.
+
+Also open, and independent of the above: **rack and bag feasibility** for
+the 25-move sequence of §7 (assign the moves to two alternating players
+and exhibit a bag ordering supplying each rack), which would upgrade
+Theorem 6 from constructibility to reachability in a legal game.
 
 **No useful bound on the remaining time can be given.** The number of
 configurations per pattern is boundable exactly — it is a count over

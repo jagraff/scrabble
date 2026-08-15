@@ -1,0 +1,242 @@
+{
+ "threshold": 1700,
+ "count": 47,
+ "note": "ranked stage-A relaxed bounds; entries 1-17 exceed 1786 and are tightened at stage B; entry 18 is the largest bound among all candidates never tightened",
+ "candidates": [
+  {
+   "word": "OXYPHENBUTAZONE",
+   "row": 0,
+   "stage_a_bound": 2000
+  },
+  {
+   "word": "OXYPHENBUTAZONE",
+   "row": 14,
+   "stage_a_bound": 1935
+  },
+  {
+   "word": "PSYCHOANALYZING",
+   "row": 0,
+   "stage_a_bound": 1911
+  },
+  {
+   "word": "PSYCHOANALYZING",
+   "row": 14,
+   "stage_a_bound": 1897
+  },
+  {
+   "word": "DEMYTHOLOGIZING",
+   "row": 14,
+   "stage_a_bound": 1860
+  },
+  {
+   "word": "DEMYTHOLOGIZING",
+   "row": 0,
+   "stage_a_bound": 1845
+  },
+  {
+   "word": "DEMYTHOLOGIZERS",
+   "row": 14,
+   "stage_a_bound": 1839
+  },
+  {
+   "word": "DEMYTHOLOGIZERS",
+   "row": 0,
+   "stage_a_bound": 1836
+  },
+  {
+   "word": "NEPHRECTOMIZING",
+   "row": 14,
+   "stage_a_bound": 1836
+  },
+  {
+   "word": "VENTRILOQUIZING",
+   "row": 0,
+   "stage_a_bound": 1834
+  },
+  {
+   "word": "REMYTHOLOGIZING",
+   "row": 14,
+   "stage_a_bound": 1830
+  },
+  {
+   "word": "HYPERIMMUNIZING",
+   "row": 0,
+   "stage_a_bound": 1825
+  },
+  {
+   "word": "NEPHRECTOMIZING",
+   "row": 0,
+   "stage_a_bound": 1824
+  },
+  {
+   "word": "REMYTHOLOGIZING",
+   "row": 0,
+   "stage_a_bound": 1815
+  },
+  {
+   "word": "HYPERIMMUNIZING",
+   "row": 14,
+   "stage_a_bound": 1807
+  },
+  {
+   "word": "DICHLOROBENZENE",
+   "row": 0,
+   "stage_a_bound": 1790
+  },
+  {
+   "word": "OVEREMPHASIZING",
+   "row": 0,
+   "stage_a_bound": 1789
+  },
+  {
+   "word": "PROVINCIALIZING",
+   "row": 0,
+   "stage_a_bound": 1777
+  },
+  {
+   "word": "COMMERCIALIZING",
+   "row": 0,
+   "stage_a_bound": 1772
+  },
+  {
+   "word": "HYPERPOLARIZING",
+   "row": 0,
+   "stage_a_bound": 1770
+  },
+  {
+   "word": "COMPLEMENTIZERS",
+   "row": 0,
+   "stage_a_bound": 1764
+  },
+  {
+   "word": "COMPLEMENTIZERS",
+   "row": 14,
+   "stage_a_bound": 1764
+  },
+  {
+   "word": "DICHLOROBENZENE",
+   "row": 14,
+   "stage_a_bound": 1758
+  },
+  {
+   "word": "HYPERPOLARIZING",
+   "row": 14,
+   "stage_a_bound": 1758
+  },
+  {
+   "word": "VENTRILOQUIZING",
+   "row": 14,
+   "stage_a_bound": 1756
+  },
+  {
+   "word": "COMMERCIALIZING",
+   "row": 14,
+   "stage_a_bound": 1746
+  },
+  {
+   "word": "ARCHAEOLOGIZING",
+   "row": 0,
+   "stage_a_bound": 1740
+  },
+  {
+   "word": "HYPOSENSITIZING",
+   "row": 0,
+   "stage_a_bound": 1739
+  },
+  {
+   "word": "CONTEXTUALIZING",
+   "row": 0,
+   "stage_a_bound": 1736
+  },
+  {
+   "word": "MICROTECHNIQUES",
+   "row": 0,
+   "stage_a_bound": 1735
+  },
+  {
+   "word": "OVEREMPHASIZING",
+   "row": 14,
+   "stage_a_bound": 1733
+  },
+  {
+   "word": "ARCHAEOLOGIZING",
+   "row": 14,
+   "stage_a_bound": 1731
+  },
+  {
+   "word": "EPIGRAMMATIZING",
+   "row": 14,
+   "stage_a_bound": 1725
+  },
+  {
+   "word": "RESYSTEMATIZING",
+   "row": 14,
+   "stage_a_bound": 1719
+  },
+  {
+   "word": "PROVINCIALIZING",
+   "row": 14,
+   "stage_a_bound": 1716
+  },
+  {
+   "word": "CONCEPTUALIZING",
+   "row": 0,
+   "stage_a_bound": 1714
+  },
+  {
+   "word": "REACCLIMATIZING",
+   "row": 14,
+   "stage_a_bound": 1713
+  },
+  {
+   "word": "SUBCATEGORIZING",
+   "row": 14,
+   "stage_a_bound": 1713
+  },
+  {
+   "word": "RESYSTEMATIZING",
+   "row": 0,
+   "stage_a_bound": 1711
+  },
+  {
+   "word": "EPIGRAMMATIZING",
+   "row": 0,
+   "stage_a_bound": 1708
+  },
+  {
+   "word": "HYPOSENSITIZING",
+   "row": 14,
+   "stage_a_bound": 1708
+  },
+  {
+   "word": "REACCLIMATIZING",
+   "row": 0,
+   "stage_a_bound": 1708
+  },
+  {
+   "word": "MICROTECHNIQUES",
+   "row": 14,
+   "stage_a_bound": 1707
+  },
+  {
+   "word": "ORTHOGONALIZING",
+   "row": 0,
+   "stage_a_bound": 1707
+  },
+  {
+   "word": "CONCEPTUALIZERS",
+   "row": 0,
+   "stage_a_bound": 1705
+  },
+  {
+   "word": "EPIGRAMMATIZERS",
+   "row": 14,
+   "stage_a_bound": 1704
+  },
+  {
+   "word": "CONTEXTUALIZING",
+   "row": 14,
+   "stage_a_bound": 1702
+  }
+ ]
+}
