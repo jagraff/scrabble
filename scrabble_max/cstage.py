@@ -44,7 +44,7 @@ def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
                   time_limit=3600.0, hint_grid=None, hint_placed=None,
                   min_score=None, known_upper=None, fix_hint=False,
                   fix_placed_exact=None, fix_crosses=None,
-                  fixed_blank_loss=None, fix_cells=None,
+                  fixed_blank_loss=None, fix_cells=None, build_only=False,
                   log=print, verbose=True):
     """Maximize the score of playing `word` on row 0 with the given TW
     cells placed.  Returns (status_name, best_value, bound, solution)."""
@@ -287,6 +287,14 @@ def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
         # cells, so pinning each possibility in turn is exhaustive.
         for (r, c), ch in fix_cells.items():
             m.Add(g[(r, c)] == (0 if ch is None else code(ch)))
+
+    if build_only:
+        # Hand the finished model back instead of solving it. Building it
+        # is 0.92s of a 1.70s solve, and a decomposition re-solves the
+        # *same* model once per branch with only a pinned cell differing,
+        # so the build is pure repeated waste. TableauSession keeps one
+        # model and varies the pinned cells through CP-SAT assumptions.
+        return m, g
 
     solver = cp_model.CpSolver()
     solver.parameters.max_time_in_seconds = time_limit

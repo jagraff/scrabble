@@ -142,3 +142,163 @@ def refute(lexicon, placed, crosses, threshold=1786, word=WORD,
     if not still_open:
         log(f'{"  " * depth}all {len(opts)} branches refuted at {pivot}')
     return (not still_open), still_open
+
+
+# --- fast path: one model per configuration, parallel over branches ------
+
+class TableauSession:
+    """One built model per configuration; branches vary by assumption.
+
+    Rebuilding the model per branch was 0.92s of a 1.70s solve, and every
+    branch of a decomposition solves the *same* model with only a pinned
+    cell differing. CP-SAT assumptions express exactly that: a pin becomes
+    a literal, and INFEASIBLE-under-assumptions is a refutation of that
+    branch alone.
+    """
+
+    def __init__(self, lexicon, placed, crosses, threshold, word=WORD):
+        from .finalize import exact_fixed_blank_loss
+        self.fb = exact_fixed_blank_loss(word, set(placed), crosses)
+        self.impossible = self.fb is None      # needs >2 blanks
+        if self.impossible:
+            return
+        self.m, self.g = solve_tableau(
+            lexicon, word, 0, fix_placed_exact=set(placed),
+            fix_crosses=crosses, min_score=threshold + 1, known_upper=None,
+            fixed_blank_loss=self.fb, build_only=True,
+            log=lambda s: None, verbose=False)
+        self.lits = {}
+
+    def _lit(self, r, c, val):
+        key = (r, c, val)
+        b = self.lits.get(key)
+        if b is None:
+            b = self.m.NewBoolVar(f'pin{r}_{c}_{val}')
+            code = 0 if val is None else ord(val) - 64
+            self.m.Add(self.g[(r, c)] == code).OnlyEnforceIf(b)
+            self.lits[key] = b
+        return b
+
+    def solve(self, fixed, time_limit):
+        from ortools.sat.python import cp_model
+        if self.impossible:
+            return 'INFEASIBLE', None
+        self.m.ClearAssumptions()
+        if fixed:
+            self.m.AddAssumptions([self._lit(r, c, v)
+                                   for (r, c), v in fixed.items()])
+        s = cp_model.CpSolver()
+        s.parameters.max_time_in_seconds = time_limit
+        s.parameters.num_search_workers = 1
+        st = s.Solve(self.m)
+        name = s.StatusName(st)
+        val = (s.ObjectiveValue()
+               if st in (cp_model.OPTIMAL, cp_model.FEASIBLE) else None)
+        return name, val
+
+
+_SESSION = {}
+
+
+def _session(lexicon, placed, crosses, threshold):
+    key = (tuple(sorted(placed)), tuple(sorted(crosses.items())), threshold)
+    s = _SESSION.get(key)
+    if s is None:
+        s = _SESSION[key] = TableauSession(lexicon, placed, crosses, threshold)
+    return s
+
+
+def _solve_batch(args):
+    """One worker task: several branches of the same configuration.
+
+    Batched deliberately -- the per-process model build is paid once per
+    batch rather than once per branch, which is the whole point of the
+    session."""
+    placed, crosses, threshold, nodes, budget = args
+    from .lexicon import load
+    global _LEX_P
+    try:
+        lex = _LEX_P
+    except NameError:
+        lex = _LEX_P = load()
+    sess = _session(lex, placed, crosses, threshold)
+    out = []
+    for fixed in nodes:
+        # keys cross the process boundary as "row,col" strings; tuple(k)
+        # would split the characters, not the two numbers
+        pins = {tuple(int(x) for x in k.split(',')): v
+                for k, v in fixed.items()}
+        name, val = sess.solve(pins, budget)
+        out.append((fixed, name, val))
+    return out
+
+
+def refute_parallel(lexicon, placed, crosses, threshold=1786, word=WORD,
+                    time_limit=60.0, split_time_limit=5.0, max_depth=6,
+                    workers=4, log=print):
+    """Breadth-first, parallel version of `refute`.
+
+    Level by level: solve every open node, drop the refuted, split the
+    rest. Breadth-first rather than depth-first because the sequential
+    version spent its first minutes descending a single corridor of
+    all-empty cells before touching a sibling; and because a whole level
+    is a natural parallel batch.
+
+    Returns (refuted, open_branches) with the same meaning as `refute`:
+    True only if every branch reached INFEASIBLE.
+    """
+    from concurrent.futures import ProcessPoolExecutor
+    pivots = pivot_candidates(lexicon, word, crosses)
+    frontier = [{}]
+    stats = {'solves': 0}
+    placed = tuple(sorted(placed))
+
+    with ProcessPoolExecutor(max_workers=workers) as ex:
+        for depth in range(max_depth + 1):
+            if not frontier:
+                break
+            budget = time_limit if depth == max_depth else split_time_limit
+            chunk = max(1, (len(frontier) + workers - 1) // workers)
+            batches = [frontier[i:i + chunk]
+                       for i in range(0, len(frontier), chunk)]
+            jobs = [(placed, crosses, threshold,
+                     [{f'{r},{c}': v for (r, c), v in n.items()} for n in b],
+                     budget) for b in batches]
+            results = []
+            for r in ex.map(_solve_batch, jobs):
+                results.extend(r)
+            stats['solves'] += len(results)
+
+            unresolved = []
+            for fixed_s, name, val in results:
+                fixed = {tuple(int(x) for x in k.split(',')): v
+                         for k, v in fixed_s.items()}
+                if name == 'INFEASIBLE':
+                    continue
+                if val is not None:
+                    log(f'*** FEASIBLE at {val} with {fixed} ***')
+                    return False, [{'fixed': fixed, 'status': name,
+                                    'value': val}]
+                unresolved.append(fixed)
+
+            log(f'depth {depth}: {len(results)} solved, '
+                f'{len(results) - len(unresolved)} refuted, '
+                f'{len(unresolved)} open', flush=True)
+            if not unresolved:
+                frontier = []
+                break
+            if depth == max_depth:
+                return False, [{'fixed': f, 'status': 'UNKNOWN',
+                                'value': None} for f in unresolved]
+            nxt = []
+            for f in unresolved:
+                pv = next((p for p in pivots if p not in f), None)
+                if pv is None:
+                    return False, [{'fixed': f, 'status': 'NO_PIVOT_LEFT',
+                                    'value': None}]
+                for a in sound_options(lexicon, word, pv[0], pv[1], crosses):
+                    nxt.append({**f, pv: a})
+            frontier = nxt
+
+    log(f'refuted with {stats["solves"]} solves')
+    return True, []

@@ -1,0 +1,825 @@
+[
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWED",
+    "3": "PREQUALIFIED",
+    "6": "NUMBERED",
+    "7": "BRAINWASHING",
+    "11": "ZOOLOGICAL",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIED",
+    "6": "NUMBERED",
+    "7": "BRAINWASHING",
+    "11": "ZOOLOGICAL",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFYING",
+    "6": "NARROWED",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETE",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWING",
+    "3": "PREQUALIFYING",
+    "6": "NARROWED",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETE",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFYING",
+    "6": "NARROWING",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETE",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFYING",
+    "6": "NARROWING",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETE",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROW",
+    "3": "PREQUALIFYING",
+    "6": "NARROWING",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETE",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWED",
+    "3": "PREQUALIFYING",
+    "6": "NARROWING",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETE",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFYING",
+    "6": "NAVIGATORS",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETE",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFYING",
+    "6": "NAVIGATOR",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETE",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNING",
+    "3": "PREQUALIFYING",
+    "6": "NARROWED",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETE",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIES",
+    "6": "NUMBERED",
+    "7": "BRAINWASHING",
+    "11": "ZOOLOGICAL",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIED",
+    "6": "NICKER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFIED",
+    "6": "NICKERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFIED",
+    "6": "NICKER",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFIED",
+    "6": "NICKERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROW",
+    "3": "PREQUALIFIED",
+    "6": "NICKERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFIED",
+    "6": "NICKERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWED",
+    "3": "PREQUALIFIED",
+    "6": "NICKERS",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFIED",
+    "6": "NUMBERED",
+    "7": "BRAINWASHING",
+    "11": "ZOOLOGICAL",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROW",
+    "3": "PREQUALIFIED",
+    "6": "NUMBERED",
+    "7": "BRAINWASHING",
+    "11": "ZOOLOGICAL",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFIES",
+    "6": "NUMBERED",
+    "7": "BRAINWASHING",
+    "11": "ZOOLOGICAL",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROWS",
+    "3": "PREQUALIFYING",
+    "6": "NARROWING",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETES",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFYING",
+    "6": "NARROWED",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETES",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFYING",
+    "6": "NAVIGATOR",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETES",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNED",
+    "3": "PREQUALIFYING",
+    "6": "NARROWING",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETES",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWED",
+    "3": "PREQUALIFYING",
+    "6": "NARROWING",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETES",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YARROW",
+    "3": "PREQUALIFYING",
+    "6": "NARROWING",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETES",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWING",
+    "3": "PREQUALIFYING",
+    "6": "NARROWED",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETES",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    2,
+    3,
+    6,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "YAWNING",
+    "3": "PREQUALIFYING",
+    "6": "NARROWED",
+    "7": "BLADDERLIKE",
+    "11": "ZOOGAMETES",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ }
+]

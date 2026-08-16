@@ -1,0 +1,4307 @@
+[
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BLADDERLIKE",
+    "9": "TWITCHIER",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BLADDERLIKE",
+    "9": "TWITCHIEST",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BLADDERLIKE",
+    "9": "TWITCHIER",
+    "11": "ZOOGAMETES",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BLADDERLIKE",
+    "9": "TWITCHED",
+    "11": "ZOOGAMETES",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHING",
+    "9": "TREDDLED",
+    "11": "ZOOGAMETES",
+    "14": "EJACULATED"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TWINKLERS",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLERS",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1785,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1785 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLERS",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1784,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1784 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHES",
+    "9": "TWINKLERS",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLERS",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLERS",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TWINKLERS",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TRICKING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BLADDERLIKE",
+    "9": "TWITCHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BLADDERLIKE",
+    "9": "TWITCHING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWIGLIKE",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWEEDS",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TREDDLES",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TASKED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TALLOWS",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWEEDS",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TREDDLES",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TREDDLE",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRENDED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUNDLES",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWEED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWEEST",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROSES",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1789
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRICKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TALLOWED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKED",
+    "11": "ZONETIME",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHED",
+    "9": "TRUCKED",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFYING",
+    "7": "BLADDERLIKE",
+    "9": "TWINGED",
+    "11": "ZOOGAMETE",
+    "14": "ESTABLISHMENTS"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFYING",
+    "7": "BLADDERLIKE",
+    "9": "TWEEDINESS",
+    "11": "ZOOGAMETES",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHES",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHES",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHES",
+    "9": "TWINKLER",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TALLOWED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TALLOWED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLER",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1784,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1784 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1785,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1785 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWEETED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XIS",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHED",
+    "9": "TERBIUMS",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHED",
+    "9": "TERBIUMS",
+    "11": "ZOOGAMETES",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHING",
+    "9": "TERBIUMS",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATED"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHING",
+    "9": "TERBIUMS",
+    "11": "ZOOGAMETES",
+    "14": "EJACULATED"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLES",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLER",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATION",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHED",
+    "9": "TREDDLED",
+    "11": "ZOOGAMETES",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHED",
+    "9": "TRICKED",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRACKING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRACKING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TRACKING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLES",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TICKER",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLE",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHED",
+    "9": "TERBIUM",
+    "11": "ZOOGAMETES",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TALLOWING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREJUDGED",
+    "7": "BRAINWASHING",
+    "9": "THENCEFORWARD",
+    "11": "ZOOGAMETE",
+    "14": "EQUALITY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHING",
+    "9": "TRICKED",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATED"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHING",
+    "9": "TRUCKED",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATED"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHING",
+    "9": "TERBIUM",
+    "11": "ZOOGAMETES",
+    "14": "EJACULATED"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BLADDERLIKE",
+    "9": "TWITCHED",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREADJUSTING",
+    "7": "BLADDERLIKE",
+    "9": "THENCEFORWARD",
+    "11": "ZOOGAMETE",
+    "14": "EQUALITY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TRUCKLING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1784,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1784 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TWINKLER",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TWINKLE",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TWINKLES",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TWINKLER",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TWINKLE",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLES",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLE",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLER",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1784,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1784 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKS",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLES",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1784,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1784 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLE",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKS",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINK",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1785,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1785 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TASKING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREADJUSTING",
+    "7": "BRAINWASHED",
+    "9": "TWIGLIKE",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TALLOWED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWIGGED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWIGGED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TWIGGED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWINGED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TWEETING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TALLOWING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHED",
+    "9": "TALLOWING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWINKLER",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TAWED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TALLOW",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TALLOWS",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWEETED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TALLOWED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1784,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1784 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TALLOWED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWEETS",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TASKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TREDDLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TREDDLED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TASKED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TWEETED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TROCKING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TROCKING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TABLED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHED",
+    "9": "TRUCKING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHED",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLED",
+    "11": "ZONETIME",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TROCKED",
+    "11": "ZONETIME",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRACKED",
+    "11": "ZONETIME",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1784,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1784 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TROCKING",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TWEETED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFYING",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATED"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRICKED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1788
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIES",
+    "7": "BRAINWASHING",
+    "9": "TRUCKING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRACKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1784,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1784 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TROCKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRICKED",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XED",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TRACKERS",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREADJUSTED",
+    "7": "BRAINWASHING",
+    "9": "TWIGLIKE",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1782,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1782 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREADJUSTED",
+    "7": "BRAINWASHING",
+    "9": "TWIGLIKE",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1783,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1783 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREJUDGING",
+    "7": "BLADDERLIKE",
+    "9": "THENCEFORWARD",
+    "11": "ZOOGAMETES",
+    "14": "EQUALITY"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 0.0,
+  "solution": null
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROTIC",
+    "3": "PREQUALIFY",
+    "7": "BRAINWASHING",
+    "9": "TERBIUMS",
+    "11": "ZOOGAMETES",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ },
+ {
+  "config": {
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFY",
+    "7": "BRAINWASHING",
+    "9": "TRUCKLED",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   },
+   "relaxed_score": 1787
+  },
+  "status": "INFEASIBLE",
+  "value": null,
+  "bound": 1781,
+  "solution": null,
+  "reason": "exact blank cost puts this configuration's ceiling at 1781 <= 1786"
+ }
+]
