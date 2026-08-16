@@ -53,15 +53,56 @@ def test_the_identity_header_is_not_progress(tmp_path):
 
 def test_cells_are_found_inside_run_namespaced_directories(tmp_path):
     """Checkpoints live in `<dir>/run-<hash>/`, and a watcher pointed at
-    the parent must still see them."""
+    the parent must still find them."""
     from scrabble_max.status import cell_files
     run = tmp_path / 'run-5de00fc1974d'
     run.mkdir()
     _write(run / '00020307111314_p03c000.jsonl', 3)
-    _write(tmp_path / '00010203071114.jsonl', 2)        # legacy, flat
+    assert len(cell_files(str(tmp_path))) == 1
+    assert len(collect(str(tmp_path))) == 1
+
+
+def test_a_live_run_is_never_merged_with_an_archived_one(tmp_path):
+    """The counts must belong to one run. Merging a live run's cells with
+    a superseded run's flat files gave "8/10 finished, 1356 configurations"
+    -- 1322 from the old run plus 34 from the new. A watcher whose job is
+    to say whether a run has finished must not be able to say that."""
+    from scrabble_max.status import cell_files
+    for i in range(4):                                  # superseded, flat
+        _write(tmp_path / f'0001020307111{i}.jsonl', 100, complete=True)
+    run = tmp_path / 'run-ddc68461eadd'
+    run.mkdir()
+    _write(run / '00020307111314_p03c000.jsonl', 3)
+
     found = cell_files(str(tmp_path))
-    assert len(found) == 2, 'both namespaced and flat layouts must be seen'
-    assert len(collect(str(tmp_path))) == 2
+    assert len(found) == 1, 'the flat files belong to a different run'
+    rows = collect(str(tmp_path))
+    assert sum(r['configs'] for r in rows) == 3, 'no cross-run arithmetic'
+
+
+def test_the_newest_run_wins_when_several_are_present(tmp_path):
+    import os
+    import time as _t
+    old = tmp_path / 'run-aaaaaaaaaaaa'
+    old.mkdir()
+    _write(old / 'a_p03c000.jsonl', 5)
+    new = tmp_path / 'run-bbbbbbbbbbbb'
+    new.mkdir()
+    _write(new / 'b_p03c000.jsonl', 2)
+    os.utime(old, (_t.time() - 3600, _t.time() - 3600))
+
+    from scrabble_max.status import cell_files, runs_present
+    assert [os.path.basename(d) for d in runs_present(str(tmp_path))][0] \
+        == 'run-bbbbbbbbbbbb'
+    assert sum(r['configs'] for r in collect(str(tmp_path))) == 2
+    assert len(cell_files(str(tmp_path))) == 1
+
+
+def test_flat_files_are_still_read_when_there_is_no_namespaced_run(tmp_path):
+    """The pre-hardening layout, so an archived run can still be inspected."""
+    from scrabble_max.status import cell_files
+    _write(tmp_path / '00010203071114.jsonl', 2)
+    assert len(cell_files(str(tmp_path))) == 1
 
 
 def test_a_half_written_final_line_does_not_lose_the_rest(tmp_path):

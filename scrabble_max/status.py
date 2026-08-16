@@ -99,15 +99,41 @@ def _pattern_of(tag):
 
 
 def cell_files(ckpt_dir):
-    """Every checkpoint under `ckpt_dir`, one level of run-namespacing deep.
+    """Every checkpoint of ONE run under `ckpt_dir`.
 
     Checkpoints live in `<dir>/run-<hash>/<cell>.jsonl` so that two
     incompatible runs cannot share a file. A watcher pointed at the parent
-    should still see them, and one pointed straight at a run directory
-    should still work -- hence both patterns."""
-    return sorted(set(glob.glob(os.path.join(ckpt_dir, '*.jsonl')))
-                  | set(glob.glob(os.path.join(ckpt_dir, 'run-*',
-                                               '*.jsonl'))))
+    should still find them, and one pointed straight at a run directory
+    should still work.
+
+    Deliberately never mixes runs. Merging a live run's cells with an
+    archived run's gives a total that belongs to neither: pointed at a
+    directory holding the old flat layout and a new namespaced one, the
+    first version of this reported "8/10 finished, 1356 configurations",
+    which was 1322 from the superseded run plus 34 from the live one. A
+    watcher whose whole job is to say whether a run has finished must not
+    be able to say that.
+
+    So: if any run directory is present, the most recently written one
+    wins and the flat files are ignored. Flat files are read only when
+    there is no namespaced run at all, which is the pre-hardening layout.
+    """
+    runs = sorted(d for d in glob.glob(os.path.join(ckpt_dir, 'run-*'))
+                  if os.path.isdir(d))
+    if runs:
+        newest = max(runs, key=os.path.getmtime)
+        return sorted(glob.glob(os.path.join(newest, '*.jsonl')))
+    return sorted(glob.glob(os.path.join(ckpt_dir, '*.jsonl')))
+
+
+def runs_present(ckpt_dir):
+    """Every run directory under `ckpt_dir`, newest first.
+
+    So the watcher can say which run it is showing, and that others exist.
+    """
+    runs = [d for d in glob.glob(os.path.join(ckpt_dir, 'run-*'))
+            if os.path.isdir(d)]
+    return sorted(runs, key=os.path.getmtime, reverse=True)
 
 
 def collect(ckpt_dir):
@@ -359,6 +385,11 @@ def main():
             except KeyboardInterrupt:
                 return
         rows = collect(a.dir)
+        runs = runs_present(a.dir)
+        if runs and not a.json:
+            print(f'run {os.path.basename(runs[0])}'
+                  + (f'  ({len(runs) - 1} other run(s) in this directory, '
+                     f'not shown)' if len(runs) > 1 else ''))
         if a.json:
             print(json.dumps([{k: (sorted(x for x in v if x is not None)
                                    if isinstance(v, set) else v)
