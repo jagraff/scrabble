@@ -5,74 +5,67 @@ Is **1,786** — Bob Lucassen's OXYPHENBUTAZONE construction
 — the highest score a single turn can earn in North American Scrabble
 under NWL2023?
 
-## Status: open — and Theorem 4 is provisional
+**Yes** — see the conditions in "What the claim is *not*" below.
 
-**The headline claim is not proved.** What the argument shows is that the
-search space collapses to fourteen explicit configurations, of which eight
-were closed and six remain open.
+## Status: the argument is complete for NWL2023
 
-> ### ⚠ Recomputation after a soundness bug (2026-08-15)
->
-> A **soundness bug** was found in `tighten.cross_options`: it
-> deduplicated cross-word options by the remainder's letter *multiset*,
-> while callers read the remainder's *order*. YARE and YEAR are both valid
-> Y-hooks with remainder multiset {A,E,R} but inward letters A and E; only
-> one survived. Deleting options shrinks the model's feasible region, so
-> its optimum can fall **below** the true maximum — and those optima are
-> used as upper bounds. Anything eliminated on "bound ≤ 1,786" may have
-> been eliminated wrongly.
->
-> The bug is fixed. **Stage B has been recomputed and every bound came
-> back identical**, so Theorems 2 and 3 stand. **Theorem 4 is still
-> provisional** — the tier-2 reduction has not yet been rerun, and the
-> count of fourteen patterns can only grow. REPORT.md §5 has the
-> analysis; PROOFS.md carries the full status table.
+**No legal NWL2023 play scores above 1,786.** Since 1,786 is achieved by a
+legal play and is reachable in a legal two-player game, it is exactly the
+maximum single-turn score — subject to the four conditions below, which
+are not incidental caveats and should be read before the claim is quoted.
 
 | | Result | Status |
 |---|---|---|
 | **Thm 1** | Any play not filling an entire edge row scores ≤ **1,656** | complete — stage A only |
-| **Thm 2** | Any play but OXYPHENBUTAZONE on row 0 scores ≤ **1,778** | reconfirmed |
-| **Thm 3** | A record-beating play covers all three TWs and places 7 tiles | reconfirmed |
-| **Thm 4** | Its placed set is one of **14** listed patterns; all score ≤ **1,794** | **provisional** |
+| **Thm 2** | Any play but OXYPHENBUTAZONE on row 0 scores ≤ **1,778** | complete |
+| **Thm 3** | A record-beating play covers all three TWs and places 7 tiles | complete |
+| **Thm 4** | Its placed set is one of **14** listed patterns; all score ≤ **1,794** | complete |
 | **Thm 5** | The published 1,786 construction is legal and scores exactly 1,786 | complete — rules engine only |
 | **Thm 6** | 1,786 is reachable in a legal two-player game (26 moves) | complete |
-| **§8** | The 14 patterns are all refuted | **6 of 14 open**, and see above |
+| **Tier 2** | The in-model blank penalty eliminates 4 of the 14 patterns | complete |
+| **Tier 3** | The remaining 10 patterns' 1,322 configurations are all refuted | **complete** |
 
-Theorems 1, 5 and 6 are untouched by the bug: stage A never calls
-`cross_options`, and the record's verification and reachability go through
-the rules engine rather than the solver stack.
+Tier 3 enumerated every configuration those ten patterns admit — 1,322 in
+total, every partition cell terminating in INFEASIBLE, which is what makes
+the lists exhaustive rather than merely long — and decided each one:
+**1,063** by an exact closed-form blank ceiling, **258** by a CP-SAT
+infeasibility proof, and the last by cell decomposition. Details, including
+the independent reproduction, are in
+[results/tier3_results.md](results/tier3_results.md).
 
-Where this lands if the numbers hold — Theorem 2 would again give the
-sharpest complete statement, since 1,778 < 1,786:
+## What the claim is *not*
 
-> **Any play beating the record is OXYPHENBUTAZONE across an edge row —
-> the record's own geometry — and scores at most 1,798.**
+1. **NWL2023 only — not "Scrabble".** Collins/CSW is a substantially
+   larger lexicon and would very plausibly admit a higher maximum. Nothing
+   here speaks to it.
+2. **One play, not a game.** This is the maximum for a single turn, not a
+   game total.
+3. **Computer-assisted, not machine-checked.** It rests on CP-SAT being
+   correct, on the lexicon file being right, and on the encodings
+   modelling Scrabble faithfully. No proof assistant has verified any part
+   of it.
+4. **Everything hangs on one property: every stage must be a
+   *relaxation*** — a filter may only ever *enlarge* the feasible set
+   (PROOFS.md §1). This is the load-bearing assumption and the place this
+   project has actually had bugs. `tighten.cross_options` once deduplicated
+   cross-word options by the remainder's letter *multiset* while callers
+   read its *order*, silently deleting options and shrinking the feasible
+   region — the unsound direction. Every affected stage was recomputed and
+   came back identical, and 28 of 28 tier-2 bounds reproduce exactly, but
+   a reviewer should start here.
 
-Of the fourteen surviving patterns, 1,903 configurations were enumerated
-and every one refuted. Those individual refutations still stand — each was
-decided by the full tableau. What the bug invalidates is the claim that
-the enumeration was *exhaustive*: the loop stops when the model goes
-infeasible, and a missing cross-word option makes it stop **earlier**, so
-`complete=True` is precisely the flag that cannot survive. Re-enumeration
-can only lengthen each list.
-
-No legal position scoring above 1,786 has been found anywhere. Six
-patterns remain unrefuted, at ceilings 1,794 (×2), 1,792 (×3) and
-1,791 (×1).
-
-The per-pattern method that closed the other eight **does not scale to
-these six and has been stopped** — cost grows steeply with the ceiling,
-and two workers ran ~32 h and ~25 h without finishing. Closing them needs
-a different approach; PROOFS.md §8 records the measured cost curve and two
-untried directions.
+A fifth, weaker caveat: the refutation of the final configuration is
+carried by two independent implementations that agree on 180 solves and on
+the open-branch count at every depth. That is strong evidence, not a
+formal check.
 
 ## Method
 
 Every step relies on one principle (PROOFS.md §1): relaxing a constraint
 can only *raise* the optimum, so a relaxation scoring ≤ 1,786 eliminates
 its case outright. Relaxations are used only to eliminate, never to
-confirm — a satisfiable relaxation proves nothing, which is why the last
-six cases need the exact model.
+confirm — a satisfiable relaxation proves nothing, which is why the
+surviving cases have to be settled by the exact model.
 
 - **Stage A** (`bounds.py`) — closed-form geometry caps over all 1,575
   (row, start, length) triples. Arithmetic only, no solver.
@@ -81,6 +74,12 @@ six cases need the exact model.
 - **Stage C** (`cstage.py`) — the full 15×15 tableau: dictionary automata,
   connectivity, inventory and exact scoring, asking directly whether any
   legal position reaches 1,787.
+- **Tier 3** (`partition.py`, `tier3.py`, `decompose.py`) — for each
+  surviving pattern, enumerate every configuration it admits (partitioned
+  into independently-enumerable cells so a pattern can use more than one
+  core), then decide each exactly. A configuration the exact blank ceiling
+  cannot kill goes to the tableau; one the tableau cannot decide is split
+  cell by cell until it does.
 - **Reachability** (`reachability.py`, `racks.py`) — backwards "unplay"
   search for a legal build-up, then an explicit rack-and-bag schedule for
   two alternating players, re-checked by independent verifier logic.

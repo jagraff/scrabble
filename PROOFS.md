@@ -12,7 +12,7 @@ construction scoring **1,786**.
 
 ---
 
-> ## ⚠ Status: Theorem 4 provisional; Theorems 2 and 3 reconfirmed
+> ## Status: recomputed after the `cross_options` bug; all theorems stand
 >
 > A soundness bug was found in `tighten.cross_options` after these
 > theorems were written. It deduplicated cross-word options by the
@@ -32,10 +32,10 @@ construction scoring **1,786**.
 > | Theorem 1 (geometry, ≤1656) | **unaffected** — stage A uses `best_rest_table`, not `cross_options` |
 > | Theorem 2 (≤1778) | **reconfirmed** — stage B recomputed, every bound identical |
 > | Theorem 3 (7 tiles) | **reconfirmed** — 1,730 / 1,706 recomputed, both identical |
-> | Theorem 4 (14 patterns) | **provisional** — tier 2 calls `tighten_candidate` per pattern; not yet recomputed |
+> | Theorem 4 (14 patterns) | **reconfirmed** — tier 2 recomputed on the fixed `cross_options`: 165 → 14, unchanged |
 > | Theorem 5 (record = 1786) | **unaffected** — rules engine only |
 > | Theorem 6 (reachability) | **unaffected** — `reachability.py`, `racks.py` |
-> | §8 (8 of 14 refuted) | see §8: the refutations stand, exhaustiveness does not |
+> | §8 (all 14 refuted) | **closed** — every pattern re-enumerated from scratch post-fix; see §8 |
 >
 > **Recomputation so far** (commit `d9420e9`, `PYTHONHASHSEED=0`,
 > OR-Tools 9.15.6755). All 17 stage-B candidates returned bounds
@@ -289,7 +289,7 @@ the theorem rests on.*
 
 ---
 
-## 5. Theorem 4 — reduction to 14 placed patterns **(provisional — awaiting tier-2 recomputation)**
+## 5. Theorem 4 — reduction to 14 placed patterns **(complete)**
 
 > **Theorem 4.** A play beating the record has its placed set among 14
 > explicitly listed 7-subsets of `{0..14}`, and scores at most **1,794**.
@@ -419,105 +419,98 @@ care about. Both now hold.
 
 ---
 
-## 8. What is not proved
+## 8. Closing the fourteen patterns **(complete)**
 
-The headline claim — that 1,786 is the global maximum — is **open**. By
-Theorem 4 it reduces to fourteen explicit cases, of which **8 are closed**
-and 6 remain.
+Theorem 4 reduces the claim to fourteen explicit placed patterns. All
+fourteen are now refuted.
 
-The method for closing one (`patterns.py::prove_pattern_by_configs`) is:
+**Tier 2 — four die outright.** Charging each blank a lower bound on what
+it really forfeits, rather than only its face value, drops four patterns'
+ceilings to 1,786 or below. The charge is `2 × value` per blank when the
+configuration has no cheap non-multiplier cell for that letter and zero
+otherwise; both are under-charges, so the objective stays an upper bound
+and Lemma 1 still applies. Ten patterns survive.
 
-1. enumerate every *configuration* (placed set with a concrete cross word
-   per placed column) whose stage-B relaxed score exceeds 1,786, by a
-   blocking-clause loop, until the model is infeasible — at which point
-   the list is provably exhaustive;
-2. refute each configuration with the full 15×15 tableau model, which
-   pins those columns and leaves supports, glue, blanks and connectivity
-   free, asking for any legal position scoring ≥ 1,787.
+**Tier 3 — the remaining ten.** For each, enumerate every configuration it
+admits and decide each one exactly.
 
-Soundness: any legal position beating the record realises some
-configuration, and its relaxed score is at least its true score, so it
-appears in the list; refuting every entry refutes the pattern. The
-enumeration terminates per pattern (it did not globally) because
-restricting to one placed set bounds the search space.
+*Enumeration.* A blocking-clause loop per pattern, run to infeasibility;
+`complete=True` therefore means the list is the whole of it. To use more
+than one core per pattern the space is partitioned: every configuration
+either gives a chosen pivot column no cross word or gives it exactly one
+of its options, so partitioning the option indices into blocks partitions
+the configurations into cells with independent loops. Cells are covering
+(asserted) and disjoint (checked at runtime). Result: **1,322
+configurations**, every cell terminating INFEASIBLE.
 
-Result so far: **1,903 configurations across 8 patterns, every one
-infeasible**. Adding the 1,300 from the abandoned global run, no legal
-position above 1,786 has been found anywhere.
+*Refutation.* Each configuration is decided by, in order of cost:
 
-**The exhaustiveness of those enumerations does not survive the
-`cross_options` bug, though the refutations do.** Each of the 1,903
-configurations was independently refuted by the tableau, and those
-refutations stand on their own — the tableau does not use
-`cross_options`. What fails is step 1's completeness claim, and it fails
-in a precisely identifiable way: the blocking loop stops when the
-stage-B⁺ model goes infeasible, and a *missing* cross-word option makes
-it go infeasible **earlier**. So `complete=True` is exactly the flag that
-cannot be trusted, and each pattern's true configuration list can only be
-longer than the one recorded.
+1. **the exact blank ceiling** — for a *pinned* configuration the forced
+   blanks are determined, so the score has a closed-form upper bound. 1,063
+   of 1,322 fall here with no solve at all;
+2. **the full tableau** (`cstage.solve_tableau`) with the cross words
+   pinned and `total ≥ 1,787` asserted. INFEASIBLE is a genuine
+   unsatisfiability proof. 258 fall here;
+3. **cell decomposition** (`decompose.py`) for anything the tableau cannot
+   decide within its limit. Exactly one configuration needed this.
 
-That gives a free check on the rerun: for every pattern already done, the
-recomputed list must be a **superset** of the old one. If it ever isn't,
-something other than this bug is wrong.
+A finding worth recording, because it is the opposite of what was
+expected: the 258 tableau refutations are not about score. Re-run with the
+score constraint removed entirely — asking only whether *any* legal board
+realises the configuration — a sample of twelve returned INFEASIBLE 12 of
+12 in ~2.8 s each. They describe boards that cannot exist at all, and
+propagation refutes them without 1,786 ever entering the proof. The
+expensive-looking half of tier 3 was the cheap half.
 
-Six patterns are open:
+### The one configuration that resisted
 
-| ceiling | placed columns |
-|---:|---|
-| 1794 | (0, 1, 3, 7, 9, 11, 14) |
-| 1794 | (0, 1, 3, 7, 10, 11, 14) |
-| 1792 | (0, 1, 3, 5, 7, 11, 14) |
-| 1792 | (0, 1, 3, 6, 7, 11, 14) |
-| 1792 | (0, 2, 3, 6, 7, 11, 14) |
-| 1791 | (0, 2, 3, 7, 10, 11, 14) |
+`(0,1,3,7,10,11,14)` with cross words OPACIFICATIONS / XEROSES /
+PREADJUSTING / BRAINWASHING / AMELIORATIVE / ZOOGAMETE / EQUALITY, exact
+ceiling 1,787. Still UNKNOWN after 1,300 s, and — unlike its siblings —
+UNKNOWN even with the score constraint dropped: it has no shallow
+structural contradiction, so the solver must search rather than propagate.
+Its static features are unremarkable (67 cross tiles against a median 68,
+143 free cells against 142, one forced blank like most).
 
-This is the **only** open item. Everything in §2–§7 is complete.
+It is refuted by splitting on individual board cells. Every legal board
+puts *something* in a given cell, so if every possible value is refuted so
+is the configuration — provided the option set is **exhaustive**. For a
+row-1 cell under a pre-existing column that set is `{empty} ∪ {letters
+that can follow the row-0 letter in some word}`; deeper cells take any
+letter. Critically the set may **not** be narrowed to letters with tiles
+still spare, because a blank can supply a letter whose copies are used up.
 
-**The per-pattern method does not scale to these six, and has been
-stopped.** Its cost grows steeply with the pattern's ceiling, because a
-higher ceiling admits configurations at more score levels, and because
-the blocking-clause loop slows as clauses accumulate:
+Recursing to depth 6 refutes it in **180 solves**. The result is carried by
+two independent implementations — depth-first with the model rebuilt per
+branch, and breadth-first in parallel with branches varied through CP-SAT
+assumptions — which agree on the solve count and on the open-branch count
+at every depth (506 s and 140 s respectively).
 
-| ceiling | configurations | enumeration |
-|---:|---:|---:|
-| 1787–1790 | 9–27 | 3–14 min |
-| 1791 | 396 | 2h 05m |
-| 1791 | 584 | 4h 24m |
-| 1791 | 824 | 7h 34m |
+The sharpest available check on the method: run the same refuter against
+the **record's own configuration** at threshold 1,785, where a 1,786 board
+demonstrably exists. It refutes 9 of 10 branches and leaves standing
+exactly the branch containing the record. A non-exhaustive option set
+would have refuted all ten.
 
-The two runs stopped had reached ~32 h on `(0,2,3,7,10,11,14)` (count
-unknown — it predates the progress logging) and 1,900 configurations in
-~25 h on `(0,1,3,7,10,11,14)`, neither finished, and the discovery rate
-was decaying only gently (1.61/min → 1.11/min), which is the signature of
-rising per-solve cost rather than approaching exhaustion. Neither run
-checkpoints inside a pattern, so both were discarded.
+### What follows, and what does not
 
-Closing the remaining six needs a different method. Two directions, both
-untried:
+Combining §2–§7 with the above: **no legal NWL2023 play scores above
+1,786**, and since the record achieves it (Theorem 5) and is reachable in
+a legal game (Theorem 6), 1,786 is the maximum.
 
-* **Enumerate configurations combinatorially rather than by CP-SAT.**
-  Tile-bag scarcity and row-1 validity do essentially all the pruning
-  (they cut 10⁹–10¹⁰ candidate tuples to a few hundred), so a
-  branch-and-bound over cross-word choices with incremental inventory and
-  score bounds should be far cheaper per configuration than a fresh solve.
-  A naive Python prototype was too slow — the per-node cost of copying
-  letter counts swamped the pruning — and it would need array-based
-  incremental state to be worth it.
-* **Attack the pattern directly with better structure**, e.g. pinning
-  cross-word *lengths* (which fixes board occupancy and collapses the
-  column automata) rather than the words themselves, giving a split far
-  coarser than enumerating words but still tractable for the tableau.
+What that statement does *not* cover:
 
-**No useful bound on the remaining time can be given.** The number of
-configurations per pattern is boundable exactly — it is a count over
-cross-word tuples reaching the threshold — but that bound is 10⁹–10¹⁰ per
-pattern against actual counts of 9–824, seven orders of magnitude loose,
-because tile-bag scarcity and row-1 word validity do the real pruning and
-neither is expressible in the count. Tightening it requires running the
-search. CP-SAT likewise admits no useful per-solve time bound. So the
-completion time is genuinely unknown, not merely uncertain.
-
----
+* **NWL2023 only.** Collins/CSW is a larger lexicon and would plausibly
+  admit more. Nothing here speaks to it.
+* **A single play, not a game total.**
+* **Computer-assisted, not machine-checked.** It rests on CP-SAT's
+  correctness, on the lexicon file, and on the encodings modelling the
+  rules faithfully. No proof assistant has checked any of it.
+* **Lemma 1 is load-bearing throughout.** Every stage must only ever
+  *enlarge* the feasible set. This is where the project has actually had
+  bugs — `cross_options` deduplicating by multiset shrank the region, the
+  unsound direction — and it is where a reviewer should start. Every
+  affected stage was recomputed; 28 of 28 tier-2 bounds reproduce exactly.
 
 ## Reproduction
 
