@@ -508,20 +508,58 @@ Blank-designation subtleties are handled conservatively throughout
 
 ## 10. Reproduction
 
+The whole chain, from an empty checkpoint directory, is one command:
+
 ```
 python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt
-export PYTHONHASHSEED=0
-.venv/bin/python -m pytest tests/ -q                 # fast tests
-.venv/bin/python -m pytest tests/ -q -m slow         # solver validation tests
+./rerun.sh                                           # ~2.5 h on 4 cores
+```
+
+It runs each stage in the order that matters — every stage's output selects
+the next stage's work — and follows each with the check that can fail it,
+ending with the directional comparison against the previous run and the run
+manifest. It is deliberately not resumable: a re-run whose point is that no
+stale artifact was reused must not itself reuse one.
+
+The stages individually:
+
+```
+export PYTHONHASHSEED=0                              # not decoration; see below
+.venv/bin/python -m pytest tests/ -q -m "not slow"   # fast tests (~50 s)
+.venv/bin/python -m pytest tests/ -q -m slow         # solver validation (~8 min)
 .venv/bin/python -m scrabble_max.bounds --threshold 1786   # stage A  (~1 min)
 .venv/bin/python -m scrabble_max.tighten --time-limit 240  # stages B/B⁺ (~1 h)
 .venv/bin/python -m scrabble_max.tighten --max-placed 6 --word OXYPHENBUTAZONE \
     --out results/bound_six_tiles.json        # Theorem 3's |S| <= 6 bound
-.venv/bin/python -m scrabble_max.cstage --time-limit 21600 --min-score 1786  # stage C
-.venv/bin/python -m scrabble_max.patterns --tier3 configs   # §7.3 per-pattern refutation
+.venv/bin/python -m scrabble_max.patterns --stop-after-row1  # tiers 1-2 (~8 min)
+.venv/bin/python -m scrabble_max.blank_tier2         # blank-penalty sweep (~6 min)
+.venv/bin/python -m scrabble_max.tier3 --workers 4 --blocks 4   # tier 3 (~1 h)
 .venv/bin/python -m scrabble_max.reachability        # 25-move build-up (~1 min)
-.venv/bin/python -m scrabble_max.racks               # rack/bag witness (~1 s)
+.venv/bin/python -m scrabble_max.racks               # rack/bag + board witness
+.venv/bin/python -m scrabble_max.check_rerun         # directional checks
+.venv/bin/python -m scrabble_max.manifest            # certify the run
+.venv/bin/python -m scrabble_max.manifest --verify   # re-hash what it names
 ```
+
+Note that `pytest tests/ -q` alone runs the solver tests too and takes ~9
+minutes; `-m "not slow"` is the fast subset.
+
+Stage C's free tableau solve (`cstage --time-limit 21600`) is **not** in
+this list. It does not terminate and is not part of the argument — §7 above
+records why. What stage C contributes is the model, used per-configuration
+with columns pinned, plus the validation test that fixes the grid to the
+known board and recovers exactly 1,786.
+
+### What certifies a run
+
+`results/MANIFEST.json` binds the environment, the parameters, and a
+SHA-256 of every artifact and every cell checkpoint. Each checkpoint also
+carries its own identity header naming the computation it certifies —
+lexicon, threshold, pattern, pivot, block membership, block count, and a
+digest of the modules that build the model — and a checkpoint that does not
+match the run being executed is refused rather than reused. See
+`results/soundness_remediation.md` for what that fixes and where the design
+deliberately differs from the audit that prompted it.
 
 `patterns` takes `--only` to run a subset of placed sets, so open patterns
 can be worked in parallel, and `--configs-out` to record the enumerated

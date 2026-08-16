@@ -181,23 +181,85 @@ cannot drift apart.
 
 ---
 
+---
+
+## P1 — provenance and the clean re-run
+
+### What the chain could not reproduce
+
+Preparing the re-run turned up a gap the audit did not find:
+`results/blank_penalty_tier2.json` is what `tier3.py` reads to decide which
+patterns to enumerate, and **it had no entry point**. It was produced once
+by an ad-hoc script and committed. Everything downstream of it was
+reproducible; the step that selected the work was not, so a clean re-run
+would have had to inherit it.
+
+`scrabble_max/blank_tier2.py` fills that in. It derives the same 14
+survivors from `pattern_row1.json` — verified against the committed file,
+same set — and asserts the two directional facts the sweep must satisfy: no
+bound may rise under the penalty, and the record play's own placed set must
+stay at or above 1,786 (below that the model would be refuting a play that
+demonstrably exists).
+
+### Correction to the note below
+
+An earlier draft of this log said stage-B solve statuses were unrecorded.
+That was wrong: all 17 bounds carry `detail.proved_optimal = True`, nested
+inside `detail` rather than at top level, which a top-level probe missed.
+Stage B is clean.
+
+The real gap was narrower — the *per-mask* cells recorded a value and no
+status, and Theorem 3 rests on those. `tighten.py` now fills a `status_out`
+map with `OPTIMAL` / `BOUND` / `INFEASIBLE` per mask, so a re-run that
+disagrees on a cell can be told from a bug: a `BOUND` is a valid upper
+bound that moves with the solver version, and an `OPTIMAL` is not supposed
+to move at all.
+
+### The manifest
+
+`scrabble_max/manifest.py` records the environment, the parameters, and a
+SHA-256 of every artifact and every cell checkpoint, in one file whose own
+digest can be quoted. Two properties it asserts that no individual
+checkpoint can:
+
+* **coverage** — every cell the partition defines has a file, and every file
+  belongs to a cell that was asked for. A cell that was never launched
+  writes nothing, so 49 files where 50 were expected looks exactly like 49
+  where 49 were expected.
+* **uniformity** — one solver build, one interpreter, one commit across
+  every cell. This is where the cost of *not* gating identity on the solver
+  version is collected: a mixed artifact is possible by construction, so it
+  is caught over the finished whole.
+
+It also separates `source_dirty` from `git_dirty`. The latter is true for
+the whole of any run, because the results being regenerated are themselves
+tracked files, so it cannot answer the question that matters — whether the
+code that produced them was committed.
+
+### The re-run
+
+`rerun.sh`, one command, ~2.5 h on four cores. Each stage is followed by the
+check that can fail it, ending with `check_rerun` (bounds may only rise,
+survivor sets may only grow) and the manifest. Not resumable by design.
+
+`results/pre_hardening/` holds the previous state for comparison — the 50
+old cell checkpoints included, because they are the evidence of the original
+tier-3 run and deleting them would destroy the audit trail.
+
+One consequence of the source digest worth stating plainly: editing any of
+the six model-building modules invalidates every checkpoint and forces a
+fresh ~1 h enumeration. Adding the per-mask status recording to `tighten.py`
+did exactly that, moving the run digest from `5de00fc1974d` to
+`ddc68461eadd`. That is the intended trade — over-gating costs compute,
+under-gating costs a false theorem — but it means model edits should be
+batched before a certifying run, not dribbled in after one.
+
 ## Not yet done
 
-- **P1** — clean re-run from an empty checkpoint directory, and a
-  machine-verifiable run manifest binding source, lexicon, parameters,
-  solver version and every cell result. Until this lands, the committed
-  `results/enum_cells/*.jsonl` are unstamped pre-hardening files: they are
-  evidence of the old run, not a certificate. Namespacing means a new run
-  writes to `results/enum_cells/run-5de00fc1974d/` and never consults them;
-  pointed at directly they would be refused as unstamped. Measured cost of
-  the full chain is ~2–3 h, not the ~8 h first
-  estimated: stage C's free tableau solve is not part of the proof
-  (`REPORT.md` §7, abandoned as non-terminating).
-- **P1 side-item** — `tighten.py` records no solve status, so it is
-  currently impossible to tell whether any of the 17 stage-B bounds was
-  timeout-derived rather than a proved optimum. A proved optimum reproduces
-  exactly; a timeout-derived `BestObjectiveBound` moves with the solver
-  version. Tier 2 is clean on this measure (140 infeasible, 25 proved
-  optima, 0 timeout-derived); stage B is unknown.
-- **P3** — the reflection wording in `PROOFS.md`, and a `REPORT.md` pointer
-  to the manifest.
+- **P1 execution** — the tooling is in; the re-run is what remains. Until it
+  finishes and the manifest is committed, the tier-3 results in `results/`
+  are the pre-hardening ones and the artifact is not certified.
+- **P4, new** — `check_rerun.py` compares against `results/pre_fix`. It
+  should learn about `results/pre_hardening` too, so the certified run can
+  be checked against the run it replaces rather than against a much older
+  one.

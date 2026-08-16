@@ -237,11 +237,28 @@ The stage-A ranking is untouched by the bug — `bounds.py` never calls
 > **Corollary 2.1 (the main result so far).** *The record play's own
 > geometry is the only one in the game that can beat it.* Any play
 > scoring more than 1,786 is OXYPHENBUTAZONE placed across row 0 — up to
-> the transposition and reflection symmetries of the board — and scores at
+> transposition and the top↔bottom reflection of the board — and scores at
 > most 1,798.
 
 Note this is strictly stronger than "no better play is known": it is a
 complete case analysis with 1,778 < 1,786 as the margin.
+
+*On the symmetries named.* Transposition is a symmetry because horizontal
+and vertical play are structurally interchangeable and the premium layout
+is symmetric about the main diagonal. The **top↔bottom** reflection is a
+symmetry for the same reason with one extra observation: it maps row 0 to
+row 14 column-for-column, so words continue to read left-to-right and
+legality is preserved. The **left↔right** reflection is *not* generally
+one — it reverses every horizontal word, and `EMIT` reversed is not a word
+— so it is deliberately not claimed here.
+
+The distinction costs nothing, because the enumeration does not quotient by
+either symmetry: rows 0 and 14 are modelled separately throughout
+(`tighten.py` builds the cross-word options with the hook letter first on
+row 0 and last on row 14), and the transposed cases are covered by
+Corollary 1.1's case analysis rather than assumed away. The symmetries
+appear in this statement to describe the equivalence class of geometries,
+not to reduce the work.
 
 ---
 
