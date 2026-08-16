@@ -42,6 +42,7 @@ from __future__ import annotations
 import json
 import os
 import time
+import signal
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 from . import tighten as T
@@ -167,6 +168,58 @@ def _run_cell(args):
     return cell_index, known + new, done, time.time() - t0, False
 
 
+class _KillPoolOnSignal:
+    """Terminate worker processes when the parent is asked to stop.
+
+    `ProcessPoolExecutor.shutdown()` waits for running tasks; it does not
+    interrupt them. So killing the parent by pid leaves the workers alive,
+    reparented to init, still solving -- and still appending to the very
+    checkpoints they were writing.
+
+    That is not hypothetical. A tier-3 launch was killed with `pkill -f
+    scrabble_max.tier3`, which matches only the parent's command line
+    because pool workers do not carry it. Five workers survived for three
+    hours, competing for the same four cores as the replacement run and
+    writing into the same directory: 5 of 50 cells ended up with two
+    complete-markers and duplicate configurations. Nothing was lost -- no
+    line was torn, and both writers were computing the same cell -- but
+    the files could no longer be certified, and the run took roughly twice
+    as long as it should have.
+    """
+
+    def __init__(self, executor, log=print):
+        self.ex = executor
+        self.log = log
+        self.prev = {}
+
+    def __enter__(self):
+        for sig in (signal.SIGINT, signal.SIGTERM):
+            try:
+                self.prev[sig] = signal.signal(sig, self._handle)
+            except ValueError:
+                pass                      # not on the main thread
+        return self
+
+    def _handle(self, signum, frame):
+        procs = list(getattr(self.ex, '_processes', {}).values())
+        self.log(f'\nsignal {signum}: terminating {len(procs)} workers '
+                 f'before exit (checkpoints are already on disk)')
+        for p in procs:
+            try:
+                p.terminate()
+            except Exception:
+                pass
+        raise KeyboardInterrupt
+
+    def __exit__(self, *exc):
+        for sig, handler in self.prev.items():
+            try:
+                signal.signal(sig, handler)
+            except ValueError:
+                pass
+        return False
+
+
 def _key(cfg):
     return (tuple(sorted(cfg['placed'])),
             tuple(sorted((int(k), v) for k, v in cfg['crosses'].items())))
@@ -193,7 +246,8 @@ def enumerate_pattern(S, n_blocks=24, threshold=1786, max_workers=4,
              time_limit) for i, block in enumerate(cells)]
     found, seen, incomplete = [], {}, []
     t0 = time.time()
-    with ProcessPoolExecutor(max_workers=max_workers) as ex:
+    with ProcessPoolExecutor(max_workers=max_workers) as ex, \
+            _KillPoolOnSignal(ex, log):
         futs = {ex.submit(_run_cell, j): j[2] for j in jobs}
         for done_n, fut in enumerate(as_completed(futs), 1):
             i, cfgs, complete, dt, cached = fut.result()
@@ -253,7 +307,8 @@ def enumerate_many(patterns, n_blocks=8, threshold=1786, max_workers=4,
     seen = {S: {} for S in cells_of}
     incomplete = {S: [] for S in cells_of}
     t0 = time.time()
-    with ProcessPoolExecutor(max_workers=max_workers) as ex:
+    with ProcessPoolExecutor(max_workers=max_workers) as ex, \
+            _KillPoolOnSignal(ex, log):
         futs = {ex.submit(_run_cell, j): (j[0], j[2]) for j in jobs}
         for n, fut in enumerate(as_completed(futs), 1):
             S, _ = futs[fut]
