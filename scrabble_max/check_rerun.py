@@ -29,6 +29,16 @@ import os
 OLD = 'results/pre_fix'
 NEW = 'results'
 
+# The certified re-run replaces `results/pre_hardening`, not `pre_fix`.
+# Comparing only against `pre_fix` would check the new run against results
+# from before the cross_options fix -- a comparison that is still valid
+# (bounds may only rise) but far too loose to catch a small regression,
+# because everything in between is allowed to have moved. Against
+# `pre_hardening` the expectation is much sharper: no model change
+# separates the two, so every number should come back *identical*, and
+# anything that moves at all is worth an explanation.
+PREVIOUS = 'results/pre_hardening'
+
 
 def _load(path):
     with open(path) as f:
@@ -155,6 +165,72 @@ def check_tier3_configs(old_dir=OLD, new_dir=NEW):
     return bad, grew
 
 
+def check_identical(prev_dir=PREVIOUS, new_dir=NEW):
+    """Numbers that should be *identical*, not merely non-decreasing.
+
+    Between `pre_hardening` and the certified re-run nothing changed that
+    can move a bound: the identity, manifest and witness work touched no
+    model. So this is a much sharper instrument than the directional
+    checks, which only forbid movement in one direction and would wave
+    through a bound that quietly climbed.
+
+    Movement here is not automatically a bug -- a timeout-derived bound
+    legitimately moves with the solver version, which is why per-mask
+    statuses are now recorded -- but it always needs an explanation.
+    """
+    out = []
+
+    o, n = f'{prev_dir}/tight_bounds.json', f'{new_dir}/tight_bounds.json'
+    if _present(o, n):
+        old = {(r['word'], r['row']): r for r in _load(o)}
+        for r in _load(n):
+            k = (r['word'], r['row'])
+            if k in old and r['tight_bound'] != old[k]['tight_bound']:
+                out.append(f'stage B {k}: {old[k]["tight_bound"]} -> '
+                           f'{r["tight_bound"]} (MOVED)')
+
+    o, n = f'{prev_dir}/pattern_row1.json', f'{new_dir}/pattern_row1.json'
+    if _present(o, n):
+        old = {tuple(r['placed']): r for r in _load(o)}
+        new = {tuple(r['placed']): r for r in _load(n)}
+        if len(new) == len(old):
+            for S, r in new.items():
+                if S in old and r['row1_bound'] != old[S]['row1_bound']:
+                    out.append(f'tier 2 {S}: {old[S]["row1_bound"]} -> '
+                               f'{r["row1_bound"]} (MOVED)')
+            ok_old = {S for S, r in old.items() if r['kept']}
+            ok_new = {S for S, r in new.items() if r['kept']}
+            if ok_old != ok_new:
+                out.append(f'tier 2 survivors changed: '
+                           f'+{sorted(ok_new - ok_old)} '
+                           f'-{sorted(ok_old - ok_new)}')
+
+    o, n = (f'{prev_dir}/blank_penalty_tier2.json',
+            f'{new_dir}/blank_penalty_tier2.json')
+    if _present(o, n):
+        old = {tuple(r['placed']): r for r in _load(o)}
+        for r in _load(n):
+            S = tuple(r['placed'])
+            if S in old and (r['new'], r['dies']) != (old[S]['new'],
+                                                      old[S]['dies']):
+                out.append(f'sweep {S}: {old[S]["new"]}/'
+                           f'dies={old[S]["dies"]} -> {r["new"]}/'
+                           f'dies={r["dies"]} (MOVED)')
+
+    o, n = (f'{prev_dir}/tier3_configs.json',
+            f'{new_dir}/tier3_configs.json')
+    if _present(o, n):
+        old = {tuple(p['placed']): p for p in _load(o)['patterns']}
+        for p in _load(n)['patterns']:
+            S = tuple(p['placed'])
+            if S in old and p['count'] != old[S]['count']:
+                out.append(f'tier 3 {S}: {old[S]["count"]} -> {p["count"]} '
+                           f'configurations (MOVED)')
+            if S in old and not p['complete']:
+                out.append(f'tier 3 {S}: not complete')
+    return out
+
+
 def verdict_breakdown(path):
     """How tier-2 verdicts were reached. Derived rather than read, because
     `proved_optimal` is recorded False on infeasibility too."""
@@ -206,6 +282,19 @@ def main():
     bad, grew = check_tier3_configs()
     violations += bad
     print(f'tier 3 lists : {len(bad)} violations, {len(grew)} lists changed')
+
+    if os.path.isdir(PREVIOUS):
+        moved = check_identical()
+        print()
+        print(f'vs {PREVIOUS} (nothing should have moved at all):')
+        if moved:
+            print(f'  {len(moved)} value(s) MOVED -- each needs an '
+                  f'explanation, though a timeout-derived bound may move '
+                  f'legitimately with the solver version:')
+            for m in moved:
+                print('   ', m)
+        else:
+            print('  every comparable number is identical')
 
     print()
     if violations:
