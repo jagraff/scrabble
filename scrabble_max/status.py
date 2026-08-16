@@ -239,9 +239,14 @@ def collect_checks(checks_dir, configs_file, cache=None):
             over = []
             for r in data:
                 statuses[r.get('status')] = statuses.get(r.get('status'), 0) + 1
-                if r.get('value') is None:
+                # "no solve" means the exact ceiling settled it, which
+                # check_configs records with a `reason`. A timeout also has
+                # value None, and counting it here would file an UNDECIDED
+                # configuration under the decided column -- the one place
+                # the display must not round off.
+                if r.get('status') == 'INFEASIBLE' and r.get('reason'):
                     no_solve += 1
-                elif r['value'] > 1786:
+                elif r.get('value') is not None and r['value'] > 1786:
                     over.append(r)
         rows.append({'tag': tag, 'done': got, 'total': total,
                      'statuses': statuses, 'no_solve': no_solve,
@@ -267,7 +272,8 @@ def render_checks(rows):
         if bad:
             alarms.append((r['tag'], bad))
         over_all += r['over']
-        n_solved = r['done'] - r['no_solve']
+        n_bad = sum(v for k, v in r['statuses'].items() if k != 'INFEASIBLE')
+        n_solved = r['done'] - r['no_solve'] - n_bad
         mark = ' (writing)' if r['writing'] else ''
         age = (_fmt(now - r['mtime']) if r['mtime'] and r['done'] < r['total']
                else '-')

@@ -100,6 +100,7 @@ def main():
     print('refuting...')
     t1 = time.time()
     beat = []
+    unresolved = []
     check_dir = os.path.join(os.path.dirname(a.out) or '.', 'tier3_checks')
     os.makedirs(check_dir, exist_ok=True)
     for S, (cfgs, complete) in sorted(res.items()):
@@ -124,18 +125,32 @@ def main():
                              log=tick)
         over = [r for r in rows if (r.get('value') or 0) > a.threshold]
         beat += over
-        solved = sum(1 for r in rows if r.get('value') is not None)
-        print(f'  {S}: {len(rows)} checked, {len(rows) - solved} killed by '
-              f'the exact blank ceiling with no solve, {len(over)} above '
-              f'threshold', flush=True)
+        by_ceiling = sum(1 for r in rows
+                         if r.get('status') == 'INFEASIBLE' and r.get('reason'))
+        undecided = [r for r in rows if r.get('status') != 'INFEASIBLE']
+        print(f'  {S}: {len(rows)} checked, {by_ceiling} by exact ceiling, '
+              f'{len(rows) - by_ceiling - len(undecided)} by CP-SAT proof, '
+              f'{len(undecided)} UNDECIDED, {len(over)} above threshold',
+              flush=True)
+        unresolved.extend((S, r) for r in undecided)
     print()
     print(f'refutation in {(time.time() - t1) / 60:.1f} min')
     if beat:
         print(f'*** {len(beat)} configurations exceed {a.threshold} ***')
         for r in beat[:10]:
             print('   ', r)
+    elif unresolved:
+        # Not the same sentence as "nothing exceeds the threshold". An
+        # undecided configuration is not a refuted one, and the proof is
+        # open until it is settled.
+        print(f'no configuration was SHOWN to exceed {a.threshold}, but '
+              f'{len(unresolved)} is/are UNDECIDED -- the proof is not '
+              f'closed for these:')
+        for S, r in unresolved:
+            print(f'    {S} {json.dumps(r["config"]["crosses"])}')
     else:
-        print(f'no configuration exceeds {a.threshold}')
+        print(f'every configuration refuted: no legal play exceeds '
+              f'{a.threshold}')
 
 
 if __name__ == '__main__':

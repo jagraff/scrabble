@@ -574,7 +574,17 @@ def check_configs(lexicon, configs, threshold=1786, time_limit=600.0,
         name, val, bound, sol = solve_tableau(
             lexicon, 'OXYPHENBUTAZONE', 0, time_limit=time_limit,
             fix_placed_exact=placed, fix_crosses=crosses,
-            min_score=threshold + 1, known_upper=1794,
+            # This configuration's own proven ceiling, not the geometry's
+            # 1794. `config_ceiling` has already been computed above and
+            # was only being used to skip the solve entirely; handing it
+            # to the solver as well costs nothing and is far tighter. Of
+            # the 259 configurations that survive the ceiling, 201 have a
+            # ceiling of exactly 1787 -- and `min_score` is 1787 -- so the
+            # objective is pinned to a single value rather than searched
+            # over the eight-point window [1787, 1794]. Across all 259 it
+            # removes 84% of the objective slack.
+            min_score=threshold + 1,
+            known_upper=int(ceiling) if ceiling is not None else 1794,
             fixed_blank_loss=fb, log=lambda s: None, verbose=False)
         log(f"[{i+1}/{len(configs)}] relaxed={cfg['relaxed_score']} "
             f"placed={sorted(placed)} -> {name} "
