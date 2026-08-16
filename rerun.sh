@@ -48,6 +48,12 @@ if [ -d "$RUNDIR" ]; then
 fi
 echo "cells will be written to $RUNDIR" | tee -a "$LOG/rerun.log"
 
+# Tests first. A run that certifies results produced by code which does not
+# pass its own tests certifies nothing, and finding that out after two and a
+# half hours of solving is the expensive way to find it out.
+step tests-fast $PY -m pytest tests/ -q -m "not slow"
+step tests-slow $PY -m pytest tests/ -q -m slow
+
 step stage-a   $PY -m scrabble_max.bounds --threshold 1786
 step stage-b   $PY -m scrabble_max.tighten --time-limit 240
 step six-tiles $PY -m scrabble_max.tighten --max-placed 6 \

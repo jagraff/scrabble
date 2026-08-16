@@ -217,6 +217,13 @@ def refutation_summary(check_dir='results/tier3_checks',
 
     for path in sorted(glob.glob(os.path.join(check_dir, '*.json'))):
         if os.path.basename(path) == 'decomposed.json':
+            # Hashed like the rest -- it is the record that the undecided
+            # configurations were closed -- but it holds decomposition
+            # outcomes, not per-configuration verdicts, so it is not
+            # counted as one.
+            out['files'].append({'file': os.path.relpath(path),
+                                 'sha256': file_digest(path),
+                                 'rows': len(decomposed)})
             continue
         with open(path) as f:
             rows = json.load(f)
@@ -284,13 +291,48 @@ def check_coverage(man: dict, patterns) -> list[str]:
     return problems
 
 
+def check_witness(path='results/rack_schedule.json', expect_score=1786):
+    """The 1,786 board must still be shown reachable.
+
+    The upper-bound half of the theorem says nothing beats 1,786; the other
+    half says 1,786 is attained *and* reachable in a legal two-player game.
+    That half is a file on disk like any other, and a run in which the
+    witness quietly stopped verifying would otherwise be certified as
+    happily as one in which it did.
+    """
+    problems = []
+    if not os.path.exists(path):
+        return [f'{path}: the reachability witness is missing']
+    with open(path) as f:
+        w = json.load(f)
+    if not w.get('feasible'):
+        problems.append(f'{path}: no rack/bag schedule was found')
+    if not w.get('verified'):
+        problems.append(f"{path}: the witness did not re-verify "
+                        f"({w.get('detail')})")
+    if not w.get('board_replay_ok'):
+        problems.append(f"{path}: the move sequence does not replay to the "
+                        f"record board ({w.get('board_replay')})")
+    if w.get('final_move_score') != expect_score:
+        problems.append(f"{path}: the final move scores "
+                        f"{w.get('final_move_score')}, expected "
+                        f'{expect_score}')
+    return problems
+
+
 def verify(path=DEFAULT_PATH) -> list[str]:
-    """Re-hash everything the manifest names and report what moved."""
+    """Re-hash everything the manifest names and report what moved.
+
+    Includes the refutation verdict files: recording a hash that nothing
+    re-checks is worse than not recording it, because it reads as coverage
+    while providing none."""
     with open(path) as f:
         man = json.load(f)
     problems = []
-    for group in ('cells', 'artifacts'):
-        for rec in man.get(group, []):
+    groups = [man.get('cells', []), man.get('artifacts', []),
+              (man.get('refutation') or {}).get('files', [])]
+    for group in groups:
+        for rec in group:
             f_ = rec['file']
             if rec.get('sha256') is None:
                 problems.append(f'{f_}: recorded as missing')
@@ -375,7 +417,7 @@ def main():
     print(f'-> {a.path}')
     print(f'manifest digest: {digest}')
 
-    problems = check_refutation(man['refutation'])
+    problems = check_refutation(man['refutation']) + check_witness()
     try:
         from .tier3 import survivors
         problems += check_coverage(man, survivors())
@@ -388,7 +430,8 @@ def main():
             print('   ', p)
         return 1
     print('coverage: every cell of every surviving pattern is present and '
-          'complete; every enumerated configuration has a refutation')
+          'complete; every enumerated configuration has a refutation; the '
+          '1786 witness verifies and replays to the record board')
     return 0
 
 

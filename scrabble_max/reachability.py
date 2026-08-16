@@ -170,8 +170,9 @@ def main():
             f"{coord_name(c)}={t.letter}{'?' if t.is_blank else ''}"
             for c, t in sorted(mv.placements.items()))
         print(f"  {i:2d}. {cells}  ->  {words}")
-    assert replay == grid or True
-    # verify final equality
+    # Compare by (letter, blank) rather than by Tile identity. An earlier
+    # `assert replay == grid or True` sat here as well: a no-op that read
+    # like a check, which is worse than no check at all.
     assert {c: (t.letter, t.is_blank) for c, t in replay.items()} == \
            {c: (t.letter, t.is_blank) for c, t in grid.items()}
     print("verified: replay reproduces the pre-board exactly")

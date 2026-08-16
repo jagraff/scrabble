@@ -327,6 +327,66 @@ class TestRefutation:
         assert any('no verdict' in p for p in M.check_refutation(s))
 
 
+class TestWitness:
+    """The other half of the theorem.
+
+    The upper bound says nothing beats 1,786. The witness says 1,786 is
+    attained and reachable in a legal two-player game. A run in which the
+    witness quietly stopped verifying would otherwise be certified as
+    happily as one in which it did.
+    """
+
+    GOOD = {'feasible': True, 'verified': True, 'board_replay_ok': True,
+            'final_move_score': 1786, 'detail': 'ok', 'board_replay': 'ok'}
+
+    def _write(self, tmp_path, **over):
+        p = tmp_path / 'rack_schedule.json'
+        p.write_text(json.dumps({**self.GOOD, **over}))
+        return str(p)
+
+    def test_a_good_witness_passes(self, tmp_path):
+        assert M.check_witness(self._write(tmp_path)) == []
+
+    def test_a_missing_witness_fails(self, tmp_path):
+        assert M.check_witness(str(tmp_path / 'nope.json'))
+
+    @pytest.mark.parametrize('field,value,word', [
+        ('feasible', False, 'no rack/bag schedule'),
+        ('verified', False, 'did not re-verify'),
+        ('board_replay_ok', False, 'does not replay'),
+        ('final_move_score', 1785, 'expected 1786'),
+    ])
+    def test_each_half_of_the_witness_is_required(self, tmp_path, field,
+                                                  value, word):
+        problems = M.check_witness(self._write(tmp_path, **{field: value}))
+        assert any(word in p for p in problems), problems
+
+    def test_the_committed_witness_passes(self):
+        assert M.check_witness() == []
+
+
+def test_verify_covers_the_refutation_files(tmp_path, lex):
+    """A recorded hash that nothing re-checks is worse than no hash: it
+    reads as coverage while providing none."""
+    run = _run(lex)
+    _cell_file(tmp_path / 'enum_cells' / f'run-{ID.digest(run)[:12]}', run)
+    checks = tmp_path / 'checks'
+    checks.mkdir()
+    verdicts = checks / 'pattern.json'
+    verdicts.write_text(json.dumps([{'status': 'INFEASIBLE', 'value': None}]))
+
+    man = M.build(ckpt_dir=str(tmp_path / 'enum_cells'), run=run)
+    man['source_dirty'] = False
+    man['refutation'] = {'files': [{'file': str(verdicts),
+                                    'sha256': M.file_digest(str(verdicts))}]}
+    path = tmp_path / 'MANIFEST.json'
+    M.write(man, str(path))
+    assert M.verify(str(path)) == []
+
+    verdicts.write_text(json.dumps([{'status': 'UNKNOWN', 'value': None}]))
+    assert any('changed since' in p for p in M.verify(str(path)))
+
+
 def test_manifest_digest_is_stable_under_reserialisation(tmp_path, lex):
     run = _run(lex)
     _cell_file(tmp_path / 'enum_cells' / f'run-{ID.digest(run)[:12]}', run)
