@@ -94,6 +94,13 @@ kept, never dropped.
    is *not* proved stated explicitly in §8. Start here.
 2. **[REPORT.md](REPORT.md)** — the engineering narrative: model design,
    why each relaxation is sound, and reproduction commands in §10.
+3. **[results/tier3_results.md](results/tier3_results.md)** — how the last
+   ten patterns were closed, and the one configuration that needed cell
+   decomposition.
+4. **[COLLINS_HANDOFF.md](COLLINS_HANDOFF.md)** — a ready-to-hand-off brief
+   for running the same question against the Collins (CSW) lexicon, where
+   the answer is necessarily ≥ 1,786 and almost certainly higher. Carries
+   the soundness rule and the traps that cost this project time.
 
 ## Layout
 
