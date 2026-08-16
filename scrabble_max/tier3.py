@@ -100,15 +100,34 @@ def main():
     print('refuting...')
     t1 = time.time()
     beat = []
+    check_dir = os.path.join(os.path.dirname(a.out) or '.', 'tier3_checks')
+    os.makedirs(check_dir, exist_ok=True)
     for S, (cfgs, complete) in sorted(res.items()):
         if not cfgs:
             print(f'  {S}: nothing to refute (0 configurations)')
             continue
+        # A distinct out_path per pattern. check_configs rewrites its whole
+        # output file after every configuration, so a shared path would
+        # leave only the last pattern's results on disk.
+        tag = ''.join(f'{c:02d}' for c in S)
+        seen = [0]
+
+        def tick(msg='', **kw):
+            seen[0] += 1
+            if seen[0] % 50 == 0:
+                print(f'    {tag}: {seen[0]}/{len(cfgs)} checked '
+                      f'({(time.time() - t1) / 60:.0f}m)', flush=True)
+
         rows = check_configs(lex, cfgs, threshold=a.threshold,
-                             time_limit=a.check_time_limit, verbose=False)
+                             time_limit=a.check_time_limit,
+                             out_path=os.path.join(check_dir, f'{tag}.json'),
+                             log=tick)
         over = [r for r in rows if (r.get('value') or 0) > a.threshold]
         beat += over
-        print(f'  {S}: {len(rows)} checked, {len(over)} above threshold')
+        solved = sum(1 for r in rows if r.get('value') is not None)
+        print(f'  {S}: {len(rows)} checked, {len(rows) - solved} killed by '
+              f'the exact blank ceiling with no solve, {len(over)} above '
+              f'threshold', flush=True)
     print()
     print(f'refutation in {(time.time() - t1) / 60:.1f} min')
     if beat:
