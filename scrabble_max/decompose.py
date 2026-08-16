@@ -75,7 +75,7 @@ def pivot_candidates(lexicon, word, crosses):
 
 def refute(lexicon, placed, crosses, threshold=1786, word=WORD,
            time_limit=25.0, max_depth=3, fixed=None, pivots=None,
-           depth=0, log=print, stats=None):
+           depth=0, log=print, stats=None, split_time_limit=6.0):
     """Try to prove no legal board with this configuration beats
     `threshold`. Returns (refuted, open_branches).
 
@@ -93,9 +93,16 @@ def refute(lexicon, placed, crosses, threshold=1786, word=WORD,
     if fb is None:
         return True, []                  # needs >2 blanks: impossible
 
+    # A node that will be split if it does not resolve should not spend
+    # the full budget failing to resolve. Measured on the first run: 21
+    # solves took 142s, nearly all of it internal nodes burning 25s to
+    # return UNKNOWN before being split anyway. Only the deepest level,
+    # where there is no split to fall back on, gets the full limit.
+    budget = time_limit if depth >= max_depth else min(time_limit,
+                                                       split_time_limit)
     t0 = time.time()
     name, val, bound, sol = solve_tableau(
-        lexicon, word, 0, time_limit=time_limit,
+        lexicon, word, 0, time_limit=budget,
         fix_placed_exact=set(placed), fix_crosses=crosses,
         min_score=threshold + 1, known_upper=None,
         fixed_blank_loss=fb, fix_cells=fixed or None,
@@ -129,7 +136,7 @@ def refute(lexicon, placed, crosses, threshold=1786, word=WORD,
         sub[pivot] = a
         ok, opened = refute(lexicon, placed, crosses, threshold, word,
                             time_limit, max_depth, sub, pivots, depth + 1,
-                            log, stats)
+                            log, stats, split_time_limit)
         if not ok:
             still_open.extend(opened)
     if not still_open:
