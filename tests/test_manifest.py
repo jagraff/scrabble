@@ -256,6 +256,77 @@ def test_uncommitted_source_is_reported_but_dirty_results_are_not(
     assert any('uncommitted source' in p for p in M.verify(str(path)))
 
 
+class TestRefutation:
+    """The other half of the claim.
+
+    Cell checkpoints certify that the *enumeration* was exhaustive. Nothing
+    certified that every enumerated configuration was then refuted: the
+    verdict files were unhashed and uncounted, so "every configuration
+    refuted" rested on a line of console output, and a configuration that
+    was enumerated and never checked would leave no trace.
+    """
+
+    def _setup(self, tmp_path, rows, enumerated=None, decomposed=None):
+        d = tmp_path / 'checks'
+        d.mkdir()
+        (d / 'pattern.json').write_text(json.dumps(rows))
+        if decomposed is not None:
+            (d / 'decomposed.json').write_text(json.dumps(decomposed))
+        cfg = tmp_path / 'tier3_configs.json'
+        cfg.write_text(json.dumps({
+            'threshold': 1786,
+            'patterns': [{'placed': [0, 2, 3],
+                          'count': len(rows) if enumerated is None
+                          else enumerated}]}))
+        return M.refutation_summary(str(d), str(cfg))
+
+    def _row(self, status='INFEASIBLE', value=None, crosses=None):
+        return {'status': status, 'value': value,
+                'config': {'placed': [0, 2, 3],
+                           'crosses': crosses or {'0': 'WORD'}}}
+
+    def test_all_refuted_is_clean(self, tmp_path):
+        s = self._setup(tmp_path, [self._row(), self._row()])
+        assert s['refuted'] == 2 and s['undecided'] == 0
+        assert M.check_refutation(s) == []
+
+    def test_an_undecided_configuration_fails(self, tmp_path):
+        s = self._setup(tmp_path, [self._row(), self._row('UNKNOWN')])
+        assert s['undecided'] == 1
+        assert any('UNDECIDED' in p for p in M.check_refutation(s))
+
+    def test_decomposition_closes_an_undecided_configuration(self, tmp_path):
+        """The step that was run by hand and recorded as prose. It now
+        leaves a machine-readable record, and this is what reads it."""
+        s = self._setup(
+            tmp_path, [self._row('UNKNOWN', crosses={'0': 'HARD'})],
+            decomposed=[{'placed': [0, 2, 3], 'crosses': {'0': 'HARD'},
+                         'refuted': True, 'open_branches': 0}])
+        assert s['undecided'] == 0 and s['refuted'] == 1
+        assert M.check_refutation(s) == []
+
+    def test_a_failed_decomposition_does_not_close_it(self, tmp_path):
+        s = self._setup(
+            tmp_path, [self._row('UNKNOWN', crosses={'0': 'HARD'})],
+            decomposed=[{'placed': [0, 2, 3], 'crosses': {'0': 'HARD'},
+                         'refuted': False, 'open_branches': 3}])
+        assert s['undecided'] == 1
+        assert any('UNDECIDED' in p for p in M.check_refutation(s))
+
+    def test_a_configuration_above_the_threshold_fails(self, tmp_path):
+        s = self._setup(tmp_path, [self._row('OPTIMAL', value=1787)])
+        assert s['above_threshold'] == 1
+        assert any('above the threshold' in p for p in M.check_refutation(s))
+
+    def test_an_unchecked_configuration_is_caught(self, tmp_path):
+        """Enumerated 5, checked 2. Without this the missing three are
+        invisible: they are absent from the verdict files, and absence is
+        exactly what a count of the files cannot see."""
+        s = self._setup(tmp_path, [self._row(), self._row()], enumerated=5)
+        assert s['missing_verdicts'] == 3
+        assert any('no verdict' in p for p in M.check_refutation(s))
+
+
 def test_manifest_digest_is_stable_under_reserialisation(tmp_path, lex):
     run = _run(lex)
     _cell_file(tmp_path / 'enum_cells' / f'run-{ID.digest(run)[:12]}', run)

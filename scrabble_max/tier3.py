@@ -60,6 +60,13 @@ def main():
                          'for reading archived pre-hardening runs; a '
                          'certified run must not use it')
     ap.add_argument('--check-time-limit', type=float, default=600.0)
+    ap.add_argument('--decompose-time-limit', type=float, default=60.0,
+                    help='per-branch limit for the decomposition that '
+                         'closes configurations CP-SAT leaves undecided')
+    ap.add_argument('--no-decompose', action='store_true',
+                    help='report undecided configurations instead of '
+                         'decomposing them; the run then fails, because an '
+                         'undecided configuration leaves the proof open')
     a = ap.parse_args()
 
     pats = survivors()
@@ -98,7 +105,7 @@ def main():
         print('NOT exhaustive: some cell did not finish; no pattern with an '
               'unfinished cell may be treated as refuted')
     if a.enumerate_only:
-        return
+        return 0 if allc else 1
 
     from .finalize import check_configs
     lex = load()
@@ -141,11 +148,44 @@ def main():
         unresolved.extend((S, r) for r in undecided)
     print()
     print(f'refutation in {(time.time() - t1) / 60:.1f} min')
+
+    # An UNDECIDED configuration is not a refuted one. CP-SAT leaves a
+    # handful undecided at any finite time limit -- one, on the recorded
+    # run -- and those were closed by decomposition: pin one board cell,
+    # recurse on whatever survives, and refute every branch. That step was
+    # run by hand and committed as prose, so the pipeline could finish
+    # "successfully" with the last case still open. It runs here instead.
+    decomposed = []
+    if unresolved and not a.no_decompose:
+        print()
+        print(f'decomposing {len(unresolved)} undecided configuration(s)')
+        from .decompose import refute_parallel
+        still_open = []
+        for S, r in unresolved:
+            crosses = {int(k): v for k, v in r['config']['crosses'].items()}
+            t2 = time.time()
+            refuted, branches = refute_parallel(
+                lex, tuple(r['config']['placed']), crosses,
+                threshold=a.threshold, workers=a.workers,
+                time_limit=a.decompose_time_limit, log=lambda *x: None)
+            print(f'    {S}: refuted={refuted} '
+                  f'({len(branches)} open, {time.time() - t2:.0f}s)',
+                  flush=True)
+            decomposed.append({'placed': list(S), 'crosses': r['config'][
+                'crosses'], 'refuted': bool(refuted),
+                'open_branches': len(branches)})
+            if not refuted:
+                still_open.append((S, r))
+        unresolved = still_open
+        with open(os.path.join(check_dir, 'decomposed.json'), 'w') as f:
+            json.dump(decomposed, f, indent=1)
+
     if beat:
         print(f'*** {len(beat)} configurations exceed {a.threshold} ***')
         for r in beat[:10]:
             print('   ', r)
-    elif unresolved:
+        return 1
+    if unresolved:
         # Not the same sentence as "nothing exceeds the threshold". An
         # undecided configuration is not a refuted one, and the proof is
         # open until it is settled.
@@ -154,10 +194,18 @@ def main():
               f'closed for these:')
         for S, r in unresolved:
             print(f'    {S} {json.dumps(r["config"]["crosses"])}')
-    else:
-        print(f'every configuration refuted: no legal play exceeds '
-              f'{a.threshold}')
+        return 1
+    if not allc:
+        # Reachable only if every configuration found so far was refuted
+        # while some cell never finished: nothing was shown to exceed the
+        # threshold, but the list it was shown over is not exhaustive.
+        print('every configuration found was refuted, but the enumeration '
+              'is NOT exhaustive -- no completeness claim may be made')
+        return 1
+    print(f'every configuration refuted: no legal play exceeds '
+          f'{a.threshold}')
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main())

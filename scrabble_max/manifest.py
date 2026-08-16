@@ -131,10 +131,13 @@ def build(*, threshold=1786, n_blocks=4, ckpt_dir='results/enum_cells',
         else:
             files.append({'file': a, 'sha256': None, 'missing': True})
 
+    refutation = refutation_summary()
+
     man = {
         'schema': 1,
         'environment': stamp(),
         'source_dirty': source_dirty(),
+        'refutation': refutation,
         'run': run,
         'run_digest': ID.digest(run),
         'cell_dir': cell_dir,
@@ -148,6 +151,9 @@ def build(*, threshold=1786, n_blocks=4, ckpt_dir='results/enum_cells',
             'configurations': sum(c['configs'] for c in cells),
             'solver_seconds': round(sum(c['seconds'] for c in cells), 1),
             'mixed_environment': mixed,
+            'refuted': refutation['refuted'],
+            'undecided': refutation['undecided'],
+            'above_threshold': refutation['above_threshold'],
         },
     }
     return man
@@ -173,6 +179,87 @@ def expected_cells(patterns, run, ckpt_dir='results/enum_cells'):
             out[ID.digest(cell)] = os.path.join(
                 ID.run_dir(ckpt_dir, run), f'{_cell_tag(S, pivot, i)}.jsonl')
     return out
+
+
+def refutation_summary(check_dir='results/tier3_checks',
+                       configs_path='results/tier3_configs.json') -> dict:
+    """Every enumerated configuration must have a verdict, and every
+    verdict must be a refutation.
+
+    The enumeration's completeness is what the cell checkpoints certify.
+    This is the other half, and it was certified by nothing: the refutation
+    phase writes per-pattern verdict files that no manifest hashed and no
+    check counted, so "every configuration refuted" rested on a line of
+    console output. A configuration that was enumerated and then never
+    checked would leave no trace at all.
+
+    `decomposed.json` records configurations CP-SAT left undecided and the
+    decomposition then closed; those count as refuted only when the
+    decomposition reports every branch refuted.
+    """
+    out = {'checked': 0, 'refuted': 0, 'undecided': 0, 'above_threshold': 0,
+           'enumerated': 0, 'missing_verdicts': 0, 'files': []}
+    if os.path.exists(configs_path):
+        with open(configs_path) as f:
+            payload = json.load(f)
+        out['enumerated'] = sum(p['count'] for p in payload['patterns'])
+        out['threshold'] = payload.get('threshold')
+
+    decomposed = {}
+    dpath = os.path.join(check_dir, 'decomposed.json')
+    if os.path.exists(dpath):
+        with open(dpath) as f:
+            for rec in json.load(f):
+                key = json.dumps(rec['crosses'], sort_keys=True)
+                decomposed[(tuple(rec['placed']), key)] = rec['refuted']
+        out['decomposed'] = len(decomposed)
+        out['decomposed_refuted'] = sum(1 for v in decomposed.values() if v)
+
+    for path in sorted(glob.glob(os.path.join(check_dir, '*.json'))):
+        if os.path.basename(path) == 'decomposed.json':
+            continue
+        with open(path) as f:
+            rows = json.load(f)
+        out['files'].append({'file': os.path.relpath(path),
+                             'sha256': file_digest(path), 'rows': len(rows)})
+        for r in rows:
+            out['checked'] += 1
+            value = r.get('value') or 0
+            thresh = out.get('threshold') or 1786
+            if value > thresh:
+                out['above_threshold'] += 1
+            elif r.get('status') == 'INFEASIBLE':
+                out['refuted'] += 1
+            else:
+                cfg = r.get('config') or {}
+                key = (tuple(cfg.get('placed') or ()),
+                       json.dumps(cfg.get('crosses') or {}, sort_keys=True))
+                if decomposed.get(key):
+                    out['refuted'] += 1
+                else:
+                    out['undecided'] += 1
+    out['missing_verdicts'] = max(0, out['enumerated'] - out['checked'])
+    return out
+
+
+def check_refutation(summary: dict) -> list[str]:
+    """Complaints about the refutation phase."""
+    problems = []
+    if summary['above_threshold']:
+        problems.append(f"{summary['above_threshold']} configuration(s) "
+                        f'scored above the threshold')
+    if summary['undecided']:
+        problems.append(f"{summary['undecided']} configuration(s) are "
+                        f'UNDECIDED and were not closed by decomposition')
+    if summary['missing_verdicts']:
+        problems.append(
+            f"{summary['missing_verdicts']} enumerated configuration(s) have "
+            f"no verdict: {summary['enumerated']} enumerated against "
+            f"{summary['checked']} checked")
+    if summary['enumerated'] and not summary['checked']:
+        problems.append('no verdict files at all, but configurations were '
+                        'enumerated')
+    return problems
 
 
 def check_coverage(man: dict, patterns) -> list[str]:
@@ -275,25 +362,33 @@ def main():
           f"{s['cells_corrupt']} corrupt, {s['cells_unstamped']} unstamped)")
     print(f"configurations: {s['configurations']}")
     print(f"solver time  : {s['solver_seconds'] / 3600:.1f} h")
+    r = man['refutation']
+    print(f"refutation   : {r['checked']} checked, {r['refuted']} refuted, "
+          f"{r['undecided']} undecided, {r['above_threshold']} above the "
+          f"threshold")
+    if r.get('decomposed'):
+        print(f"  of which    {r['decomposed_refuted']}/{r['decomposed']} "
+              f"closed by decomposition")
     if s['mixed_environment']:
         print(f"MIXED ENVIRONMENT: {s['mixed_environment']}")
     print(f"artifacts    : {len(man['artifacts'])}")
     print(f'-> {a.path}')
     print(f'manifest digest: {digest}')
 
+    problems = check_refutation(man['refutation'])
     try:
         from .tier3 import survivors
-        problems = check_coverage(man, survivors())
+        problems += check_coverage(man, survivors())
     except (OSError, ValueError) as e:
         print(f'coverage not checked: {e}')
-        return 0
+        problems.append(f'coverage could not be checked: {e}')
     if problems:
-        print(f'\n{len(problems)} COVERAGE PROBLEM(S):')
+        print(f'\n{len(problems)} PROBLEM(S):')
         for p in problems[:20]:
             print('   ', p)
         return 1
     print('coverage: every cell of every surviving pattern is present and '
-          'complete')
+          'complete; every enumerated configuration has a refutation')
     return 0
 
 
