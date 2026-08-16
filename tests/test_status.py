@@ -157,3 +157,96 @@ def test_a_silent_cell_with_no_finished_solve_is_still_flagged(tmp_path):
     out = render(collect(str(tmp_path)))
     assert 'longer than any solve' in out
     assert 'no solve finished yet' in out
+
+
+# --- refutation phase ---------------------------------------------------
+
+def _configs_file(tmp_path, counts):
+    p = tmp_path / 'tier3_configs.json'
+    p.write_text(json.dumps({'patterns': [
+        {'placed': list(placed), 'count': n, 'complete': True, 'configs': []}
+        for placed, n in counts.items()]}))
+    return str(p)
+
+
+def _check_rows(n, status='INFEASIBLE', value=None):
+    return [{'config': {'placed': [0], 'crosses': {}, 'relaxed_score': 1787},
+             'status': status, 'value': value, 'bound': 1780,
+             'solution': None} for _ in range(n)]
+
+
+def test_checks_count_decided_against_the_enumerated_total(tmp_path):
+    from scrabble_max.status import collect_checks, render_checks
+    cfg = _configs_file(tmp_path, {(0, 2, 3, 7, 11, 13, 14): 14})
+    cdir = tmp_path / 'checks'
+    cdir.mkdir()
+    (cdir / '00020307111314.json').write_text(json.dumps(_check_rows(9)))
+    rows = collect_checks(str(cdir), cfg)
+    assert rows[0]['done'] == 9 and rows[0]['total'] == 14
+    assert '9/14' in render_checks(rows)
+
+
+def test_a_file_caught_mid_rewrite_reuses_the_last_good_read(tmp_path):
+    """check_configs rewrites the whole file after every configuration, so
+    landing mid-write is routine. Reporting 0 there would look exactly
+    like a pattern that had stalled."""
+    from scrabble_max.status import collect_checks
+    cfg = _configs_file(tmp_path, {(0, 2, 3, 7, 11, 13, 14): 14})
+    cdir = tmp_path / 'checks'
+    cdir.mkdir()
+    f = cdir / '00020307111314.json'
+    f.write_text(json.dumps(_check_rows(9)))
+    cache = {}
+    assert collect_checks(str(cdir), cfg, cache)[0]['done'] == 9
+    f.write_text('[{"status": "INFEA')                  # caught mid-write
+    row = collect_checks(str(cdir), cfg, cache)[0]
+    assert row['done'] == 9 and row['writing']
+
+
+def test_a_status_other_than_infeasible_is_raised_as_an_alarm(tmp_path):
+    """An UNKNOWN is an undecided configuration, and the proof is not
+    closed while one exists -- it must never blend into the table."""
+    from scrabble_max.status import collect_checks, render_checks
+    cfg = _configs_file(tmp_path, {(0, 2, 3, 7, 11, 13, 14): 2})
+    cdir = tmp_path / 'checks'
+    cdir.mkdir()
+    (cdir / '00020307111314.json').write_text(
+        json.dumps(_check_rows(1) + _check_rows(1, status='UNKNOWN')))
+    out = render_checks(collect_checks(str(cdir), cfg))
+    assert 'NOT INFEASIBLE' in out and 'UNKNOWN' in out
+
+
+def test_a_configuration_above_the_threshold_is_shouted_about(tmp_path):
+    """The one result that would overturn the record rather than confirm
+    it. It must not be a quiet row in a table."""
+    from scrabble_max.status import collect_checks, render_checks
+    cfg = _configs_file(tmp_path, {(0, 2, 3, 7, 11, 13, 14): 1})
+    cdir = tmp_path / 'checks'
+    cdir.mkdir()
+    (cdir / '00020307111314.json').write_text(
+        json.dumps(_check_rows(1, status='OPTIMAL', value=1790)))
+    out = render_checks(collect_checks(str(cdir), cfg))
+    assert 'SCORE ABOVE 1786' in out and '1790' in out
+
+
+def test_all_infeasible_and_complete_states_the_conclusion(tmp_path):
+    from scrabble_max.status import collect_checks, render_checks
+    cfg = _configs_file(tmp_path, {(0, 2, 3, 7, 11, 13, 14): 3})
+    cdir = tmp_path / 'checks'
+    cdir.mkdir()
+    (cdir / '00020307111314.json').write_text(json.dumps(_check_rows(3)))
+    out = render_checks(collect_checks(str(cdir), cfg))
+    assert 'every configuration INFEASIBLE' in out
+
+
+def test_ceiling_kills_and_solver_decisions_are_counted_separately(tmp_path):
+    """They are different evidence: a ceiling kill is closed-form
+    arithmetic, a solver decision is a CP-SAT infeasibility proof."""
+    from scrabble_max.status import collect_checks
+    cfg = _configs_file(tmp_path, {(0, 2, 3, 7, 11, 13, 14): 4})
+    cdir = tmp_path / 'checks'
+    cdir.mkdir()
+    (cdir / '00020307111314.json').write_text(json.dumps(
+        _check_rows(3) + _check_rows(1, value=1700)))
+    row = collect_checks(str(cdir), cfg)[0]
+    assert row['no_solve'] == 3 and row['done'] - row['no_solve'] == 1

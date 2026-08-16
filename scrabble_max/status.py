@@ -200,6 +200,108 @@ def render(rows, by_pattern=False):
     return '\n'.join(out)
 
 
+def collect_checks(checks_dir, configs_file, cache=None):
+    """Refutation progress, per pattern.
+
+    `check_configs` rewrites its whole output file after every
+    configuration, so a read can easily land mid-write and raise. That is
+    normal, not an error: the previous good value is reused and the row is
+    marked `(writing)`. Reporting 0 for a file that is simply being
+    rewritten would look exactly like a stalled pattern.
+    """
+    cache = {} if cache is None else cache
+    expected = {}
+    if os.path.exists(configs_file):
+        try:
+            d = json.load(open(configs_file))
+            for p in d['patterns']:
+                tag = ''.join(f'{c:02d}' for c in p['placed'])
+                expected[tag] = p['count']
+        except (json.JSONDecodeError, KeyError):
+            pass
+
+    rows = []
+    for tag, total in sorted(expected.items()):
+        path = os.path.join(checks_dir, f'{tag}.json')
+        writing = False
+        if not os.path.exists(path):
+            got, statuses, no_solve, over = 0, {}, 0, []
+        else:
+            try:
+                data = json.load(open(path))
+                cache[tag] = data
+            except json.JSONDecodeError:
+                data = cache.get(tag, [])
+                writing = True
+            got = len(data)
+            statuses = {}
+            no_solve = 0
+            over = []
+            for r in data:
+                statuses[r.get('status')] = statuses.get(r.get('status'), 0) + 1
+                if r.get('value') is None:
+                    no_solve += 1
+                elif r['value'] > 1786:
+                    over.append(r)
+        rows.append({'tag': tag, 'done': got, 'total': total,
+                     'statuses': statuses, 'no_solve': no_solve,
+                     'over': over, 'writing': writing,
+                     'mtime': (os.path.getmtime(path)
+                               if os.path.exists(path) else None)})
+    return rows
+
+
+def render_checks(rows):
+    if not rows:
+        return ('no enumeration results yet -- results/tier3_configs.json '
+                'is missing, so there is nothing to refute')
+    now = time.time()
+    w = max(len(r['tag']) for r in rows)
+    head = (f'{"pattern".ljust(w)}  decided       by ceiling  by solver  '
+            f'not INFEASIBLE  since')
+    out = [head, '-' * len(head)]
+    d = t = ceil = solved = 0
+    alarms, over_all = [], []
+    for r in rows:
+        bad = {k: v for k, v in r['statuses'].items() if k != 'INFEASIBLE'}
+        if bad:
+            alarms.append((r['tag'], bad))
+        over_all += r['over']
+        n_solved = r['done'] - r['no_solve']
+        mark = ' (writing)' if r['writing'] else ''
+        age = (_fmt(now - r['mtime']) if r['mtime'] and r['done'] < r['total']
+               else '-')
+        out.append(
+            f'{r["tag"].ljust(w)}  {r["done"]:>4}/{r["total"]:<6}  '
+            f'{r["no_solve"]:>10}  {n_solved:>9}  '
+            f'{(sum(bad.values()) if bad else 0):>14}  {age:>5}{mark}')
+        d += r['done']
+        t += r['total']
+        ceil += r['no_solve']
+        solved += n_solved
+    out.append('-' * len(head))
+    pct = (100.0 * d / t) if t else 0.0
+    out.append(f'{d}/{t} decided ({pct:.1f}%)  |  {ceil} by exact blank '
+               f'ceiling with no solve, {solved} by tableau solve')
+    if over_all:
+        out.append('')
+        out.append(f'*** {len(over_all)} CONFIGURATION(S) SCORE ABOVE 1786 '
+                   f'-- this would beat the record ***')
+        for r in over_all[:5]:
+            out.append(f'    value={r["value"]} {r["config"]}')
+    if alarms:
+        out.append('')
+        out.append('NOT INFEASIBLE -- these are undecided or realisable, and '
+                   'the proof is not closed while any remain:')
+        for tag, bad in alarms:
+            out.append(f'    {tag}: {bad}')
+    elif d == t and t:
+        out.append('')
+        out.append('every configuration INFEASIBLE: no legal play in these '
+                   'geometries exceeds 1786')
+    return '\n'.join(out)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--dir', default='results/enum_ckpt',
@@ -210,9 +312,28 @@ def main():
                     help='merge partition cells into one row per pattern')
     ap.add_argument('--json', action='store_true',
                     help='machine-readable, for piping')
+    ap.add_argument('--checks', action='store_true',
+                    help='show the refutation phase instead of enumeration')
+    ap.add_argument('--checks-dir', default='results/tier3_checks')
+    ap.add_argument('--configs', default='results/tier3_configs.json')
     a = ap.parse_args()
 
+    cache = {}
     while True:
+        if a.checks:
+            rows = collect_checks(a.checks_dir, a.configs, cache)
+            if a.watch:
+                print('\033[2J\033[H', end='')
+                print(time.strftime('%H:%M:%S'), f'  {a.checks_dir}')
+            print(json.dumps(rows, indent=1, default=str) if a.json
+                  else render_checks(rows))
+            if not a.watch:
+                return
+            try:
+                time.sleep(a.watch)
+                continue
+            except KeyboardInterrupt:
+                return
         rows = collect(a.dir)
         if a.json:
             print(json.dumps([{k: (sorted(x for x in v if x is not None)
