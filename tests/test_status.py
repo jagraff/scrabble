@@ -169,10 +169,18 @@ def _configs_file(tmp_path, counts):
     return str(p)
 
 
-def _check_rows(n, status='INFEASIBLE', value=None):
-    return [{'config': {'placed': [0], 'crosses': {}, 'relaxed_score': 1787},
-             'status': status, 'value': value, 'bound': 1780,
-             'solution': None} for _ in range(n)]
+def _check_rows(n, status='INFEASIBLE', value=None, reason=None):
+    """`reason` is what marks a kill by the exact ceiling: check_configs
+    sets it only when it skipped the solver entirely. A row without one
+    that also has no value is a *timeout*, not a cheap win."""
+    row = {'config': {'placed': [0], 'crosses': {}, 'relaxed_score': 1787},
+           'status': status, 'value': value, 'bound': 1780, 'solution': None}
+    if reason:
+        row['reason'] = reason
+    return [dict(row) for _ in range(n)]
+
+
+CEIL = 'exact blank cost puts this ceiling at 1786 <= 1786'
 
 
 def test_checks_count_decided_against_the_enumerated_total(tmp_path):
@@ -247,6 +255,24 @@ def test_ceiling_kills_and_solver_decisions_are_counted_separately(tmp_path):
     cdir = tmp_path / 'checks'
     cdir.mkdir()
     (cdir / '00020307111314.json').write_text(json.dumps(
-        _check_rows(3) + _check_rows(1, value=1700)))
+        _check_rows(3, reason=CEIL) + _check_rows(1, value=1700)))
     row = collect_checks(str(cdir), cfg)[0]
     assert row['no_solve'] == 3 and row['done'] - row['no_solve'] == 1
+
+
+def test_a_timeout_is_not_counted_as_a_ceiling_kill(tmp_path):
+    """The bug this replaces: an UNKNOWN also has value None, so counting
+    'no value' as a ceiling kill filed an undecided configuration under
+    the decided column -- and the run then printed that every
+    configuration had been killed by the ceiling while one was open."""
+    from scrabble_max.status import collect_checks, render_checks
+    cfg = _configs_file(tmp_path, {(0, 2, 3, 7, 11, 13, 14): 3})
+    cdir = tmp_path / 'checks'
+    cdir.mkdir()
+    (cdir / '00020307111314.json').write_text(json.dumps(
+        _check_rows(2, reason=CEIL) + _check_rows(1, status='UNKNOWN')))
+    row = collect_checks(str(cdir), cfg)[0]
+    assert row['no_solve'] == 2, 'the UNKNOWN must not be a ceiling kill'
+    out = render_checks([row])
+    assert 'NOT INFEASIBLE' in out
+    assert 'every configuration INFEASIBLE' not in out
