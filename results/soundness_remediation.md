@@ -342,6 +342,70 @@ is correct behaviour — they are consistency assertions over the artifact set
 — and it is why `rerun.sh` runs the suites before touching results rather
 than after.
 
+---
+
+## P3 — what the clean re-run found
+
+### A stale checkpoint was reused, and it cost five configurations
+
+The audit's central worry was not hypothetical. Four of the 50 archived cell
+checkpoints contain only a `complete` marker with no `started` line, and
+`started` is written unconditionally before any solving — so those four were
+not produced by the code the run used. Their mtimes are 19:22:45–19:23:07 on
+2026-08-15; commit `ed8a8a3`, which added the marker, landed at 19:23:45,
+and the tier-3 run began at 19:24:31. They are leftovers from an aborted
+launch, consumed as complete.
+
+Three were harmless. The fourth, `00010307111314_p03c001`, claimed **0
+configurations in 15.12 s**; the clean re-run enumerates the same cell in
+**116 s and finds 5**.
+
+`tier3_results.md` had already recorded the symptom. Its prediction table
+has exactly one miss — pattern `(0,1,3,7,11,13,14)`, predicted 5, actual 0 —
+explained away as *"the one miss goes in the safe direction: 0
+configurations means that pattern is refuted with nothing left to check."*
+That reasoning is backwards. Missing configurations is never the safe
+direction: they were not refuted, they were not looked at. An independent
+check fired correctly and was rationalised.
+
+### The five are refuted, so 1,786 stands
+
+All five survive the exact-blank ceiling, so only a tableau solve settles
+them. Decided with `check_configs` at the current commit:
+
+```
+[1/5] relaxed=1787 -> INFEASIBLE (3s)
+[2/5] relaxed=1787 -> INFEASIBLE (2s)
+[3/5] relaxed=1787 -> INFEASIBLE (2s)
+[4/5] relaxed=1788 -> INFEASIBLE (2s)
+[5/5] relaxed=1787 -> INFEASIBLE (2s)
+```
+
+Cross words: `OPACIFICATIONS / XEROTIC|XEROSES / PREQUALIFYING /
+BLADDERLIKE / ZOOGAMETE|ZOOGAMETES / NARROWING|NARROWED /
+ESTABLISHMENTS`. All refute in seconds by propagation, matching the
+archived observation that the configurations surviving the ceiling are
+usually structurally impossible rather than merely low-scoring.
+
+The pipeline decides these same five again in its own refutation phase;
+that second verdict is an independent confirmation, not a formality.
+
+### So the conclusion held and the certificate did not
+
+The 1,786 result is unchanged. What was false is the claim that it had been
+*exhaustively verified*: the committed artifact skipped five configurations,
+and nothing in it recorded that. Reading the repository could not have
+revealed this. Only re-running from an empty directory did.
+
+### The 29.7-minute enumeration was a replay
+
+`tier3_results.md` records the tier-3 enumeration as taking 29.7 minutes.
+The archived cells' start times span **15.2 hours**, 2026-08-15 19:24 to
+2026-08-16 10:38. Both are true: the 29.7 minutes measured a final pass over
+mostly-cached cells, not a computation. That is exactly the condition in
+which a leftover file gets consumed unnoticed. The clean re-run's tier-3
+enumeration takes hours, which is the honest figure.
+
 ## Not yet done
 
 - **P1 execution** — the tooling is in; the re-run is what remains. Until it
