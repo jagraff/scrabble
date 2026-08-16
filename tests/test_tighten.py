@@ -52,6 +52,28 @@ def test_adjacent_pairs():
 
 
 @pytest.mark.slow
+def test_every_per_mask_bound_records_how_it_was_reached():
+    """A per-mask cell can be a proved optimum or a timeout-derived
+    `BestObjectiveBound`. Both are valid upper bounds, but only the first
+    reproduces exactly across solver versions, and until now only the
+    winning mask's status was written down -- so a rerun disagreeing on a
+    cell could not be told from a bug.
+
+    Theorem 3 rests on these cells, which is why the distinction has to be
+    on disk rather than inferable."""
+    status = {}
+    (bound, _), per_mask = tighten_candidate(
+        LEX, 'OXYPHENBUTAZONE', 0, time_limit=120.0, status_out=status)
+    assert set(status) == set(per_mask), 'every cell must record a status'
+    assert set(status.values()) <= {'OPTIMAL', 'BOUND', 'INFEASIBLE'}
+    for mask, st in status.items():
+        if st == 'INFEASIBLE':
+            assert per_mask[mask] == float('-inf')
+        else:
+            assert per_mask[mask] > float('-inf')
+
+
+@pytest.mark.slow
 def test_tight_bound_dominates_known_1786():
     # The real 1786 play satisfies every stage-B constraint, so the stage-B
     # optimum for (OXYPHENBUTAZONE, row 0) must be >= 1786.

@@ -278,8 +278,21 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
                       pairwise_all_rows=False, enumerate_above=None,
                       enumerate_cb=None, fix_placed=None, max_placed=None,
                       blank_penalty=False, prune_unplaced=True,
-                      partition=None):
+                      partition=None, status_out=None):
     """Return ((bound, detail), per_mask) for a full-row edge play.
+
+    `status_out`, if given, is filled with `{t_mask: status}` recording how
+    each per-mask bound was reached: `OPTIMAL` (a proved optimum, which
+    reproduces exactly), `BOUND` (the time limit expired and the value is
+    a `BestObjectiveBound`, still a valid upper bound but one that moves
+    with the solver version), or `INFEASIBLE`.
+
+    Only the winning mask's status was recorded before, inside `detail`.
+    The others went unrecorded, so a per-mask cell -- and Theorem 3 rests
+    on these -- could be timeout-derived with nothing on disk to say so.
+    An out-parameter rather than a third return value: three call sites
+    unpack the pair, and widening it to record a diagnostic is the kind of
+    churn the charging-scale reader was deliberately kept out of.
 
     row1_exact adds the exact model of the next row inward: every tile in
     it is either a cross-word letter (fixed by the chosen option), a
@@ -605,6 +618,8 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
         status = solver.Solve(model)
         if status == cp_model.INFEASIBLE:
             per_mask[t_mask] = float('-inf')
+            if status_out is not None:
+                status_out[t_mask] = 'INFEASIBLE'
             continue
         if status not in (cp_model.OPTIMAL, cp_model.FEASIBLE):
             raise RuntimeError(f'solver status {status} for T={T}')
@@ -616,6 +631,8 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
             val = solver.ObjectiveValue()
             proved = True
         per_mask[t_mask] = val
+        if status_out is not None:
+            status_out[t_mask] = 'OPTIMAL' if proved else 'BOUND'
         if val > best[0]:
             chosen = {}
             for (c, oi), v in x.items():
@@ -676,11 +693,16 @@ def main():
         payload = {}
         for r in (0, N - 1):
             t1 = time.time()
+            st = {}
             (b, _), pm = tighten_candidate(
                 lex, word, r, opts_cache=opts_cache, adj_pairs=adj,
-                time_limit=args.time_limit, max_placed=6)
+                time_limit=args.time_limit, max_placed=6, status_out=st)
             payload[f'row{r}_max6'] = b
             payload[f'row{r}_max6_per_mask'] = pm
+            # How each cell was reached. A BOUND is still a valid upper
+            # bound, but it moves with the solver version, so a rerun that
+            # disagrees on one is not evidence of a bug.
+            payload[f'row{r}_max6_per_mask_status'] = st
             print(f'{word} row={r} |S|<=6: {b:.0f}  '
                   f'({time.time() - t1:.1f}s)', flush=True)
         with open(out, 'w') as f:
@@ -701,12 +723,14 @@ def main():
     for cand in cands:
         w, r = cand['word'], cand['row']
         t1 = time.time()
+        st = {}
         (bound, detail), per_mask = tighten_candidate(
             lex, w, r, opts_cache=opts_cache, adj_pairs=adj,
-            time_limit=args.time_limit, max_placed=args.max_placed)
+            time_limit=args.time_limit, max_placed=args.max_placed,
+            status_out=st)
         entry = {'word': w, 'row': r, 'relaxed_max': cand['relaxed_max'],
                  'tight_bound': bound, 'per_mask': per_mask,
-                 'detail': detail}
+                 'per_mask_status': st, 'detail': detail}
         print(f"{w} row={r}: relaxed {cand['relaxed_max']} -> tight "
               f"{bound:.0f}  ({time.time()-t1:.1f}s)", flush=True)
         if bound > args.threshold:
@@ -716,16 +740,18 @@ def main():
                 print("  building line DAWG...", flush=True)
                 dawg = build_line_dawg(lex)
             t2 = time.time()
+            st2 = {}
             (b2, d2), pm2 = tighten_candidate(
                 lex, w, r, opts_cache=opts_cache, adj_pairs=adj,
                 time_limit=args.time_limit * 4, row1_exact=True,
                 dawg=dawg, mask_filter=live_masks, pairwise_all_rows=True,
-                max_placed=args.max_placed)
+                max_placed=args.max_placed, status_out=st2)
             print(f"  row1-exact: {bound:.0f} -> {b2:.0f} "
                   f"({time.time()-t2:.1f}s)", flush=True)
             entry['row1_exact_bound'] = b2
             entry['row1_exact_detail'] = d2
             entry['row1_exact_per_mask'] = pm2
+            entry['row1_exact_per_mask_status'] = st2
         results.append(entry)
         with open(args.out, 'w') as f:
             json.dump(results, f, indent=1, default=str)

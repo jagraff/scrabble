@@ -1,0 +1,927 @@
+[
+ {
+  "word": "OXYPHENBUTAZONE",
+  "row": 0,
+  "relaxed_max": 2000,
+  "tight_bound": 1798.0,
+  "per_mask": {
+   "0": 264.0,
+   "1": 413.0,
+   "2": 416.0,
+   "3": 784.0,
+   "4": 414.0,
+   "5": 780.0,
+   "6": 784.0,
+   "7": 1798.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    1,
+    3,
+    4,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XYLEM",
+    "3": "PREINTERVIEWED",
+    "4": "HARQUEBUSES",
+    "7": "BRAINWASHING",
+    "11": "ZOOGAMETE",
+    "14": "EJACULATING"
+   },
+   "blanks(bs,bu)": {
+    "C": [
+     1,
+     0
+    ],
+    "N": [
+     1,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  },
+  "row1_exact_bound": 1794.0,
+  "row1_exact_detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "1": "XEROSES",
+    "3": "PREQUALIFIED",
+    "7": "BRAINWASHING",
+    "9": "TWINKLED",
+    "11": "ZOOGAMETE",
+    "14": "EVOCATIVELY"
+   },
+   "blanks(bs,bu)": {
+    "C": [
+     1,
+     0
+    ],
+    "H": [
+     0,
+     1
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true,
+   "row1": "PEER.HARDWOOD.V"
+  },
+  "row1_exact_per_mask": {
+   "7": 1794.0
+  }
+ },
+ {
+  "word": "OXYPHENBUTAZONE",
+  "row": 14,
+  "relaxed_max": 1935,
+  "tight_bound": 1778.0,
+  "per_mask": {
+   "0": 262.0,
+   "1": 407.0,
+   "2": 394.0,
+   "3": 756.0,
+   "4": 426.0,
+   "5": 778.0,
+   "6": 775.0,
+   "7": 1778.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    1,
+    2,
+    3,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "MAGNIFICO",
+    "1": "QUADRUPLEX",
+    "2": "BACKWOODSY",
+    "3": "YAWP",
+    "7": "JAMB",
+    "11": "FRITZ",
+    "14": "ZOOXANTHELLAE"
+   },
+   "blanks(bs,bu)": {
+    "X": [
+     1,
+     0
+    ],
+    "Z": [
+     1,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "PSYCHOANALYZING",
+  "row": 0,
+  "relaxed_max": 1911,
+  "tight_bound": 1430.0,
+  "per_mask": {
+   "0": 249.0,
+   "1": 413.0,
+   "2": 386.0,
+   "3": 650.0,
+   "4": 400.0,
+   "5": 763.0,
+   "6": 740.0,
+   "7": 1430.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    1,
+    3,
+    6,
+    7,
+    10,
+    14
+   ],
+   "crosses": {
+    "0": "PREMANUFACTURED",
+    "1": "SEXPLOITATION",
+    "3": "CHARKING",
+    "6": "ABRIDGEABLE",
+    "7": "NETIQUETTES",
+    "10": "YOURSELF",
+    "14": "GIZZARDS"
+   },
+   "blanks(bs,bu)": {
+    "Z": [
+     2,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "PSYCHOANALYZING",
+  "row": 14,
+  "relaxed_max": 1897,
+  "tight_bound": 1424.0,
+  "per_mask": {
+   "0": 268.0,
+   "1": 391.0,
+   "2": 414.0,
+   "3": 646.0,
+   "4": 414.0,
+   "5": 741.0,
+   "6": 763.0,
+   "7": 1424.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    1,
+    3,
+    6,
+    7,
+    10,
+    14
+   ],
+   "crosses": {
+    "0": "MINICAMP",
+    "1": "WAXWORKERS",
+    "3": "QUADRATIC",
+    "6": "JAVELINA",
+    "7": "DEEPFROZEN",
+    "10": "INVESTIGATORY",
+    "14": "HIGHFALUTING"
+   },
+   "blanks(bs,bu)": {
+    "H": [
+     1,
+     0
+    ],
+    "Z": [
+     1,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "DEMYTHOLOGIZING",
+  "row": 14,
+  "relaxed_max": 1860,
+  "tight_bound": 1703.0,
+  "per_mask": {
+   "0": 263.0,
+   "1": 436.0,
+   "2": 416.0,
+   "3": 786.0,
+   "4": 405.0,
+   "5": 774.0,
+   "6": 752.0,
+   "7": 1703.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "VENTRILOQUIZED",
+    "1": "PROFESSORIATE",
+    "3": "BOOKBINDERY",
+    "7": "CONJUNCTIVAL",
+    "8": "EXPRESSO",
+    "11": "WAREZ",
+    "14": "HIGHFALUTING"
+   },
+   "blanks(bs,bu)": {
+    "H": [
+     1,
+     0
+    ],
+    "Z": [
+     1,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "DEMYTHOLOGIZING",
+  "row": 0,
+  "relaxed_max": 1845,
+  "tight_bound": 1650.0,
+  "per_mask": {
+   "0": 252.0,
+   "1": 397.0,
+   "2": 384.0,
+   "3": 724.0,
+   "4": 400.0,
+   "5": 738.0,
+   "6": 724.0,
+   "7": 1650.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    3,
+    7,
+    9,
+    11,
+    13,
+    14
+   ],
+   "crosses": {
+    "0": "DJIBBAHS",
+    "3": "YCLEPED",
+    "7": "LIONIZATIONS",
+    "9": "GOFFERING",
+    "11": "ZAXES",
+    "13": "NETIQUETTE",
+    "14": "GASTRONOMICALLY"
+   },
+   "blanks(bs,bu)": {
+    "Z": [
+     1,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "DEMYTHOLOGIZERS",
+  "row": 14,
+  "relaxed_max": 1839,
+  "tight_bound": 1716.0,
+  "per_mask": {
+   "0": 263.0,
+   "1": 435.0,
+   "2": 416.0,
+   "3": 780.0,
+   "4": 436.0,
+   "5": 793.0,
+   "6": 777.0,
+   "7": 1716.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    3,
+    7,
+    9,
+    11,
+    13,
+    14
+   ],
+   "crosses": {
+    "0": "SUBJECTIVIZED",
+    "3": "BACKWOODSY",
+    "7": "QUINQUENNIAL",
+    "9": "GOLLIWOGG",
+    "11": "FRITZ",
+    "13": "DISAPPROVER",
+    "14": "METHOXYFLURANES"
+   },
+   "blanks(bs,bu)": {
+    "Q": [
+     1,
+     0
+    ],
+    "Z": [
+     1,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "DEMYTHOLOGIZERS",
+  "row": 0,
+  "relaxed_max": 1836,
+  "tight_bound": 1629.0,
+  "per_mask": {
+   "0": 256.0,
+   "1": 397.0,
+   "2": 386.0,
+   "3": 717.0,
+   "4": 397.0,
+   "5": 729.0,
+   "6": 721.0,
+   "7": 1629.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    3,
+    5,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "DJIBBAHS",
+    "3": "YCLEPED",
+    "5": "HARUSPEX",
+    "7": "LIONIZATIONS",
+    "9": "GASTRONOMICALLY",
+    "11": "ZIGGED",
+    "14": "SQUIFFED"
+   },
+   "blanks(bs,bu)": {
+    "S": [
+     1,
+     0
+    ],
+    "Z": [
+     1,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "NEPHRECTOMIZING",
+  "row": 14,
+  "relaxed_max": 1836,
+  "tight_bound": 1639.0,
+  "per_mask": {
+   "0": 256.0,
+   "1": 397.0,
+   "2": 405.0,
+   "3": 736.0,
+   "4": 395.0,
+   "5": 726.0,
+   "6": 732.0,
+   "7": 1639.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "QUARTERSAWN",
+    "1": "PYRIDOXINE",
+    "3": "KABBALAH",
+    "7": "FRIZZIEST",
+    "8": "FANTASTICO",
+    "11": "WAREZ",
+    "14": "MAHJONGG"
+   },
+   "blanks(bs,bu)": {
+    "Z": [
+     2,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "VENTRILOQUIZING",
+  "row": 0,
+  "relaxed_max": 1834,
+  "tight_bound": 1629.0,
+  "per_mask": {
+   "0": 241.0,
+   "1": 383.0,
+   "2": 380.0,
+   "3": 718.0,
+   "4": 387.0,
+   "5": 725.0,
+   "6": 717.0,
+   "7": 1629.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    3,
+    5,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "VIDEOGRAPHY",
+    "3": "THENCEFORWARD",
+    "5": "IODOMETRIES",
+    "7": "OPACIFICATIONS",
+    "9": "UVEAL",
+    "11": "ZAXES",
+    "14": "GASTRONOMICALLY"
+   },
+   "blanks(bs,bu)": {
+    "C": [
+     2,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "REMYTHOLOGIZING",
+  "row": 14,
+  "relaxed_max": 1830,
+  "tight_bound": 1666.0,
+  "per_mask": {
+   "0": 261.0,
+   "1": 420.0,
+   "2": 413.0,
+   "3": 764.0,
+   "4": 402.0,
+   "5": 749.0,
+   "6": 743.0,
+   "7": 1666.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    3,
+    7,
+    9,
+    11,
+    13,
+    14
+   ],
+   "crosses": {
+    "0": "EXTEMPORIZER",
+    "3": "BOOKBINDERY",
+    "7": "CONJUNCTIVAL",
+    "9": "AUTOLYSING",
+    "11": "QUARTZ",
+    "13": "WIREDRAWN",
+    "14": "HIGHFALUTING"
+   },
+   "blanks(bs,bu)": {
+    "H": [
+     1,
+     0
+    ],
+    "Z": [
+     1,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "HYPERIMMUNIZING",
+  "row": 0,
+  "relaxed_max": 1825,
+  "tight_bound": 1645.0,
+  "per_mask": {
+   "0": 249.0,
+   "1": 399.0,
+   "2": 388.0,
+   "3": 730.0,
+   "4": 394.0,
+   "5": 738.0,
+   "6": 727.0,
+   "7": 1645.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    1,
+    2,
+    3,
+    7,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "HARQUEBUSES",
+    "1": "YAFF",
+    "2": "PREINTERVIEWING",
+    "3": "EJACULATING",
+    "7": "METHOXYL",
+    "11": "ZOOSPORIC",
+    "14": "GIZZARDS"
+   },
+   "blanks(bs,bu)": {
+    "Z": [
+     2,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "NEPHRECTOMIZING",
+  "row": 0,
+  "relaxed_max": 1824,
+  "tight_bound": 1642.0,
+  "per_mask": {
+   "0": 259.0,
+   "1": 390.0,
+   "2": 406.0,
+   "3": 729.0,
+   "4": 406.0,
+   "5": 728.0,
+   "6": 739.0,
+   "7": 1642.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "NETIQUETTES",
+    "2": "PREDEVELOPMENTS",
+    "3": "HOVERFLY",
+    "7": "THENCEFORWARD",
+    "9": "MAXILLAS",
+    "11": "ZINKY",
+    "14": "GIZZARDS"
+   },
+   "blanks(bs,bu)": {
+    "Z": [
+     2,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "REMYTHOLOGIZING",
+  "row": 0,
+  "relaxed_max": 1815,
+  "tight_bound": 1621.0,
+  "per_mask": {
+   "0": 250.0,
+   "1": 389.0,
+   "2": 381.0,
+   "3": 712.0,
+   "4": 395.0,
+   "5": 726.0,
+   "6": 715.0,
+   "7": 1621.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    3,
+    5,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "REJECTIVE",
+    "3": "YATAGHAN",
+    "5": "HARQUEBUSES",
+    "7": "LIONIZATIONS",
+    "9": "GOFFERED",
+    "11": "ZAXES",
+    "14": "GASTRONOMICALLY"
+   },
+   "blanks(bs,bu)": {
+    "S": [
+     1,
+     0
+    ],
+    "Z": [
+     1,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "HYPERIMMUNIZING",
+  "row": 14,
+  "relaxed_max": 1807,
+  "tight_bound": 1624.0,
+  "per_mask": {
+   "0": 255.0,
+   "1": 401.0,
+   "2": 382.0,
+   "3": 720.0,
+   "4": 394.0,
+   "5": 727.0,
+   "6": 714.0,
+   "7": 1624.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    1,
+    3,
+    7,
+    11,
+    13,
+    14
+   ],
+   "crosses": {
+    "0": "DJELLABAH",
+    "1": "INVESTIGATORY",
+    "3": "PYRIDOXINE",
+    "7": "BUCKRAM",
+    "11": "QUARTZ",
+    "13": "OVERFLOWN",
+    "14": "HIGHFALUTING"
+   },
+   "blanks(bs,bu)": {
+    "H": [
+     1,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "DICHLOROBENZENE",
+  "row": 0,
+  "relaxed_max": 1790,
+  "tight_bound": 1585.0,
+  "per_mask": {
+   "0": 251.0,
+   "1": 393.0,
+   "2": 389.0,
+   "3": 713.0,
+   "4": 389.0,
+   "5": 715.0,
+   "6": 707.0,
+   "7": 1585.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    2,
+    3,
+    7,
+    8,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "DENUMERABILITY",
+    "2": "CROQUETED",
+    "3": "HARUSPEX",
+    "7": "OPACIFICATIONS",
+    "8": "BRAINWASHING",
+    "11": "ZOOGAMETES",
+    "14": "EVOCATIVELY"
+   },
+   "blanks(bs,bu)": {
+    "C": [
+     2,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ },
+ {
+  "word": "OVEREMPHASIZING",
+  "row": 0,
+  "relaxed_max": 1789,
+  "tight_bound": 1560.0,
+  "per_mask": {
+   "0": 256.0,
+   "1": 389.0,
+   "2": 398.0,
+   "3": 707.0,
+   "4": 399.0,
+   "5": 712.0,
+   "6": 724.0,
+   "7": 1560.0
+  },
+  "detail": {
+   "T": [
+    0,
+    7,
+    14
+   ],
+   "WM": 27,
+   "placed": [
+    0,
+    2,
+    6,
+    7,
+    9,
+    11,
+    14
+   ],
+   "crosses": {
+    "0": "OPACIFICATIONS",
+    "2": "EVAGINATED",
+    "6": "PREQUALIFIED",
+    "7": "HEXARCHY",
+    "9": "SLOWDOWN",
+    "11": "ZUKES",
+    "14": "GASTRONOMICALLY"
+   },
+   "blanks(bs,bu)": {
+    "C": [
+     2,
+     0
+    ]
+   },
+   "bingo": true,
+   "proved_optimal": true
+  }
+ }
+]
