@@ -80,6 +80,9 @@ def test_verify_catches_an_edited_artifact(tmp_path, lex):
     art = tmp_path / 'result.json'
     art.write_text('{"x": 1}')
     man = M.build(ckpt_dir=str(ckpt), artifacts=[str(art)], run=run)
+    # Pinned: the tree this test runs in may legitimately have uncommitted
+    # source, and that would otherwise show up as a second complaint.
+    man['source_dirty'] = False
     path = tmp_path / 'MANIFEST.json'
     M.write(man, str(path))
 
@@ -232,6 +235,25 @@ class TestCoverage:
         man = M.build(ckpt_dir=str(tmp_path / 'enum_cells'), run=run)
         problems = M.check_coverage(man, [self.PATTERN])
         assert len(problems) == 1 and 'not in the partition' in problems[0]
+
+
+def test_uncommitted_source_is_reported_but_dirty_results_are_not(
+        tmp_path, lex, monkeypatch):
+    """`git_dirty` is true for the whole of any run, because the results
+    being regenerated are tracked files. Only uncommitted *source* means
+    the recorded commit fails to identify the code."""
+    run = _run(lex)
+    _cell_file(tmp_path / 'enum_cells' / f'run-{ID.digest(run)[:12]}', run)
+    man = M.build(ckpt_dir=str(tmp_path / 'enum_cells'), run=run)
+    man['source_dirty'] = False
+    man['environment']['git_dirty'] = True          # results in flight
+    path = tmp_path / 'MANIFEST.json'
+    M.write(man, str(path))
+    assert M.verify(str(path)) == []
+
+    man['source_dirty'] = True
+    M.write(man, str(path))
+    assert any('uncommitted source' in p for p in M.verify(str(path)))
 
 
 def test_manifest_digest_is_stable_under_reserialisation(tmp_path, lex):

@@ -37,6 +37,21 @@ from .provenance import LEXICON_PATH, stamp
 DEFAULT_PATH = 'results/MANIFEST.json'
 
 
+def source_dirty() -> bool | None:
+    """Whether any *source* file is uncommitted.
+
+    `stamp()['git_dirty']` is true for the whole of any run, because the
+    results it is regenerating are themselves tracked files -- so it cannot
+    answer the question that matters, which is whether the code that
+    produced them was committed. This looks only at the package and its
+    tests. None if git is unavailable.
+    """
+    from .provenance import _git
+
+    out = _git('status', '--porcelain', '--', 'scrabble_max', 'tests')
+    return None if out is None else bool(out.strip())
+
+
 def file_digest(path: str) -> str:
     h = hashlib.sha256()
     with open(path, 'rb') as f:
@@ -119,6 +134,7 @@ def build(*, threshold=1786, n_blocks=4, ckpt_dir='results/enum_cells',
     man = {
         'schema': 1,
         'environment': stamp(),
+        'source_dirty': source_dirty(),
         'run': run,
         'run_digest': ID.digest(run),
         'cell_dir': cell_dir,
@@ -203,6 +219,9 @@ def verify(path=DEFAULT_PATH) -> list[str]:
     mixed = man.get('summary', {}).get('mixed_environment') or {}
     for k, vs in mixed.items():
         problems.append(f'cells were produced under mixed {k}: {vs}')
+    if man.get('source_dirty'):
+        problems.append('the run was made with uncommitted source changes, '
+                        'so its commit does not identify the code')
     return problems
 
 
