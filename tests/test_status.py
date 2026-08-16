@@ -37,6 +37,33 @@ def _write(path, n, seconds=12.0, complete=False, penalty=True, torn=False):
     path.write_text(text)
 
 
+def test_the_identity_header_is_not_progress(tmp_path):
+    """The stamp is not a solve, and it carries no charging scale of its
+    own -- letting it contribute a None would read as "this file cannot
+    vouch for itself" and raise a spurious mixed-scale alarm."""
+    p = tmp_path / '00020307111314_p03c000.jsonl'
+    header = json.dumps({'header': {'threshold': 1786}, 'identity': 'ab'})
+    p.write_text(header + '\n'
+                 + ''.join(json.dumps(_entry(i)) + '\n' for i in range(3)))
+    r = read_one(str(p))
+    assert r['configs'] == 3
+    assert len(r['timings']) == 3, 'the header contributes no duration'
+    assert r['scales'] == {True}
+
+
+def test_cells_are_found_inside_run_namespaced_directories(tmp_path):
+    """Checkpoints live in `<dir>/run-<hash>/`, and a watcher pointed at
+    the parent must still see them."""
+    from scrabble_max.status import cell_files
+    run = tmp_path / 'run-5de00fc1974d'
+    run.mkdir()
+    _write(run / '00020307111314_p03c000.jsonl', 3)
+    _write(tmp_path / '00010203071114.jsonl', 2)        # legacy, flat
+    found = cell_files(str(tmp_path))
+    assert len(found) == 2, 'both namespaced and flat layouts must be seen'
+    assert len(collect(str(tmp_path))) == 2
+
+
 def test_a_half_written_final_line_does_not_lose_the_rest(tmp_path):
     """The normal state of a live checkpoint."""
     p = tmp_path / '00020307111314.jsonl'

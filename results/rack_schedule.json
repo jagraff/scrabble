@@ -2,6 +2,9 @@
  "feasible": true,
  "verified": true,
  "detail": "97 played, 3 on racks, 0 in bag",
+ "board_replay_ok": true,
+ "board_replay": "26 moves replayed, final move scored 1786",
+ "final_move_score": 1786,
  "n_moves": 26,
  "tiles_played": 97,
  "witness": {

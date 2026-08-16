@@ -26,7 +26,7 @@ import os
 import time
 
 from .lexicon import load
-from .partition import enumerate_many
+from .partition import DEFAULT_BLOCKS, enumerate_many
 
 SURVIVORS_FILE = 'results/blank_penalty_tier2.json'
 
@@ -45,8 +45,9 @@ def main():
     # blocks would then buy nothing but an extra closing infeasibility
     # proof each. Cross-pattern parallelism carries the run either way;
     # the cells are insurance against a straggler, not the main mechanism.
-    ap.add_argument('--blocks', type=int, default=4,
-                    help='partition cells per pattern (default 4 + 1)')
+    ap.add_argument('--blocks', type=int, default=DEFAULT_BLOCKS,
+                    help=f'partition cells per pattern '
+                         f'(default {DEFAULT_BLOCKS} + 1)')
     ap.add_argument('--workers', type=int, default=4,
                     help='concurrent cells; this machine has 4 performance '
                          'cores, so 4 by default')
@@ -54,6 +55,10 @@ def main():
     ap.add_argument('--ckpt-dir', default='results/enum_cells')
     ap.add_argument('--out', default='results/tier3_configs.json')
     ap.add_argument('--enumerate-only', action='store_true')
+    ap.add_argument('--allow-unstamped', action='store_true',
+                    help='accept checkpoints with no identity header. Only '
+                         'for reading archived pre-hardening runs; a '
+                         'certified run must not use it')
     ap.add_argument('--check-time-limit', type=float, default=600.0)
     a = ap.parse_args()
 
@@ -65,7 +70,8 @@ def main():
 
     t0 = time.time()
     res = enumerate_many(pats, n_blocks=a.blocks, threshold=a.threshold,
-                         max_workers=a.workers, ckpt_dir=a.ckpt_dir)
+                         max_workers=a.workers, ckpt_dir=a.ckpt_dir,
+                         allow_unstamped=a.allow_unstamped)
     t_enum = time.time() - t0
 
     os.makedirs(os.path.dirname(a.out) or '.', exist_ok=True)

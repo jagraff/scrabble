@@ -39,6 +39,40 @@ from .tighten import build_line_dawg
 
 LETTERS = [chr(ord('A') + i) for i in range(26)]
 
+# The triple-word columns of row 0.
+TW_COLS = (0, 7, 14)
+
+
+def tw_occupancy(tw_placed):
+    """Exact occupancy of the three TW columns: 1 where covered, 0 where not.
+
+    `tw_placed` names which TW squares the play covers, and the score
+    expression reads the word multiplier straight off its length
+    (`WM = 3 ** len(tw_placed)`). That is only valid if the unnamed TW
+    columns are actually *empty*: forcing the named ones occupied while
+    leaving the rest free lets a solution cover a TW square that the score
+    never multiplies, so the model can assign a legal board less than its
+    true Scrabble score.
+
+    Under-scoring is the dangerous direction here. This model is used to
+    eliminate configurations by showing they cannot reach a threshold, and
+    a genuinely record-beating board that gets scored below the cutoff
+    would be eliminated wrongly.
+
+    The full mask `(0, 7, 14)` -- the only one any caller has ever passed,
+    and the one the committed results use -- has no unnamed columns, so
+    this changes no recorded number. It closes the trap for every other
+    mask. `tighten.py` has always pinned all three exactly; this brings the
+    tableau model into line with it.
+    """
+    tw = set(tw_placed)
+    unknown = tw - set(TW_COLS)
+    if unknown:
+        raise ValueError(
+            f'{sorted(unknown)} are not triple-word columns; row 0 has TWs '
+            f'at {list(TW_COLS)}')
+    return {c: (1 if c in tw else 0) for c in TW_COLS}
+
 
 def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
                   time_limit=3600.0, hint_grid=None, hint_placed=None,
@@ -62,8 +96,11 @@ def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
     m = cp_model.CpModel()
 
     placed = [m.NewBoolVar(f'p{c}') for c in range(N)]
-    for c in tw_placed:
-        m.Add(placed[c] == 1)
+    # Exact, not "at least these": see `tw_occupancy`. An unnamed TW column
+    # left free could be covered by a solution whose score is then computed
+    # with too small a word multiplier.
+    for c, want in tw_occupancy(tw_placed).items():
+        m.Add(placed[c] == want)
     m.Add(sum(placed) <= 7)
     bingo = m.NewBoolVar('bingo')
     m.Add(sum(placed) >= 7 * bingo)

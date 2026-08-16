@@ -45,13 +45,23 @@ import time
 import signal
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
+from . import identity as ID
 from . import tighten as T
 from .finalize import (checkpoint_scales, enumerate_configs, read_checkpoint,
-                       repair_checkpoint)
+                       repair_checkpoint, verify_checkpoint_identity)
 from .lexicon import load
+from .provenance import LEXICON_PATH, stamp
 from .rules import N
 
 WORD = 'OXYPHENBUTAZONE'
+
+# One default, referenced everywhere. Three entry points previously
+# defaulted to 4, 8 and 24 blocks while writing to the same directory, and
+# the cell index -- the only thing in the file name that varied with the
+# partition -- means a different set of option indices at each of them.
+# Identity stamping now catches that, but a trap that is merely detected is
+# still a trap, so the defaults no longer disagree.
+DEFAULT_BLOCKS = 4
 
 
 def _check_passthrough():
@@ -64,7 +74,8 @@ def _check_passthrough():
 
     from .finalize import enumerate_configs
     params = inspect.signature(enumerate_configs).parameters
-    missing = [p for p in ('partition', 'prune_unplaced') if p not in params]
+    missing = [p for p in ('partition', 'prune_unplaced', 'identity',
+                           'environment') if p not in params]
     if missing:
         raise RuntimeError(
             f'finalize.enumerate_configs is missing {missing}; partitioned '
@@ -136,16 +147,31 @@ def _lexicon():
 
 
 def _run_cell(args):
-    S, pivot, cell_index, block, threshold, ckpt_dir, time_limit = args
+    (S, pivot, cell_index, block, threshold, ckpt_dir, time_limit, run,
+     env, allow_unstamped) = args
     lexicon = _lexicon()
+    cell = (ID.cell_manifest(run, pattern=S, pivot=pivot,
+                             cell_index=cell_index, block=block)
+            if run is not None else None)
     path = (os.path.join(ckpt_dir, f'{_cell_tag(S, pivot, cell_index)}.jsonl')
             if ckpt_dir else None)
     if path:
+        assert cell is not None, (
+            'a checkpoint is being written with no identity to stamp it; '
+            '_run_context ties the two together and they have come apart')
         repair_checkpoint(path)
+        # Identity before contents. A `complete` marker is a discharged
+        # proof obligation, and it discharges nothing unless this file was
+        # produced for this cell of this model. Raises rather than warns:
+        # a warning in a 50-cell run scrolls past and the contaminated
+        # result still prints complete=True.
+        verify_checkpoint_identity(path, cell, allow_unstamped)
         # cells resume through read_checkpoint rather than
         # resume_enumeration, so the charging-scale guard has to be
         # repeated here; a cell that silently crossed scales would put the
-        # mixed list straight into the union
+        # mixed list straight into the union. Redundant with the identity
+        # gate now (blank_penalty is a gated field), and kept anyway: it
+        # still covers a file whose header is accepted as unstamped.
         scales = checkpoint_scales(path) - {None}
         if scales and scales != {True}:
             raise ValueError(
@@ -164,8 +190,33 @@ def _run_cell(args):
         lexicon, threshold=threshold, fix_placed=set(S), known_configs=known,
         checkpoint_path=path, workers=1, blank_penalty=True,
         prune_unplaced=True, partition=(pivot, block),
-        time_limit=time_limit, log=lambda *a, **k: None)
+        time_limit=time_limit, log=lambda *a, **k: None,
+        identity=cell, environment=env)
     return cell_index, known + new, done, time.time() - t0, False
+
+
+def _run_context(threshold, n_blocks, ckpt_dir):
+    """The run manifest, its namespaced directory, and the environment.
+
+    Built once in the parent: the lexicon is hashed here rather than in
+    every cell, and `require_hash_seed` fires before any worker starts
+    rather than fifty times inside a process pool where the traceback
+    arrives as a BrokenProcessPool.
+
+    With no checkpoint directory there is nothing to certify: an in-memory
+    enumeration stores no result that a later run could mistake for its
+    own. Identity is a property of persisted artifacts, so this returns
+    empty-handed rather than demanding a pinned hash seed from callers who
+    are not writing anything down."""
+    if not ckpt_dir:
+        return None, None, None
+    run = ID.run_manifest(lexicon_path=LEXICON_PATH, threshold=threshold,
+                          word=WORD, row=0, blank_penalty=True,
+                          prune_unplaced=True, n_blocks=n_blocks)
+    env = stamp()
+    out_dir = ID.run_dir(ckpt_dir, run)
+    os.makedirs(out_dir, exist_ok=True)
+    return run, env, out_dir
 
 
 class _KillPoolOnSignal:
@@ -225,8 +276,9 @@ def _key(cfg):
             tuple(sorted((int(k), v) for k, v in cfg['crosses'].items())))
 
 
-def enumerate_pattern(S, n_blocks=24, threshold=1786, max_workers=4,
-                      ckpt_dir=None, time_limit=3600.0, log=print):
+def enumerate_pattern(S, n_blocks=DEFAULT_BLOCKS, threshold=1786,
+                      max_workers=4, ckpt_dir=None, time_limit=3600.0,
+                      log=print, allow_unstamped=False):
     """Enumerate pattern `S` across cells in parallel.
 
     Returns (configs, complete). `complete` is True only if every cell
@@ -239,11 +291,13 @@ def enumerate_pattern(S, n_blocks=24, threshold=1786, max_workers=4,
     log(f'pattern {tuple(sorted(S))}: pivot column {pivot} '
         f'({n_options} options) -> {len(cells)} cells, '
         f'{max_workers} workers')
+    run, env, ckpt_dir = _run_context(threshold, n_blocks, ckpt_dir)
     if ckpt_dir:
-        os.makedirs(ckpt_dir, exist_ok=True)
+        log(f'  run {ID.digest(run)[:12]} -> {ckpt_dir}')
 
     jobs = [(tuple(sorted(S)), pivot, i, block, threshold, ckpt_dir,
-             time_limit) for i, block in enumerate(cells)]
+             time_limit, run, env, allow_unstamped)
+            for i, block in enumerate(cells)]
     found, seen, incomplete = [], {}, []
     t0 = time.time()
     with ProcessPoolExecutor(max_workers=max_workers) as ex, \
@@ -275,9 +329,10 @@ def enumerate_pattern(S, n_blocks=24, threshold=1786, max_workers=4,
     return found, complete
 
 
-def enumerate_many(patterns, n_blocks=8, threshold=1786, max_workers=4,
-                   ckpt_dir='results/enum_cells', time_limit=3600.0,
-                   log=print):
+def enumerate_many(patterns, n_blocks=DEFAULT_BLOCKS, threshold=1786,
+                   max_workers=4, ckpt_dir='results/enum_cells',
+                   time_limit=3600.0, log=print, allow_unstamped=False,
+                   manifest_out=None):
     """Enumerate several patterns through one flat queue of cells.
 
     Running `enumerate_pattern` per pattern would give each its own pool
@@ -291,7 +346,7 @@ def enumerate_many(patterns, n_blocks=8, threshold=1786, max_workers=4,
     every one of its cells finished.
     """
     lexicon = load()
-    os.makedirs(ckpt_dir, exist_ok=True)
+    run, env, ckpt_dir = _run_context(threshold, n_blocks, ckpt_dir)
     jobs, cells_of = [], {}
     for S in patterns:
         S = tuple(sorted(S))
@@ -299,9 +354,11 @@ def enumerate_many(patterns, n_blocks=8, threshold=1786, max_workers=4,
         cells = make_cells(n_options, n_blocks)
         cells_of[S] = len(cells)
         for i, block in enumerate(cells):
-            jobs.append((S, pivot, i, block, threshold, ckpt_dir, time_limit))
+            jobs.append((S, pivot, i, block, threshold, ckpt_dir, time_limit,
+                         run, env, allow_unstamped))
     log(f'{len(patterns)} patterns -> {len(jobs)} cells, '
         f'{max_workers} workers')
+    log(f'run {ID.digest(run)[:12]} -> {ckpt_dir}')
 
     found = {S: [] for S in cells_of}
     seen = {S: {} for S in cells_of}
@@ -341,7 +398,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--pattern', required=True,
                     help='comma-separated placed columns, e.g. 0,2,3,7,11,13,14')
-    ap.add_argument('--blocks', type=int, default=24)
+    ap.add_argument('--blocks', type=int, default=DEFAULT_BLOCKS)
     ap.add_argument('--workers', type=int, default=4)
     ap.add_argument('--threshold', type=int, default=1786)
     ap.add_argument('--ckpt-dir', default=None)

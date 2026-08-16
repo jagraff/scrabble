@@ -1,0 +1,203 @@
+# Soundness remediation: work log
+
+Tracks the response to `scrabble_adversarial_soundness_review.md`. One
+section per finding: what the code actually did, what changed, and the test
+that pins it. Every claim below is backed by a test that runs in seconds —
+`pytest -m "not slow"` is 170 tests in ~39 s.
+
+Status at the time of writing: **P0 complete, P1 not started.** The
+committed tier-3 results are still the pre-hardening ones and the clean
+re-run has not been done, so the artifact is not yet certified end to end.
+
+---
+
+## Verification of the review's findings
+
+The review was audited before being acted on. Three findings held, one held
+in a weaker form than stated, one was mostly wrong.
+
+| # | claim | verdict |
+|---|---|---|
+| 1 | checkpoints not bound to their computation | **confirmed**, and the sharpest instance was not the one named |
+| 2 | provenance does not identify the final run | **confirmed** |
+| 3 | `verify_witness` weaker than documented | **partly** — the named exploit does not work, a different one does |
+| 4 | Stage-C partial `tw_placed` unsound | **confirmed latent**, no effect on any committed number |
+| 5 | reflection is not a symmetry | **mostly wrong** |
+
+### 1 — the block count, not the threshold
+
+The review led with `--threshold`. The likelier break is `--blocks`.
+`make_cells` round-robins option indices, so cell *i* covers indices
+`i mod n_blocks`; the cell index is in the file name but the block count was
+not, and three entry points defaulted to 4, 8 and 24 blocks while writing to
+the same `results/enum_cells`. Re-running a 4-block directory at 8 blocks
+reused five files whose union no longer covered the option set and printed
+`complete=True`.
+
+### 3 — the exploit the review named does not work
+
+The review's headline was `zip(witness_moves, moves)` with no length check,
+allowing a truncated witness. That one is already blocked: the 100-tile
+accounting identity sums played tiles over the full move list but racks over
+only the zipped prefix, so a short witness fails `!= 100`. Every move places
+at least one tile, so the identity cannot be satisfied by a short witness.
+
+The real hole was `p = rec['player']` — the mover was read out of the record
+instead of derived from the move index. Sweeping all 25 adjacent-owner swaps
+found **24 tile-feasible schedules in which one player takes two turns in a
+row**, every one of which the old verifier accepted. That is the "two
+alternating players" claim the schedule exists to certify.
+
+Also unchecked: `rack_after` and `bag_left` were written to the witness and
+never compared against anything; refill-to-seven was not enforced; opening
+hands were not required to be seven tiles.
+
+### 5 — reflection
+
+Top↔bottom reflection *is* a genuine Scrabble symmetry: the premium layout
+is symmetric under it and left-to-right reading order is preserved. It is
+left↔right reflection that reverses words. And nothing in the pipeline
+quotients by either — row 0 and row 14 are enumerated separately
+(`tighten.py:12,113`). The sentence in `PROOFS.md` is descriptive, not
+load-bearing; it needs a precision edit, not a deletion. Deferred to P3.
+
+---
+
+## P0.1 — checkpoint identity (`scrabble_max/identity.py`)
+
+A cell checkpoint makes two claims: a list of configurations, and
+`complete` — the blocking-clause loop reached INFEASIBLE. The second is a
+discharged proof obligation and is only meaningful about the model it was
+proved for.
+
+**Gated** (mismatch ⇒ `StaleCheckpoint`, raised not warned): lexicon digest,
+threshold, word, row, `blank_penalty`, `prune_unplaced`, `n_blocks`,
+pattern, pivot, cell index, **explicit block membership**, a digest of the
+model-building sources, and `PYTHONHASHSEED`.
+
+**Recorded, not gated**: OR-Tools version, Python, platform, git commit.
+
+### Where this diverges from the review, and why
+
+*The review wanted OR-Tools version to be a hard reject.* An infeasibility
+proof is a fact about the model, not about the solver that found it, so a
+proof from 9.14 and one from 9.15 establish the same proposition. Gating on
+it would discard sound work on every upgrade and make every future bump
+silently invalidate the whole certificate. The legitimate worry it answers —
+"a solver build turns out to be buggy and I must find everything it
+touched" — is served by recording the version in every header and asserting
+*uniformity* over the finished manifest (P1), which is the stronger
+property: checked over the whole artifact rather than pairwise at resume.
+
+*The review wanted the git commit gated.* A typo fix in a markdown file
+would then invalidate hours of solver output, which trains the operator to
+pass `--allow-unstamped`, and a gate that is routinely bypassed protects
+nothing. The digest covers the six modules that can change the emitted
+model; the commit is still recorded.
+
+*Stricter than the review on `PYTHONHASHSEED`.* Gating on
+`os.environ.get` alone is close to worthless: with the variable unset every
+worker records the same `None` and so compares equal to every other, while
+each actually runs under a different random seed — the check would report a
+match in exactly the dangerous case. `require_hash_seed()` refuses to start
+instead.
+
+Identity applies to *persisted* artifacts only. With no checkpoint directory
+nothing is stored that a later run could mistake for its own, so an
+in-memory enumeration needs no stamp and is not made to demand one.
+
+Belt and braces: checkpoint directories are namespaced
+`results/enum_cells/run-<hash12>/`, so stale reuse is impossible by
+construction even if the check regresses.
+
+**Also fixed:** the three conflicting `n_blocks` defaults now all reference
+`partition.DEFAULT_BLOCKS`. Identity stamping detects the mismatch, but a
+trap that is merely detected is still a trap.
+
+**Tests** — `tests/test_identity.py`, 24 tests, 0.32 s. The four isolation
+cases the review asked for (threshold, blocks, lexicon, code revision), plus
+block membership at equal count, header/legacy handling, hash-seed refusal,
+digest collision hygiene, and two wiring tests that drive `_run_cell` end to
+end with the solver stubbed out.
+
+## P0.2 — witness verification (`scrabble_max/racks.py`)
+
+`verify_witness` now derives everything it checks. The mover comes from the
+move index; `rack_after` and `bag_left` are recomputed and compared;
+refill-to-seven is enforced; opening hands must be exactly seven; witness
+and move-list lengths must agree.
+
+`schedule()` gained an `owner=` override. It exists so a deliberately
+non-alternating schedule can be built and rejected — the only way to
+demonstrate that alternation is enforced rather than merely recorded.
+
+**New: `verify_board_sequence`.** `verify_witness` consumes tile *counts*,
+so it cannot see where the tiles went: a schedule for an entirely different
+set of moves satisfies it. The sequence is now re-parsed with its cells
+intact and replayed through the rules engine, confirming legality and word
+validity at every step, that the final position is the record board, and
+that the last move scores exactly 1786. This closes a gap the review did not
+raise: the rack witness and the board were previously joined only by a text
+log.
+
+Run output:
+
+```
+26 moves (25 build-up + the record play), 97 tiles played
+board replay: True  (26 moves replayed, final move scored 1786)
+rack/bag feasible with 2 alternating players: True
+witness independently re-verified: True  (97 played, 3 on racks, 0 in bag)
+```
+
+**Tests** — `tests/test_racks.py`, 20 tests, 0.07 s. Every tamper case from
+the review (truncate, append, corrupt `rack_after`, corrupt `bag_left`) plus
+skipped refill, short opening hand, a draw the bag cannot supply, four
+tile-feasible alternation breaks, and two board-replay cases.
+
+Non-vacuity was checked rather than assumed: the pre-fix verifier was
+re-run against each tamper case. It accepted the extra trailing move,
+corrupted `rack_after`, corrupted `bag_left`, and all 24 alternation breaks.
+It rejected truncation, skipped refill and the short opening hand — the
+first via the accounting identity, the others incidentally. The tests say
+which is which rather than implying all of them were exploits.
+
+## P0.3 — `tw_placed` exactness (`scrabble_max/cstage.py`)
+
+`solve_tableau` forced the named TW columns occupied but left the rest free,
+while scoring read the word multiplier off `len(tw_placed)`. A solution
+covering an unnamed TW square was therefore scored below its true value —
+and since this model eliminates configurations by failing to reach a
+threshold, under-scoring can discard a legal record-beating board.
+
+Now pinned exactly through `tw_occupancy()`, matching what `tighten.py` has
+always done (`tighten.py:333-334`). **No committed number changes**: every
+caller passes the full `(0, 7, 14)` mask, which has no unnamed columns. The
+per-mask bounds behind Theorem 3 come from `tighten.py` and were never
+affected.
+
+**Tests** — `tests/test_cstage.py`, all 8 subsets of the three TW columns,
+plus a test tying `WM = 3 ** len(mask)` to the pinned occupancy so the two
+cannot drift apart.
+
+---
+
+## Not yet done
+
+- **P1** — clean re-run from an empty checkpoint directory, and a
+  machine-verifiable run manifest binding source, lexicon, parameters,
+  solver version and every cell result. Until this lands, the committed
+  `results/enum_cells/*.jsonl` are unstamped pre-hardening files: they are
+  evidence of the old run, not a certificate. Namespacing means a new run
+  writes to `results/enum_cells/run-5de00fc1974d/` and never consults them;
+  pointed at directly they would be refused as unstamped. Measured cost of
+  the full chain is ~2–3 h, not the ~8 h first
+  estimated: stage C's free tableau solve is not part of the proof
+  (`REPORT.md` §7, abandoned as non-terminating).
+- **P1 side-item** — `tighten.py` records no solve status, so it is
+  currently impossible to tell whether any of the 17 stage-B bounds was
+  timeout-derived rather than a proved optimum. A proved optimum reproduces
+  exactly; a timeout-derived `BestObjectiveBound` moves with the solver
+  version. Tier 2 is clean on this measure (140 infeasible, 25 proved
+  optima, 0 timeout-derived); stage B is unknown.
+- **P3** — the reflection wording in `PROOFS.md`, and a `REPORT.md` pointer
+  to the manifest.

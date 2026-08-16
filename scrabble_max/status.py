@@ -72,6 +72,12 @@ def read_one(path):
             except json.JSONDecodeError:
                 corrupt = True          # almost certainly a live final line
                 continue
+            if 'header' in e:
+                # the identity stamp: not progress, and it carries no
+                # charging scale of its own -- counting its absence would
+                # put a spurious None in `scales`, which reads as "this
+                # file cannot vouch for itself"
+                continue
             scales.add(e.get('blank_penalty'))
             if 'started' in e:
                 # a work marker, not a solve: it carries no duration, and
@@ -92,10 +98,22 @@ def _pattern_of(tag):
     return tag.split('_')[0]
 
 
+def cell_files(ckpt_dir):
+    """Every checkpoint under `ckpt_dir`, one level of run-namespacing deep.
+
+    Checkpoints live in `<dir>/run-<hash>/<cell>.jsonl` so that two
+    incompatible runs cannot share a file. A watcher pointed at the parent
+    should still see them, and one pointed straight at a run directory
+    should still work -- hence both patterns."""
+    return sorted(set(glob.glob(os.path.join(ckpt_dir, '*.jsonl')))
+                  | set(glob.glob(os.path.join(ckpt_dir, 'run-*',
+                                               '*.jsonl'))))
+
+
 def collect(ckpt_dir):
     rows = []
     now = time.time()
-    for path in sorted(glob.glob(os.path.join(ckpt_dir, '*.jsonl'))):
+    for path in cell_files(ckpt_dir):
         r = read_one(path)
         tag = os.path.basename(path)[:-len('.jsonl')]
         r['tag'] = tag

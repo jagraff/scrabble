@@ -25,9 +25,19 @@ from collections import Counter
 from ortools.sat.python import cp_model
 
 from .rules import DISTRIBUTION, N, VALUES
+from . import identity as ID
 from . import tighten as T
 
 LETTERS = [chr(ord('A') + i) for i in range(26)]
+
+
+class StaleCheckpoint(ValueError):
+    """A checkpoint on disk does not certify the computation being run.
+
+    Its own class rather than a bare ValueError because the resume paths
+    must never swallow it: it is the difference between "resume from here"
+    and "this file is evidence about a different search space".
+    """
 
 
 def _append_checkpoint(path, rec, seconds, complete=False,
@@ -64,6 +74,84 @@ def _append_checkpoint(path, rec, seconds, complete=False,
     with open(path, 'a') as f:
         f.write(json.dumps(entry) + '\n')
         f.flush()
+
+
+def write_header(path, manifest, environment=None):
+    """Stamp a checkpoint with the computation it certifies.
+
+    Written as the first line, before any solving, so that a file which
+    exists at all can be identified -- including one killed during its
+    opening infeasibility proof, which is otherwise just a `started`
+    marker with nothing to say what it started on.
+
+    Idempotent: re-running a cell that already has a header leaves the file
+    alone, so a resume does not append a second one."""
+    if path is None:
+        return False
+    if os.path.exists(path) and os.path.getsize(path) > 0:
+        return False
+    os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
+    rec = {'header': manifest, 'identity': ID.digest(manifest)}
+    if environment is not None:
+        # Recorded, never gated. See identity.py: uniformity across an
+        # artifact is asserted over the finished manifest, not enforced
+        # pairwise at resume time.
+        rec['environment'] = environment
+    with open(path, 'a') as f:
+        f.write(json.dumps(rec) + '\n')
+        f.flush()
+    return True
+
+
+def checkpoint_header(path):
+    """(manifest, identity) from a checkpoint, or (None, None) if unstamped.
+
+    A file written before this existed has no header, which is not the same
+    as a header that fails to match: the first is legacy data whose identity
+    is simply unknown, and the caller decides whether unknown is
+    acceptable."""
+    if not path or not os.path.exists(path):
+        return None, None
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                e = json.loads(line)
+            except json.JSONDecodeError:
+                return None, None       # torn first line: cannot identify
+            if 'header' in e:
+                return e['header'], e.get('identity')
+            return None, None           # first real record is not a header
+    return None, None
+
+
+def verify_checkpoint_identity(path, manifest, allow_unstamped=False):
+    """Refuse to reuse a checkpoint that certifies something else.
+
+    Returns 'absent', 'stamped' or 'unstamped'; raises `StaleCheckpoint`
+    on a mismatch. Raising rather than warning is the whole point -- a
+    warning in a 50-cell run scrolls past, and the result it contaminates
+    still prints `complete=True` at the end."""
+    if not path or not os.path.exists(path) or os.path.getsize(path) == 0:
+        return 'absent'
+    stored, stored_id = checkpoint_header(path)
+    want = ID.digest(manifest)
+    if stored is None:
+        if allow_unstamped:
+            return 'unstamped'
+        raise StaleCheckpoint(
+            f'{path} carries no identity header, so it cannot vouch for '
+            f'which computation produced it. It predates identity stamping '
+            f'or was written by another tool. Move it aside and re-run, or '
+            f'pass allow_unstamped=True to accept it on the operator\'s '
+            f'word alone.')
+    if stored_id != want or ID.digest(stored) != want:
+        raise StaleCheckpoint(
+            f'{path} certifies a different computation and must not be '
+            f'reused: {ID.describe_mismatch(stored, manifest)}')
+    return 'stamped'
 
 
 def repair_checkpoint(path):
@@ -110,6 +198,8 @@ def read_checkpoint(path):
             except json.JSONDecodeError:
                 corrupt = True
                 continue
+            if 'header' in e:
+                continue          # identity stamp, not enumeration progress
             timings.append(e.get('seconds', 0.0))
             if e.get('complete'):
                 complete = True
@@ -147,13 +237,19 @@ def checkpoint_scales(path):
                 e = json.loads(line)
             except json.JSONDecodeError:
                 continue
+            if 'header' in e:
+                # The header carries the scale as a gated field; counting it
+                # here as well would add a spurious `None` to every stamped
+                # file and make it look unable to vouch for itself.
+                continue
             scales.add(e.get('blank_penalty'))
     return scales
 
 
 def resume_enumeration(lexicon, S, threshold=1786, time_limit=900.0,
                        checkpoint_dir='results/enum_ckpt', log=print,
-                       workers=1, blank_penalty=True):
+                       workers=1, blank_penalty=True, identity=None,
+                       environment=None, allow_unstamped=False):
     """Enumerate one pattern's configurations, resuming if interrupted.
 
     Returns (configs, complete, resumed_from). Safe to call repeatedly:
@@ -164,6 +260,14 @@ def resume_enumeration(lexicon, S, threshold=1786, time_limit=900.0,
     path = f'{checkpoint_dir}/{tag}.jsonl'
     if repair_checkpoint(path):
         log('  repaired a torn final line in the checkpoint')
+    # Identity first: everything below this line treats the file as
+    # evidence about *this* computation, and that has to be established
+    # before its contents are read rather than after.
+    if identity is not None:
+        state = verify_checkpoint_identity(path, identity, allow_unstamped)
+        if state == 'unstamped':
+            log('  WARNING: checkpoint has no identity header; accepting it '
+                'on the operator\'s word (allow_unstamped)')
     known, complete, timings, corrupt = read_checkpoint(path)
     scales = checkpoint_scales(path) - {None} if known or complete else set()
     if scales and scales != {bool(blank_penalty)}:
@@ -193,7 +297,8 @@ def resume_enumeration(lexicon, S, threshold=1786, time_limit=900.0,
         lexicon, threshold=threshold, time_limit=time_limit,
         fix_placed=set(S), known_configs=known, log=log,
         checkpoint_path=path, workers=workers,
-        blank_penalty=blank_penalty)
+        blank_penalty=blank_penalty, identity=identity,
+        environment=environment)
     return known + new, done, len(known)
 
 
@@ -202,7 +307,7 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
                       known_configs=(), log=print, fix_placed=None,
                       checkpoint_path=None, workers=1,
                       blank_penalty=True, prune_unplaced=True,
-                      partition=None):
+                      partition=None, identity=None, environment=None):
     """All (placed, crosses) configs with row-1-exact relaxed score
     > threshold, for the all-TWs mask.
 
@@ -238,6 +343,12 @@ def enumerate_configs(lexicon, word='OXYPHENBUTAZONE', row=0,
     # indistinguishable from a run that never started. The whole point of
     # the checkpoints as a progress record is that silence should be
     # readable, and it is not readable if the file does not exist.
+    #
+    # The identity header goes first, before the `started` marker creates
+    # the file: a cell killed inside its opening infeasibility proof would
+    # otherwise leave a file with nothing in it to say what it was proving.
+    if identity is not None:
+        write_header(checkpoint_path, identity, environment)
     _append_checkpoint(checkpoint_path, None, 0.0, started=True,
                        blank_penalty=blank_penalty)
 
