@@ -122,7 +122,30 @@ def second_letters(lexicon, letter: str, row: int) -> set[str]:
     return out
 
 
+_DAWG_CACHE = {}
+
+
 def build_line_dawg(lexicon):
+    """Cached wrapper: the DAWG depends only on the lexicon.
+
+    Building it costs ~2s and every `solve_tableau` call did it afresh. A
+    decomposition that splits one configuration into dozens of pinned
+    subproblems pays that per branch, where it becomes the dominant cost --
+    measured at roughly 2s of a 2.5s solve.
+
+    Keyed on `id(lexicon)` with the lexicon itself held in the value, so
+    the object cannot be collected and have its id reused for a different
+    one while the entry is live.
+    """
+    hit = _DAWG_CACHE.get(id(lexicon))
+    if hit is not None:
+        return hit[1]
+    out = _build_line_dawg_uncached(lexicon)
+    _DAWG_CACHE[id(lexicon)] = (lexicon, out)
+    return out
+
+
+def _build_line_dawg_uncached(lexicon):
     """Minimal DFA accepting exactly the 15-column line contents whose
     maximal nonempty runs are each either a single tile or a lexicon word.
 

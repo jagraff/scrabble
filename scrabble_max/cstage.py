@@ -44,7 +44,8 @@ def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
                   time_limit=3600.0, hint_grid=None, hint_placed=None,
                   min_score=None, known_upper=None, fix_hint=False,
                   fix_placed_exact=None, fix_crosses=None,
-                  fixed_blank_loss=None, log=print, verbose=True):
+                  fixed_blank_loss=None, fix_cells=None,
+                  log=print, verbose=True):
     """Maximize the score of playing `word` on row 0 with the given TW
     cells placed.  Returns (status_name, best_value, bound, solution)."""
     assert row == 0, "row-14 candidates were eliminated earlier"
@@ -278,6 +279,14 @@ def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
                     m.Add(placed[c] == v)
                 else:
                     m.AddHint(placed[c], v)
+
+    if fix_cells:
+        # Pin individual cells: {(row, col): 'A' or None}, None meaning
+        # empty. Used to split one hard instance into a partition of
+        # easier ones -- every legal board assigns *something* to these
+        # cells, so pinning each possibility in turn is exhaustive.
+        for (r, c), ch in fix_cells.items():
+            m.Add(g[(r, c)] == (0 if ch is None else code(ch)))
 
     solver = cp_model.CpSolver()
     solver.parameters.max_time_in_seconds = time_limit
