@@ -254,6 +254,94 @@ did exactly that, moving the run digest from `5de00fc1974d` to
 under-gating costs a false theorem — but it means model edits should be
 batched before a certifying run, not dribbled in after one.
 
+---
+
+## P2 — soundness gaps found while certifying, not in the audit
+
+The audit asked whether a stale checkpoint could be reused. Wiring the chain
+so a machine could check it end to end turned up three places where the
+pipeline could report success with the proof open. None appear in the
+review.
+
+### The last open case was closed in prose
+
+Tier 3's refutation leaves configurations CP-SAT cannot decide at its time
+limit. On the recorded run there was exactly one — exact ceiling 1787, so if
+realisable at all it beats the record by a point, and UNKNOWN after 1300 s
+even with the score constraint dropped. `tier3_results.md` describes how it
+was closed: pin a board cell, recurse, refute all 180 branches,
+independently reproduced by a second implementation.
+
+But `decompose.py` had **no CLI, and `tier3.py` never called it**. The
+closure was a manual invocation written up as prose. A clean re-run would
+stop at `1 UNDECIDED`, print that the proof was not closed, and **exit 0** —
+`rerun.sh` would have recorded the step as successful.
+
+Run against the committed artifacts, the new checker reports the true
+machine-checkable state:
+
+```
+1322 enumerated, 1322 checked, 1321 refuted,
+1 UNDECIDED and not closed by decomposition
+```
+
+`tier3` now runs the decomposition itself, records each outcome in
+`tier3_checks/decomposed.json`, and exits non-zero on anything undecided,
+anything above the threshold, or an enumeration that did not finish.
+
+### The refutation half was certified by nothing
+
+Cell checkpoints establish that the *enumeration* was exhaustive. The
+verdicts refuting what it enumerated were unhashed and uncounted, so "every
+configuration refuted" rested on a line of console output. A configuration
+enumerated and then never checked would leave no trace at all — absence is
+precisely what a listing of the verdict files cannot show. The manifest now
+hashes every verdict file and counts refuted against enumerated.
+
+Related: `verify()` had begun recording those hashes without re-checking
+them. A recorded hash that nothing verifies is worse than no hash, because
+it reads as coverage while providing none.
+
+### The witness was certified by nothing
+
+The upper bound says nothing beats 1,786. The other half of the theorem says
+1,786 is *attained and reachable*, and that half is a file on disk like any
+other. A run whose witness quietly stopped verifying, replayed to a
+different board, or scored 1,785 would have been certified exactly as
+happily as one that did not. `check_witness` requires all four: a schedule
+exists, it re-verifies, it replays to the record board, and the final move
+scores 1,786.
+
+### Smaller things
+
+* `rerun.sh` runs both test suites before any solving. Certifying results
+  produced by code that fails its own tests certifies nothing.
+* `reachability.py` carried `assert replay == grid or True` directly above
+  the real check — a no-op that reads like a check, which is worse than
+  none, because the next reader will believe it.
+
+### Checked and cleared
+
+* `max_configs=100000` returns `complete=False` when the cap is hit. No
+  false exhaustiveness.
+* The reachability node budgets fail safe: exhaustion reports no sequence
+  found, so they cannot manufacture reachability.
+* `known_upper` is applied only where the exact per-configuration blank
+  ceiling is at or above the threshold, and `int()` floors an
+  integer-valued score, so it cannot cut off a real solution.
+* Every per-mask cell in the re-run came back `OPTIMAL` — 17 candidates × 8
+  masks, no timeout-derived bound anywhere. Theorem 3's cells are
+  solver-version-independent as a matter of measurement, not argument.
+
+### Two tests that fail mid-run, by design
+
+`test_survivors_match_the_recorded_sweep` and
+`test_tier_two_survivors_match_the_config_enumeration` compare across result
+files. During a re-run the directory is half-regenerated and they fail. That
+is correct behaviour — they are consistency assertions over the artifact set
+— and it is why `rerun.sh` runs the suites before touching results rather
+than after.
+
 ## Not yet done
 
 - **P1 execution** — the tooling is in; the re-run is what remains. Until it
