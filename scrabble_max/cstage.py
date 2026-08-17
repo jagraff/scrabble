@@ -153,6 +153,29 @@ def solve_tableau(lexicon, word: str, row: int = 0, *, tw_placed=(0, 7, 14),
 
     # ---- optional: pin a specific configuration (per-config checking) ----
     if fix_placed_exact is not None:
+        # Both this and the TW mask pin `placed`, and they must agree. If
+        # they disagree on a column the model is infeasible by
+        # contradiction rather than by refutation -- and the caller reads
+        # INFEASIBLE as "no legal board realises this configuration above
+        # the threshold", so a configuration that might genuinely beat the
+        # record would be discarded with no Scrabble content in the
+        # reasoning at all. Silent, and in the unsound direction.
+        #
+        # It cannot arise as things stand: Theorem 3 puts all three
+        # triple-word columns in every pattern that reaches tier 3, and
+        # every caller uses the full mask. That is a fact about today's
+        # callers, not a property of this function, which is why it is
+        # checked rather than assumed.
+        for c, want in tw_occupancy(tw_placed).items():
+            if (c in fix_placed_exact) != bool(want):
+                raise ValueError(
+                    f'column {c} is pinned both ways: tw_placed='
+                    f'{tuple(tw_placed)} wants it '
+                    f'{"occupied" if want else "empty"} while '
+                    f'fix_placed_exact={sorted(fix_placed_exact)} wants it '
+                    f'{"occupied" if c in fix_placed_exact else "empty"}. '
+                    f'The model would be INFEASIBLE by contradiction, which '
+                    f'the caller would read as a refutation.')
         for c in range(N):
             m.Add(placed[c] == (1 if c in fix_placed_exact else 0))
     if fix_crosses is not None:

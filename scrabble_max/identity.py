@@ -154,23 +154,34 @@ def run_manifest(*, lexicon_path, threshold, word, row=0, blank_penalty=True,
     }
 
 
-def cell_manifest(run: dict, *, pattern, pivot, cell_index, block) -> dict:
+def cell_manifest(run: dict, *, pattern, cell_index, constraints) -> dict:
     """One cell's gated fields: the run's, plus which slice of the space.
 
-    `block` is stored as its explicit sorted membership, not as an index.
-    The index is what the file name already carried, and the index is
-    precisely what stayed constant while the meaning changed underneath it
-    when `n_blocks` moved."""
+    `constraints` is the cell's [(column, block), ...] -- one entry per
+    pivot column. Each block is stored as its explicit sorted membership,
+    not as an index. The index is what the file name already carried, and
+    the index is precisely what stayed constant while the meaning changed
+    underneath it when `n_blocks` moved.
+
+    Storing every constraint, rather than a single pivot, is what keeps
+    the identity honest once a cell is the product of several columns: two
+    cells can agree on their first pivot and differ on the second, and a
+    manifest that recorded only the first would call them the same cell.
+    """
+    items = []
+    for col, block in constraints:
+        # None is the "this column takes no cross word" part, which is not
+        # a set of option indices and must not be confused with the empty
+        # set -- an empty block would enumerate nothing at all.
+        items.append([int(col),
+                      None if block is None else sorted(int(i) for i in block)])
+    items.sort(key=lambda t: t[0])
     return {
         **run,
         'kind': 'enumeration-cell',
         'pattern': [int(c) for c in sorted(pattern)],
-        'pivot': int(pivot),
         'cell_index': int(cell_index),
-        # None is the "pivot column takes no cross word" cell, which is not
-        # a set of option indices and must not be confused with the empty
-        # set -- an empty block would enumerate nothing at all.
-        'block': (None if block is None else sorted(int(i) for i in block)),
+        'constraints': items,
     }
 
 

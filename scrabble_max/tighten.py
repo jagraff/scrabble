@@ -55,6 +55,29 @@ from .bounds import word_playable
 LETTERS = [ch for ch in DISTRIBUTION if ch != '?']
 
 
+def normalise_partition(partition):
+    """Accept one pivot constraint or several, and return a list of them.
+
+    A cell used to be a single `(column, block)` pair. Splitting on one
+    column is not always enough: the configurations that survive can
+    concentrate on a handful of that column's options, and since the blocks
+    partition option *indices*, every configuration sharing an option
+    shares a cell however finely the indices are split. Constraining
+    several columns at once breaks those clumps, because a configuration
+    must land in one block at each pivot independently.
+
+    The single-pair form is still accepted so that callers and tests
+    written against it keep working; `((3, {1, 2}),)` and `(3, {1, 2})`
+    mean the same thing.
+    """
+    if partition is None:
+        return []
+    items = list(partition)
+    if items and isinstance(items[0], int):
+        return [(items[0], items[1])]           # a bare (column, block) pair
+    return [(int(pc), block) for pc, block in items]
+
+
 def cross_options(lexicon, letter: str, row: int):
     """Cross-word options for a hook tile `letter` at an edge row,
     honouring hook validity (remainder must be a word when len >= 3).
@@ -598,15 +621,23 @@ def tighten_candidate(lexicon, word: str, row: int, *, time_limit=300.0,
                 # option, and the option-index blocks are disjoint and
                 # cover every index -- so the cells partition the feasible
                 # set and their union is the whole enumeration.
-                pc, block = partition
-                if not opt_lists[pc]:
-                    raise ValueError(
-                        f'partition pivot {pc} has no cross options; it must '
-                        f'be a placed column of fix_placed')
-                if block is None:
-                    model.Add(has_cross[pc] == 0)
-                else:
-                    model.Add(sum(x[(pc, oi)] for oi in block) == 1)
+                #
+                # Several pivots may be constrained at once. Each column's
+                # blocks partition that column's choices, so the cells of
+                # the product are pairwise disjoint and cover everything
+                # for the same reason a product of partitions is a
+                # partition: a configuration's choice at each pivot lands
+                # in exactly one block, so the tuple of its choices selects
+                # exactly one cell.
+                for pc, block in normalise_partition(partition):
+                    if not opt_lists[pc]:
+                        raise ValueError(
+                            f'partition pivot {pc} has no cross options; it '
+                            f'must be a placed column of fix_placed')
+                    if block is None:
+                        model.Add(has_cross[pc] == 0)
+                    else:
+                        model.Add(sum(x[(pc, oi)] for oi in block) == 1)
             return enumerate_cb(model,
                                 (placed, x, opt_lists, has_cross, total_var))
 

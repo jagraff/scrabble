@@ -43,8 +43,12 @@ def _run(lex, **over):
 
 
 def _cell(run, **over):
-    kw = dict(pattern=(0, 2, 3, 7, 11, 13, 14), pivot=3, cell_index=1,
-              block=frozenset({1, 5, 9}))
+    """A cell manifest. `pivot`/`block` are accepted as a shorthand for a
+    single-column cell, which most of these cases want."""
+    pivot = over.pop('pivot', 3)
+    block = over.pop('block', frozenset({1, 5, 9}))
+    kw = dict(pattern=(0, 2, 3, 7, 11, 13, 14), cell_index=1,
+              constraints=[(pivot, block)])
     kw.update(over)
     return ID.cell_manifest(run, **kw)
 
@@ -284,8 +288,11 @@ def _fake_cell_run(monkeypatch, tmp_path, recorder):
     monkeypatch.setattr(partition, 'stamp', lambda: {'ortools': 'test'})
 
 
-def _cell_args(ckpt_dir, run, *, cell_index=1, block=frozenset({1, 5})):
-    return ((0, 2, 3, 7, 11, 13, 14), 3, cell_index, block, 1786,
+def _cell_args(ckpt_dir, run, *, cell_index=1, block=frozenset({1, 5}),
+               constraints=None):
+    if constraints is None:
+        constraints = [(3, block)]
+    return ((0, 2, 3, 7, 11, 13, 14), constraints, cell_index, 1786,
             ckpt_dir, 60.0, run, {'ortools': 'test'}, False)
 
 
@@ -300,7 +307,8 @@ def test_run_cell_stamps_then_reuses_only_its_own_work(
 
     i, cfgs, complete, _, cached = _run_cell(_cell_args(out, run))
     assert complete and not cached, 'first pass must actually enumerate'
-    assert seen[0]['n_blocks'] == 4 and seen[0]['block'] == [1, 5]
+    assert seen[0]['n_blocks'] == 4
+    assert seen[0]['constraints'] == [[3, [1, 5]]]
 
     i, cfgs, complete, _, cached = _run_cell(_cell_args(out, run))
     assert complete and cached, 'a matching checkpoint must short-circuit'

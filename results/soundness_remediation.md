@@ -5,8 +5,36 @@ five further defects that turned up while acting on it. One section per
 finding: what the code actually did, what changed, and the test that pins
 it. Every claim is backed by a test that runs in seconds.
 
-**Status: complete.** The certified run is manifest `99a5fe3feede` at
-commit `4174af3`:
+> ## ⚠ UNRUN CHANGES ON HEAD
+>
+> Two model-source changes have been made and **not yet run**. The
+> certified manifest below describes commit `4174af3`; HEAD now differs in
+> `cstage.py`, `tighten.py` and `partition.py`, which are three of the six
+> modules whose text determines checkpoint identity.
+>
+> **Consequences, until a fresh run happens:**
+>
+> * The run digest has changed, so `results/enum_cells/run-ddc68461eadd/`
+>   is no longer the directory a new run would use. Those 50 cells remain
+>   valid evidence for commit `4174af3` and are not reusable at HEAD —
+>   `./rerun.sh` (without `--resume`) is the correct next step, and
+>   `--resume` would find nothing to resume.
+> * `MANIFEST.json` still verifies, and still describes `4174af3`. It does
+>   **not** describe HEAD.
+> * The full chain must be re-run to re-certify: roughly 20 hours, though
+>   the partition change is expected to cut the tail substantially.
+>
+> The changes are covered by fast tests and neither alters what is
+> computed or how anything is bounded — one converts a silent false
+> refutation into an error, the other changes only which cell computes
+> what. But that is an argument, and arguments of that shape have been
+> wrong in this project before, which is the reason to re-run rather than
+> to reason.
+>
+> See "The two unrun changes" below.
+
+**Status: certified at `4174af3`; HEAD has unrun changes.** The certified
+run is manifest `99a5fe3feede` at commit `4174af3`:
 
 | | |
 |---|---|
@@ -471,6 +499,69 @@ second raised AttributeError before reaching the code it claimed to
 exercise while its own except-clause swallowed it. Every non-trivial guard
 in this remediation has since been checked by breaking the thing it
 guards.
+
+## The two unrun changes
+
+Both were listed below as deliberately deferred. They have since been made,
+and **not run**. Fast tests cover them; no pipeline has executed them.
+
+### 1. `cstage.solve_tableau` refuses contradictory pinning
+
+`tw_placed` and `fix_placed_exact` both pin `placed`. When they disagree on
+a column the model is infeasible by contradiction rather than by
+refutation, and `check_configs` records `INFEASIBLE` — so a configuration
+that might genuinely beat the record would be discarded with no Scrabble
+content in the reasoning at all.
+
+Verified rather than assumed: with the guard removed, that combination
+returns **INFEASIBLE in 1.6 s**, silently. The guard raises instead.
+
+It still cannot arise in the pipeline — Theorem 3 puts all three
+triple-word columns in every tier-3 pattern, checked over all 1,327
+configurations by `tests/test_tw_mask_invariant.py`. The guard is for the
+next caller, not this one.
+
+Tests: `tests/test_cstage.py`, six cases — three columns omitted, the
+mirror case a partial mask creates, and two consistent configurations that
+must still be accepted, because a guard that rejected them would turn every
+tier-3 refutation into an exception.
+
+### 2. Product partitioning over several pivot columns
+
+`choose_pivot` picked the column with the most cross options in the
+lexicon. That is the wrong quantity: it measures what the lexicon offers,
+not how the surviving configurations spread across it. On
+(0,1,3,7,10,11,14) it picked column 3 — 1,619 options, of which the 623
+survivors use 15, with 334 on `PREQUALIFIED` alone. Blocks partition option
+*indices*, so those 334 share one index and one cell at any block count.
+
+Measured from that cell's own checkpoint: **580 configurations, 11.0 hours
+of solver time on one core**, with per-solve cost rising from a 15 s median
+over its first twenty solves to 127 s over its last twenty — the
+blocking-clause loop adds a clause per solution, so cost is superlinear in
+cell size and a fat cell is punished twice. Three cores idled throughout.
+
+Rather than guess a better single pivot, `choose_pivots` takes the two
+widest columns and `make_product_cells` forms the product partition. A
+clump on one pivot is broken by the other. Coverage and disjointness hold
+for the usual reason: a configuration's choice at each pivot lands in
+exactly one block there, so the tuple of its choices names exactly one
+cell.
+
+For reference, re-enumerating that pattern on column 10 with 48 blocks took
+**90 minutes on three cores** and produced the identical 623
+configurations.
+
+Tests: `tests/test_partition.py`, seven cases including an exhaustive
+check that every (option at pivot A, option at pivot B) pair — the
+no-cross-word case included — lands in exactly one cell, and a direct
+reconstruction of the clump showing it now spreads across four cells
+instead of one.
+
+`identity.cell_manifest` now records every `(column, block)` constraint
+rather than a single pivot: two cells can agree on their first pivot and
+differ on the second, and a manifest recording only the first would call
+them the same cell.
 
 ## Deliberately not done, and why
 

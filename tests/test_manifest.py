@@ -39,12 +39,15 @@ def _run(lex, **over):
 
 
 def _cell_file(cell_dir, run, *, pattern=(0, 2, 3), pivot=3, index=0,
-               block=None, complete=True, configs=2, env=None):
-    cell = ID.cell_manifest(run, pattern=pattern, pivot=pivot,
-                            cell_index=index, block=block)
+               block=None, complete=True, configs=2, env=None,
+               constraints=None):
+    if constraints is None:
+        constraints = [(pivot, block)]
+    cell = ID.cell_manifest(run, pattern=pattern, cell_index=index,
+                            constraints=constraints)
     cell_dir.mkdir(parents=True, exist_ok=True)
-    tag = ''.join(f'{c:02d}' for c in sorted(pattern))
-    path = cell_dir / f'{tag}_p{pivot:02d}c{index:03d}.jsonl'
+    from scrabble_max.partition import _cell_tag
+    path = cell_dir / f'{_cell_tag(pattern, [c for c, _ in constraints], index)}.jsonl'
     write_header(str(path), cell, env or {'ortools': '9.15.6755',
                                           'python': '3.12.3'})
     with open(path, 'a') as f:
@@ -168,12 +171,12 @@ PATTERN = (0, 2, 3, 7, 11, 13, 14)
 
 @pytest.fixture(scope='module')
 def geometry():
-    """`choose_pivot` scans 1,619 cross options and costs ~2.7 s. Computed
-    once for the module rather than once per test."""
+    """Scanning cross options costs seconds. Computed once for the module
+    rather than once per test."""
     from scrabble_max.lexicon import load
-    from scrabble_max.partition import choose_pivot, make_cells
-    pivot, n_options = choose_pivot(load(), PATTERN)
-    return pivot, make_cells(n_options, 4)
+    from scrabble_max.partition import choose_pivots, make_product_cells
+    pivots = choose_pivots(load(), PATTERN)
+    return pivots, make_product_cells(pivots, 4)
 
 
 class TestCoverage:
@@ -182,20 +185,20 @@ class TestCoverage:
     expected looks exactly like 4 files where 4 were expected.
 
     One real pattern, against the real lexicon, because the expected set is
-    derived from `choose_pivot`/`make_cells` and stubbing those would test
-    the stub.
+    derived from `choose_pivots`/`make_product_cells` and stubbing those
+    would test the stub.
     """
 
     PATTERN = PATTERN
 
     def _populate(self, tmp_path, run, geometry, skip=()):
-        pivot, cells = geometry
+        _pivots, cells = geometry
         d = tmp_path / 'enum_cells' / f'run-{ID.digest(run)[:12]}'
-        for i, block in enumerate(cells):
+        for i, constraints in enumerate(cells):
             if i in skip:
                 continue
-            _cell_file(d, run, pattern=self.PATTERN, pivot=pivot, index=i,
-                       block=block)
+            _cell_file(d, run, pattern=self.PATTERN, index=i,
+                       constraints=constraints)
         return M.build(ckpt_dir=str(tmp_path / 'enum_cells'), run=run)
 
     def test_a_full_directory_has_no_complaints(self, tmp_path, lex,
@@ -211,12 +214,12 @@ class TestCoverage:
         assert len(problems) == 1 and 'missing entirely' in problems[0]
 
     def test_an_unfinished_cell_is_caught(self, tmp_path, lex, geometry):
-        pivot, cells = geometry
+        _pivots, cells = geometry
         run = _run(lex)
         man = self._populate(tmp_path, run, geometry, skip={1})
         _cell_file(tmp_path / 'enum_cells' / f'run-{ID.digest(run)[:12]}',
-                   run, pattern=self.PATTERN, pivot=pivot, index=1,
-                   block=cells[1], complete=False)
+                   run, pattern=self.PATTERN, index=1,
+                   constraints=cells[1], complete=False)
         man = M.build(ckpt_dir=str(tmp_path / 'enum_cells'), run=run)
         problems = M.check_coverage(man, [self.PATTERN])
         assert len(problems) == 1 and 'not complete' in problems[0]
@@ -226,12 +229,12 @@ class TestCoverage:
         """A file whose identity is valid but does not belong to the
         partition being certified -- a stray from a different run dropped
         into the directory."""
-        pivot, cells = geometry
+        pivots, cells = geometry
         run = _run(lex)
         man = self._populate(tmp_path, run, geometry)
+        stray = tuple((c, frozenset({3})) for c, _ in pivots)
         _cell_file(tmp_path / 'enum_cells' / f'run-{ID.digest(run)[:12]}',
-                   run, pattern=self.PATTERN, pivot=pivot, index=99,
-                   block=frozenset({3}))
+                   run, pattern=self.PATTERN, index=99, constraints=stray)
         man = M.build(ckpt_dir=str(tmp_path / 'enum_cells'), run=run)
         problems = M.check_coverage(man, [self.PATTERN])
         assert len(problems) == 1 and 'not in the partition' in problems[0]

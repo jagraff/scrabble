@@ -63,6 +63,11 @@ WORD = 'OXYPHENBUTAZONE'
 # still a trap, so the defaults no longer disagree.
 DEFAULT_BLOCKS = 4
 
+# How many columns to constrain at once. Two is enough to break the clumps
+# measured so far and keeps the cell count to (blocks+1)^2; a third
+# multiplies the closing infeasibility proofs again for no observed gain.
+DEFAULT_PIVOTS = 2
+
 
 def _check_passthrough():
     """Fail early and legibly if `enumerate_configs` cannot take a cell.
@@ -86,14 +91,52 @@ def _check_passthrough():
 def choose_pivot(lexicon, S, word=WORD):
     """The placed column with the most cross options.
 
-    Partitioning on the widest column gives the finest control over cell
-    size; a narrow one could not be split into enough cells to balance."""
+    Kept for callers and tests that want a single pivot. `choose_pivots`
+    is what the enumeration uses, and the docstring there explains why one
+    column is not enough."""
     best, best_n = None, -1
     for c in sorted(S):
         n = len(T.cross_options(lexicon, word[c], 0))
         if n > best_n:
             best, best_n = c, n
     return best, best_n
+
+
+def choose_pivots(lexicon, S, word=WORD, k=DEFAULT_PIVOTS):
+    """The `k` placed columns with the most cross options, widest first.
+
+    Splitting on one column balances badly, and the option count is why:
+    it measures how many cross words the *lexicon* offers, not how the
+    configurations that actually survive are spread across them. On
+    pattern (0,1,3,7,10,11,14) the widest column is 3, with 1,619 options
+    -- of which the 623 surviving configurations use just 15, and 334 of
+    them use `PREQUALIFIED` alone. `make_cells` splits option *indices*,
+    so those 334 share one index and therefore one cell, at any block
+    count. That cell took 11.0 hours of solver time while three cores sat
+    idle, and its per-solve cost rose from a 15s median over its first
+    twenty solves to 127s over its last twenty, because the
+    blocking-clause loop adds a clause per solution and the model grows
+    with the answer.
+
+    Column 10 has fewer options (881) but the survivors realise 118
+    distinct words there, the largest bucket holding 57. Re-enumerating
+    the same pattern on column 10 with 48 blocks took 90 minutes on three
+    cores and produced the identical 623 configurations.
+
+    Which column will spread well is not knowable before enumerating, so
+    this does not try to guess: it constrains several columns at once, and
+    a clump on any one of them is broken by the others. The cost is more
+    cells, each paying its own closing infeasibility proof -- cheap, and
+    bounded, against a tail measured in hours.
+    """
+    counts = [(len(T.cross_options(lexicon, word[c], 0)), c)
+              for c in sorted(S)]
+    counts.sort(key=lambda t: (-t[0], t[1]))
+    chosen = [(c, n) for n, c in counts[:max(1, k)] if n > 0]
+    if not chosen:
+        raise ValueError(f'no placed column of {tuple(sorted(S))} has cross '
+                         f'options; there is nothing to partition on')
+    return chosen
 
 
 def make_cells(n_options, n_blocks):
@@ -115,6 +158,35 @@ def make_cells(n_options, n_blocks):
     return [None] + blocks          # None = "pivot column has no cross word"
 
 
+def make_product_cells(pivots, n_blocks):
+    """Every cell of the product partition, as a list of (column, block).
+
+    `pivots` is [(column, n_options), ...]. Each column contributes its own
+    partition -- the no-cross-word case, then the option-index blocks --
+    and a cell is one choice from each. A configuration's choice at each
+    pivot lands in exactly one of that column's parts, so the tuple of its
+    choices names exactly one cell: the cells are disjoint and they cover
+    everything, which is what completeness rests on.
+
+    Both halves are asserted rather than trusted, per column, because a
+    partition that merely looks tidy would still drop configurations if it
+    failed to cover.
+    """
+    per_column = []
+    for col, n_options in pivots:
+        blocks = make_cells(n_options, n_blocks)         # [None] + blocks
+        covered = set().union(*[b for b in blocks if b is not None]) \
+            if len(blocks) > 1 else set()
+        assert covered == set(range(n_options)), (
+            f'column {col}: blocks must cover every option index')
+        per_column.append([(col, b) for b in blocks])
+
+    cells = [[]]
+    for parts in per_column:
+        cells = [cell + [part] for cell in cells for part in parts]
+    return [tuple(cell) for cell in cells]
+
+
 def _cell_tag(S, pivot, i):
     """Checkpoint name for one cell.
 
@@ -124,9 +196,15 @@ def _cell_tag(S, pivot, i):
     only pivot and cell index in the name they would share checkpoint
     files. The resume path pre-blocks whatever it reads, so one pattern
     would silently start from another's configurations, and the completion
-    marker would end its loop early with a list that is not its own."""
+    marker would end its loop early with a list that is not its own.
+
+    `pivot` may be a single column or the several a product cell
+    constrains; all of them go in the name, so two cells of the same
+    pattern cannot collide either."""
     tag = ''.join(f'{c:02d}' for c in sorted(S))
-    return f'{tag}_p{pivot:02d}c{i:03d}'
+    cols = [pivot] if isinstance(pivot, int) else list(pivot)
+    ptag = 'p'.join(f'{int(c):02d}' for c in cols)
+    return f'{tag}_p{ptag}c{i:03d}'
 
 
 _LEX = None
@@ -147,13 +225,14 @@ def _lexicon():
 
 
 def _run_cell(args):
-    (S, pivot, cell_index, block, threshold, ckpt_dir, time_limit, run,
+    (S, constraints, cell_index, threshold, ckpt_dir, time_limit, run,
      env, allow_unstamped) = args
     lexicon = _lexicon()
-    cell = (ID.cell_manifest(run, pattern=S, pivot=pivot,
-                             cell_index=cell_index, block=block)
+    cols = [c for c, _ in constraints]
+    cell = (ID.cell_manifest(run, pattern=S, cell_index=cell_index,
+                             constraints=constraints)
             if run is not None else None)
-    path = (os.path.join(ckpt_dir, f'{_cell_tag(S, pivot, cell_index)}.jsonl')
+    path = (os.path.join(ckpt_dir, f'{_cell_tag(S, cols, cell_index)}.jsonl')
             if ckpt_dir else None)
     if path:
         assert cell is not None, (
@@ -189,7 +268,7 @@ def _run_cell(args):
     new, done = enumerate_configs(
         lexicon, threshold=threshold, fix_placed=set(S), known_configs=known,
         checkpoint_path=path, workers=1, blank_penalty=True,
-        prune_unplaced=True, partition=(pivot, block),
+        prune_unplaced=True, partition=tuple(constraints),
         time_limit=time_limit, log=lambda *a, **k: None,
         identity=cell, environment=env)
     return cell_index, known + new, done, time.time() - t0, False
@@ -286,18 +365,18 @@ def enumerate_pattern(S, n_blocks=DEFAULT_BLOCKS, threshold=1786,
     exhaustive and no completeness claim may be made from it."""
     _check_passthrough()
     lexicon = load()
-    pivot, n_options = choose_pivot(lexicon, S)
-    cells = make_cells(n_options, n_blocks)
-    log(f'pattern {tuple(sorted(S))}: pivot column {pivot} '
-        f'({n_options} options) -> {len(cells)} cells, '
-        f'{max_workers} workers')
+    pivots = choose_pivots(lexicon, S)
+    cells = make_product_cells(pivots, n_blocks)
+    log(f'pattern {tuple(sorted(S))}: pivot columns '
+        f'{[c for c, _ in pivots]} ({[n for _, n in pivots]} options) '
+        f'-> {len(cells)} cells, {max_workers} workers')
     run, env, ckpt_dir = _run_context(threshold, n_blocks, ckpt_dir)
     if ckpt_dir:
         log(f'  run {ID.digest(run)[:12]} -> {ckpt_dir}')
 
-    jobs = [(tuple(sorted(S)), pivot, i, block, threshold, ckpt_dir,
+    jobs = [(tuple(sorted(S)), constraints, i, threshold, ckpt_dir,
              time_limit, run, env, allow_unstamped)
-            for i, block in enumerate(cells)]
+            for i, constraints in enumerate(cells)]
     found, seen, incomplete = [], {}, []
     t0 = time.time()
     with ProcessPoolExecutor(max_workers=max_workers) as ex, \
@@ -350,11 +429,11 @@ def enumerate_many(patterns, n_blocks=DEFAULT_BLOCKS, threshold=1786,
     jobs, cells_of = [], {}
     for S in patterns:
         S = tuple(sorted(S))
-        pivot, n_options = choose_pivot(lexicon, S)
-        cells = make_cells(n_options, n_blocks)
+        pivots = choose_pivots(lexicon, S)
+        cells = make_product_cells(pivots, n_blocks)
         cells_of[S] = len(cells)
-        for i, block in enumerate(cells):
-            jobs.append((S, pivot, i, block, threshold, ckpt_dir, time_limit,
+        for i, constraints in enumerate(cells):
+            jobs.append((S, constraints, i, threshold, ckpt_dir, time_limit,
                          run, env, allow_unstamped))
     log(f'{len(patterns)} patterns -> {len(jobs)} cells, '
         f'{max_workers} workers')

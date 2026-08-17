@@ -38,6 +38,52 @@ def test_non_tw_column_is_rejected():
         tw_occupancy((0, 5))
 
 
+# --- the TW mask and fix_placed_exact must agree -------------------------
+#
+# Both pin `placed`. If they disagree on a column the model is infeasible by
+# contradiction rather than by refutation, and the caller reads INFEASIBLE
+# as "no legal board realises this configuration above the threshold" -- so
+# a configuration that might genuinely beat the record is discarded with no
+# Scrabble content in the reasoning. Silent, and in the unsound direction.
+
+@pytest.mark.parametrize('placed', [
+    (0, 1, 3, 7, 11, 13),           # 14 missing
+    (1, 3, 7, 11, 13, 14),          # 0 missing
+    (0, 1, 3, 11, 13, 14),          # 7 missing
+])
+def test_a_configuration_missing_a_triple_word_column_is_refused(placed):
+    """Rather than silently returning INFEASIBLE."""
+    with pytest.raises(ValueError, match='pinned both ways'):
+        solve_tableau(LEX, 'OXYPHENBUTAZONE', 0,
+                      fix_placed_exact=set(placed), build_only=True,
+                      log=lambda s: None)
+
+
+def test_a_partial_mask_conflicting_the_other_way_is_refused():
+    """The mirror case, introduced by making the mask exact: an unnamed TW
+    column is forced empty, so a configuration that places it conflicts."""
+    with pytest.raises(ValueError, match='pinned both ways'):
+        solve_tableau(LEX, 'OXYPHENBUTAZONE', 0, tw_placed=(0, 7),
+                      fix_placed_exact={0, 1, 3, 7, 11, 13, 14},
+                      build_only=True, log=lambda s: None)
+
+
+def test_a_consistent_configuration_is_accepted():
+    """The guard must not reject the configurations the pipeline actually
+    checks, or every tier-3 refutation becomes an exception."""
+    m, g = solve_tableau(LEX, 'OXYPHENBUTAZONE', 0,
+                         fix_placed_exact={0, 1, 3, 6, 7, 11, 14},
+                         build_only=True, log=lambda s: None)
+    assert m is not None and g
+
+
+def test_a_consistent_partial_mask_is_accepted():
+    m, g = solve_tableau(LEX, 'OXYPHENBUTAZONE', 0, tw_placed=(0, 7),
+                         fix_placed_exact={0, 1, 3, 7, 11, 13},
+                         build_only=True, log=lambda s: None)
+    assert m is not None and g
+
+
 @pytest.mark.slow
 def test_tableau_model_reproduces_1786_when_fixed():
     """With the whole grid fixed to the known construction, the tableau

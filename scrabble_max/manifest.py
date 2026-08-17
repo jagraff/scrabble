@@ -166,18 +166,20 @@ def expected_cells(patterns, run, ckpt_dir='results/enum_cells'):
     a cell that was never launched writes no file, and a short directory is
     otherwise indistinguishable from a complete one."""
     from .lexicon import load
-    from .partition import _cell_tag, choose_pivot, make_cells
+    from .partition import _cell_tag, choose_pivots, make_product_cells
 
     lex = load()
     out = {}
     for S in patterns:
         S = tuple(sorted(S))
-        pivot, n_options = choose_pivot(lex, S)
-        for i, block in enumerate(make_cells(n_options, run['n_blocks'])):
-            cell = ID.cell_manifest(run, pattern=S, pivot=pivot,
-                                    cell_index=i, block=block)
+        pivots = choose_pivots(lex, S)
+        cols = [c for c, _ in pivots]
+        for i, constraints in enumerate(make_product_cells(pivots,
+                                                           run['n_blocks'])):
+            cell = ID.cell_manifest(run, pattern=S, cell_index=i,
+                                    constraints=constraints)
             out[ID.digest(cell)] = os.path.join(
-                ID.run_dir(ckpt_dir, run), f'{_cell_tag(S, pivot, i)}.jsonl')
+                ID.run_dir(ckpt_dir, run), f'{_cell_tag(S, cols, i)}.jsonl')
     return out
 
 
