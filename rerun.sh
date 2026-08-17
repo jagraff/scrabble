@@ -77,8 +77,12 @@ step tests-slow $PY -m pytest tests/ -q -m slow
 
 step stage-a   $PY -m scrabble_max.bounds --threshold 1786
 step stage-b   $PY -m scrabble_max.tighten --time-limit 240
-step six-tiles $PY -m scrabble_max.tighten --max-placed 6 \
-                   --word OXYPHENBUTAZONE --out results/bound_six_tiles.json
+# `--six-tiles`, not `--max-placed 6 --word ... --out ...`. The latter is
+# what REPORT.md documented and it does something else entirely: it takes
+# the ordinary candidate path and writes a two-row list, where Theorem 3
+# needs the per-row, per-mask dictionary `--six-tiles` produces. The
+# documented command did not reproduce the committed artifact.
+step six-tiles $PY -m scrabble_max.tighten --six-tiles
 step tier-2    $PY -m scrabble_max.patterns --stop-after-row1
 step sweep     $PY -m scrabble_max.blank_tier2
 step tier-3    $PY -m scrabble_max.tier3 --workers 4 --blocks 4

@@ -529,8 +529,7 @@ export PYTHONHASHSEED=0                              # not decoration; see below
 .venv/bin/python -m pytest tests/ -q -m slow         # solver validation (~8 min)
 .venv/bin/python -m scrabble_max.bounds --threshold 1786   # stage A  (~1 min)
 .venv/bin/python -m scrabble_max.tighten --time-limit 240  # stages B/B⁺ (~1 h)
-.venv/bin/python -m scrabble_max.tighten --max-placed 6 --word OXYPHENBUTAZONE \
-    --out results/bound_six_tiles.json        # Theorem 3's |S| <= 6 bound
+.venv/bin/python -m scrabble_max.tighten --six-tiles   # Theorem 3's |S| <= 6 bound
 .venv/bin/python -m scrabble_max.patterns --stop-after-row1  # tiers 1-2 (~8 min)
 .venv/bin/python -m scrabble_max.blank_tier2         # blank-penalty sweep (~6 min)
 .venv/bin/python -m scrabble_max.tier3 --workers 4 --blocks 4   # tier 3 (~1 h)

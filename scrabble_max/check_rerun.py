@@ -78,6 +78,17 @@ def check_six_tiles(old_dir=OLD, new_dir=NEW):
     if not _present(o, n):
         return ['six-tile: files missing'], {}
     old, new = _load(o), _load(n)
+    # Guard the shape before walking it. `tighten --six-tiles` writes a
+    # dict keyed by row and mask; the ordinary candidate path writes a
+    # list, and a run that invoked the wrong one used to arrive here as an
+    # AttributeError from inside the loop -- which says nothing about the
+    # actual mistake.
+    for label, obj in (('old', old), ('new', new)):
+        if not isinstance(obj, dict):
+            return ([f'six-tile: the {label} file is a '
+                     f'{type(obj).__name__}, not the per-mask dictionary '
+                     f'`tighten --six-tiles` writes; it was produced by a '
+                     f'different command'], {})
     bad, moved = [], {}
     for k, v in new.items():
         if k not in old:

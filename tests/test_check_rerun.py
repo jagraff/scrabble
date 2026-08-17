@@ -100,6 +100,22 @@ def test_a_changed_sweep_verdict_is_reported(dirs):
     assert len(moved) == 1 and 'dies=' in moved[0]
 
 
+def test_a_six_tile_file_of_the_wrong_shape_is_reported_not_a_traceback(dirs):
+    """`tighten --six-tiles` writes a per-mask dictionary; the ordinary
+    candidate path writes a list. Running the wrong command used to reach
+    the comparison and raise AttributeError from inside a loop, which
+    names neither the file nor the mistake. It was the documented
+    reproduction command that was wrong, so this is not hypothetical.
+    """
+    from scrabble_max.check_rerun import check_six_tiles
+    prev, new = dirs
+    _write(prev, 'bound_six_tiles.json', {'row0_max6': 1730.0})
+    _write(new, 'bound_six_tiles.json', [{'word': 'X', 'tight_bound': 1.0}])
+    bad, moved = check_six_tiles(str(prev), str(new))
+    assert bad and 'not the per-mask dictionary' in bad[0]
+    assert moved == {}
+
+
 def test_missing_files_are_skipped_not_fabricated(dirs):
     """A partial re-run must not be reported as a pile of regressions."""
     prev, new = dirs
