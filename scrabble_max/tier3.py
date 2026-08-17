@@ -31,6 +31,49 @@ from .partition import DEFAULT_BLOCKS, enumerate_many
 SURVIVORS_FILE = 'results/blank_penalty_tier2.json'
 
 
+def _silent(*args, **kwargs):
+    """A logger that swallows everything, keyword arguments included.
+
+    `lambda *x: None` looks equivalent and is not: `refute_parallel` logs
+    its per-depth progress with `flush=True`, and a positional-only lambda
+    raises TypeError on the first such call. That crash would have landed
+    at the very end of a multi-hour run, in the decomposition step that
+    exists to close the last open case -- the most expensive possible place
+    to discover it.
+    """
+
+
+def decompose_undecided(lex, unresolved, threshold=1786, workers=4,
+                        time_limit=60.0, log=print):
+    """Close configurations CP-SAT left UNDECIDED, by decomposition.
+
+    Returns (records, still_open). A configuration counts as closed only
+    when every branch of its decomposition reached INFEASIBLE.
+
+    A function rather than a block inside `main` so it can be tested
+    without running the pipeline. It is the step that used to be performed
+    by hand and written up as prose, so it is the last place that should be
+    reachable only through a four-hour run.
+    """
+    from .decompose import refute_parallel
+
+    records, still_open = [], []
+    for S, r in unresolved:
+        crosses = {int(k): v for k, v in r['config']['crosses'].items()}
+        t0 = time.time()
+        refuted, branches = refute_parallel(
+            lex, tuple(r['config']['placed']), crosses, threshold=threshold,
+            workers=workers, time_limit=time_limit, log=_silent)
+        log(f'    {S}: refuted={refuted} ({len(branches)} open, '
+            f'{time.time() - t0:.0f}s)')
+        records.append({'placed': list(S), 'crosses': r['config']['crosses'],
+                        'refuted': bool(refuted),
+                        'open_branches': len(branches)})
+        if not refuted:
+            still_open.append((S, r))
+    return records, still_open
+
+
 def survivors(path=SURVIVORS_FILE):
     """The patterns tier 2 could not eliminate."""
     rows = json.load(open(path))
@@ -159,24 +202,9 @@ def main():
     if unresolved and not a.no_decompose:
         print()
         print(f'decomposing {len(unresolved)} undecided configuration(s)')
-        from .decompose import refute_parallel
-        still_open = []
-        for S, r in unresolved:
-            crosses = {int(k): v for k, v in r['config']['crosses'].items()}
-            t2 = time.time()
-            refuted, branches = refute_parallel(
-                lex, tuple(r['config']['placed']), crosses,
-                threshold=a.threshold, workers=a.workers,
-                time_limit=a.decompose_time_limit, log=lambda *x: None)
-            print(f'    {S}: refuted={refuted} '
-                  f'({len(branches)} open, {time.time() - t2:.0f}s)',
-                  flush=True)
-            decomposed.append({'placed': list(S), 'crosses': r['config'][
-                'crosses'], 'refuted': bool(refuted),
-                'open_branches': len(branches)})
-            if not refuted:
-                still_open.append((S, r))
-        unresolved = still_open
+        decomposed, unresolved = decompose_undecided(
+            lex, unresolved, threshold=a.threshold, workers=a.workers,
+            time_limit=a.decompose_time_limit)
         with open(os.path.join(check_dir, 'decomposed.json'), 'w') as f:
             json.dump(decomposed, f, indent=1)
 
