@@ -406,6 +406,61 @@ mostly-cached cells, not a computation. That is exactly the condition in
 which a leftover file gets consumed unnoticed. The clean re-run's tier-3
 enumeration takes hours, which is the honest figure.
 
+---
+
+## P5 — the independent verification, complete
+
+Run on the idle cores while the certified pipeline works through its
+straggler cell. None of it writes to `results/`; it is corroboration, not a
+shortcut, and the certified run still has to reach these conclusions
+through its own identity-bound artifacts.
+
+| pattern | archived | independent re-run | verdict |
+|---|---:|---:|---|
+| 8 patterns | — | — | identical counts |
+| (0,1,3,7,11,13,14) | 0 | **5** | the stale-checkpoint gap; all 5 INFEASIBLE |
+| (0,1,3,7,10,11,14) | 623 | **623** | identical set, different partition |
+
+For the largest pattern, enumerated from scratch under a **different pivot
+column and block count** (10/48 against 3/4) and reaching the identical
+623-configuration set — zero found that the archive lacked, zero missing.
+Then decided: 550 by exact ceiling with no solve, 72 by CP-SAT proof, 1
+UNDECIDED, **0 above 1786**.
+
+The one undecided is the configuration `tier3_results.md` describes as "the
+one that resisted":
+
+```
+OPACIFICATIONS / XEROSES / PREADJUSTING / BRAINWASHING
+AMELIORATIVE / ZOOGAMETE / EQUALITY
+   -> refuted=True, 0 open branches, 404s
+```
+
+Closed by `tier3.decompose_undecided` -- the production function, not a
+reimplementation -- so the path that crashed on its first real invocation
+now has an end-to-end confirmation rather than only a stubbed test.
+
+Every configuration of every surviving pattern is therefore accounted for
+by an independent route, and nothing reaches 1787.
+
+## Bugs found by using the tools rather than reading them
+
+Worth recording as a pattern, because all three were invisible to review:
+
+* **the decomposition crash** -- found by running the production path on
+  the pattern that actually contains an undecided configuration;
+* **the status watcher merging two runs** -- found by watching a live run
+  next to an archived one;
+* **the manifest matching verdicts by count** -- found by running the
+  manifest against a half-finished run.
+
+And two of my own tests were decoration until mutation-tested: the first
+decomposition regression test passed with the bug reintroduced, and a
+second raised AttributeError before reaching the code it claimed to
+exercise while its own except-clause swallowed it. Every non-trivial guard
+in this remediation has since been checked by breaking the thing it
+guards.
+
 ## Not yet done
 
 - **P1 execution** — the tooling is in; the re-run is what remains. Until it

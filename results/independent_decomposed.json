@@ -1,0 +1,24 @@
+[
+ {
+  "placed": [
+   0,
+   1,
+   3,
+   7,
+   10,
+   11,
+   14
+  ],
+  "crosses": {
+   "0": "OPACIFICATIONS",
+   "1": "XEROSES",
+   "3": "PREADJUSTING",
+   "7": "BRAINWASHING",
+   "10": "AMELIORATIVE",
+   "11": "ZOOGAMETE",
+   "14": "EQUALITY"
+  },
+  "refuted": true,
+  "open_branches": 0
+ }
+]
