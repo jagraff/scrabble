@@ -181,6 +181,18 @@ def expected_cells(patterns, run, ckpt_dir='results/enum_cells'):
     return out
 
 
+def _config_key(cfg):
+    """A configuration's identity, independent of how it was serialised.
+
+    Cross-word keys are column numbers that survive a JSON round trip as
+    strings, so both sides are normalised to strings before comparing.
+    """
+    placed = tuple(sorted(int(c) for c in (cfg.get('placed') or ())))
+    crosses = tuple(sorted((str(k), v)
+                           for k, v in (cfg.get('crosses') or {}).items()))
+    return placed, crosses
+
+
 def refutation_summary(check_dir='results/tier3_checks',
                        configs_path='results/tier3_configs.json') -> dict:
     """Every enumerated configuration must have a verdict, and every
@@ -198,12 +210,22 @@ def refutation_summary(check_dir='results/tier3_checks',
     decomposition reports every branch refuted.
     """
     out = {'checked': 0, 'refuted': 0, 'undecided': 0, 'above_threshold': 0,
-           'enumerated': 0, 'missing_verdicts': 0, 'files': []}
+           'enumerated': 0, 'missing_verdicts': 0, 'unmatched_verdicts': 0,
+           'files': []}
+    enumerated_keys = set()
     if os.path.exists(configs_path):
         with open(configs_path) as f:
             payload = json.load(f)
         out['enumerated'] = sum(p['count'] for p in payload['patterns'])
         out['threshold'] = payload.get('threshold')
+        for p in payload['patterns']:
+            # A pattern may record only its count. Then identity matching
+            # is not available for it and the comparison falls back to
+            # counts below, rather than crashing or -- worse -- silently
+            # treating the missing entries as absent verdicts.
+            for c in (p.get('configs') or []):
+                enumerated_keys.add(_config_key(c))
+    verdict_keys = set()
 
     decomposed = {}
     dpath = os.path.join(check_dir, 'decomposed.json')
@@ -231,6 +253,7 @@ def refutation_summary(check_dir='results/tier3_checks',
                              'sha256': file_digest(path), 'rows': len(rows)})
         for r in rows:
             out['checked'] += 1
+            verdict_keys.add(_config_key(r.get('config') or {}))
             value = r.get('value') or 0
             thresh = out.get('threshold') or 1786
             if value > thresh:
@@ -245,7 +268,21 @@ def refutation_summary(check_dir='results/tier3_checks',
                     out['refuted'] += 1
                 else:
                     out['undecided'] += 1
-    out['missing_verdicts'] = max(0, out['enumerated'] - out['checked'])
+    # By identity, not by count. Two sets of the same size can be disjoint,
+    # so counting verdicts against enumerated configurations would accept a
+    # directory of verdicts left over from a different enumeration -- which
+    # is exactly how a stale checkpoint went unnoticed on the archived run.
+    if len(enumerated_keys) == out['enumerated'] and out['enumerated']:
+        out['matched_by'] = 'identity'
+        out['missing_verdicts'] = len(enumerated_keys - verdict_keys)
+        out['unmatched_verdicts'] = len(verdict_keys - enumerated_keys)
+    else:
+        # Not every configuration was listed, so identity matching would
+        # report the unlisted ones as missing. Say which comparison was
+        # actually made rather than letting the weaker one pass for the
+        # stronger.
+        out['matched_by'] = 'count'
+        out['missing_verdicts'] = max(0, out['enumerated'] - out['checked'])
     return out
 
 
@@ -263,6 +300,11 @@ def check_refutation(summary: dict) -> list[str]:
             f"{summary['missing_verdicts']} enumerated configuration(s) have "
             f"no verdict: {summary['enumerated']} enumerated against "
             f"{summary['checked']} checked")
+    if summary.get('unmatched_verdicts'):
+        problems.append(
+            f"{summary['unmatched_verdicts']} verdict(s) are for "
+            f'configurations this enumeration never produced, so they were '
+            f'left by a different run and cannot certify this one')
     if summary['enumerated'] and not summary['checked']:
         problems.append('no verdict files at all, but configurations were '
                         'enumerated')

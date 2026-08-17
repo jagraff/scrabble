@@ -318,6 +318,43 @@ class TestRefutation:
         assert s['above_threshold'] == 1
         assert any('above the threshold' in p for p in M.check_refutation(s))
 
+    def test_verdicts_for_a_different_enumeration_are_caught(self, tmp_path):
+        """Matching by count would accept these: same number of verdicts as
+        configurations, but for configurations this run never produced.
+        That is how a stale artifact hides -- the totals agree and the
+        contents do not."""
+        d = tmp_path / 'checks'
+        d.mkdir()
+        (d / 'pattern.json').write_text(json.dumps([
+            self._row(crosses={'0': 'STALE'}),
+            self._row(crosses={'0': 'ALSOSTALE'}),
+        ]))
+        cfg = tmp_path / 'tier3_configs.json'
+        cfg.write_text(json.dumps({'threshold': 1786, 'patterns': [{
+            'placed': [0, 2, 3], 'count': 2,
+            'configs': [{'placed': [0, 2, 3], 'crosses': {'0': 'FRESH'}},
+                        {'placed': [0, 2, 3], 'crosses': {'0': 'ALSOFRESH'}}],
+        }]}))
+        s = M.refutation_summary(str(d), str(cfg))
+        assert s['checked'] == 2 and s['enumerated'] == 2, 'counts agree'
+        assert s['missing_verdicts'] == 2 and s['unmatched_verdicts'] == 2
+        problems = M.check_refutation(s)
+        assert any('no verdict' in p for p in problems)
+        assert any('never produced' in p for p in problems)
+
+    def test_matching_verdicts_are_accepted(self, tmp_path):
+        d = tmp_path / 'checks'
+        d.mkdir()
+        (d / 'pattern.json').write_text(json.dumps([
+            self._row(crosses={'0': 'FRESH'})]))
+        cfg = tmp_path / 'tier3_configs.json'
+        cfg.write_text(json.dumps({'threshold': 1786, 'patterns': [{
+            'placed': [0, 2, 3], 'count': 1,
+            'configs': [{'placed': [0, 2, 3], 'crosses': {'0': 'FRESH'}}]}]}))
+        s = M.refutation_summary(str(d), str(cfg))
+        assert s['missing_verdicts'] == 0 and s['unmatched_verdicts'] == 0
+        assert M.check_refutation(s) == []
+
     def test_an_unchecked_configuration_is_caught(self, tmp_path):
         """Enumerated 5, checked 2. Without this the missing three are
         invisible: they are absent from the verdict files, and absence is
