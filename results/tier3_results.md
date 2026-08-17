@@ -4,6 +4,18 @@ Tier 2 left ten placed patterns that no bound could eliminate. Tier 3
 enumerates every configuration each of them admits, then decides each one
 exactly. This records what that produced.
 
+> **This document describes the run of 2026-08-15/16, which was not
+> exhaustive.** It reused a stale checkpoint and skipped five
+> configurations. It is kept because its findings about *why* the phase
+> behaves as it does remain sound and useful, and because deleting the
+> record of a flawed run is how the flaw gets forgotten. The corrections
+> are marked inline.
+>
+> The authoritative result is the certified run of 2026-08-17: **1,327
+> configurations, all refuted, 0 undecided, 0 above the threshold**,
+> manifest `99a5fe3feede`, with the last open case closed by the pipeline
+> rather than by hand. See `soundness_remediation.md`.
+
 ## Enumeration
 
 All ten patterns enumerated to completion — every partition cell ended in
@@ -21,26 +33,54 @@ long.
 | (0,2,3,7,9,11,14) | 43 |
 | (0,2,3,6,7,11,14) | 30 |
 | (0,2,3,7,11,13,14) | 14 |
-| (0,1,3,7,11,13,14) | 0 |
-| **total** | **1322** |
+| (0,1,3,7,11,13,14) | ~~0~~ **5** |
+| **total** | ~~1322~~ **1327** |
 
-29.7 minutes, `results/tier3_configs.json`.
+> **Corrected 2026-08-17.** The struck figures are wrong. This run reused
+> four checkpoints left behind by an aborted launch — files written
+> 19:22:45–19:23:07 on 2026-08-15, before the 19:23:45 commit that added
+> the `started` marker they lack, and consumed as complete by the run that
+> began at 19:24:31. Three were harmless. The fourth,
+> `00010307111314_p03c001`, claimed 0 configurations in 15.12 s where a
+> clean re-enumeration finds **5** in 116 s. Those five were never
+> enumerated and never refuted here. They have since been refuted, three
+> times independently and once by the certified pipeline; see
+> `soundness_remediation.md`.
+>
+> The **29.7 minutes** recorded below is also misleading. The cells of this
+> run were started across a 15.2-hour span, 2026-08-15 19:24 to
+> 2026-08-16 10:38; the 29.7 minutes measured a final pass over
+> mostly-cached cells, not a computation. A genuine from-scratch
+> enumeration takes **18.7 hours of solver time**. Reporting a replay as a
+> runtime is what made the reuse invisible.
+
+`results/tier3_configs.json`.
 
 Five of these patterns had counts predicted in advance from the archived
 pre-fix lists, by evaluating the in-model blank penalty arithmetically.
 Four came in exactly:
 
-| pattern | predicted | actual |
-|---|---:|---:|
-| (0,1,2,3,7,11,14) | 95 | **95** |
-| (0,1,3,4,7,11,14) | 165 | **165** |
-| (0,2,3,7,9,11,14) | 43 | **43** |
-| (0,2,3,7,11,13,14) | 14 | **14** |
-| (0,1,3,7,11,13,14) | 5 | 0 |
+| pattern | predicted | actual | certified re-run |
+|---|---:|---:|---:|
+| (0,1,2,3,7,11,14) | 95 | **95** | 95 |
+| (0,1,3,4,7,11,14) | 165 | **165** | 165 |
+| (0,2,3,7,9,11,14) | 43 | **43** | 43 |
+| (0,2,3,7,11,13,14) | 14 | **14** | 14 |
+| (0,1,3,7,11,13,14) | 5 | 0 | **5** |
 
 The prediction and the measurement were made independently, in different
-sessions. The one miss goes in the safe direction: 0 configurations means
-that pattern is refuted with nothing left to check.
+sessions.
+
+> **The original text said:** *"The one miss goes in the safe direction: 0
+> configurations means that pattern is refuted with nothing left to
+> check."*
+>
+> That reasoning is backwards, and it is the sentence that let the bug
+> through. Missing configurations is never the safe direction: they were
+> not refuted, they were not looked at. The prediction was right and the
+> measurement was wrong, which is exactly what the disagreement was
+> evidence of. An independent check fired correctly and was explained
+> away — the certified re-run finds the predicted 5.
 
 ## Refutation
 

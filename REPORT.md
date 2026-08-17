@@ -551,6 +551,16 @@ known board and recovers exactly 1,786.
 
 ### What certifies a run
 
+The current certified run is manifest **`99a5fe3feede`**, at commit
+`4174af3`: 50 of 50 cells complete, 1,327 configurations, all refuted, none
+undecided, none above the threshold, one solver build and one machine
+throughout. Verify it with
+
+```
+.venv/bin/python -m scrabble_max.manifest --verify   # re-hash what it names
+python3 check_independent.py                         # re-derive it, sharing no code
+```
+
 `results/MANIFEST.json` binds the environment, the parameters, and a
 SHA-256 of every artifact and every cell checkpoint. Each checkpoint also
 carries its own identity header naming the computation it certifies —

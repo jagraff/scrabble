@@ -1,13 +1,24 @@
 # Soundness remediation: work log
 
-Tracks the response to `scrabble_adversarial_soundness_review.md`. One
-section per finding: what the code actually did, what changed, and the test
-that pins it. Every claim below is backed by a test that runs in seconds —
-`pytest -m "not slow"` is 170 tests in ~39 s.
+Tracks the response to `scrabble_adversarial_soundness_review.md`, and the
+five further defects that turned up while acting on it. One section per
+finding: what the code actually did, what changed, and the test that pins
+it. Every claim is backed by a test that runs in seconds.
 
-Status at the time of writing: **P0 complete, P1 not started.** The
-committed tier-3 results are still the pre-hardening ones and the clean
-re-run has not been done, so the artifact is not yet certified end to end.
+**Status: complete.** The certified run is manifest `99a5fe3feede` at
+commit `4174af3`:
+
+| | |
+|---|---|
+| cells | 50 of 50 complete, 0 corrupt, 0 unstamped |
+| configurations | 1,327 enumerated, **1,327 refuted** |
+| undecided | 0 — closed by decomposition inside the pipeline |
+| above the threshold | 0 |
+| environment | one solver build, one machine, one commit, clean source |
+
+`check_independent.py`, which shares no code with the package, agrees: 31
+checks, 0 failures. `python -m scrabble_max.manifest --verify` reports
+everything it names unchanged.
 
 ---
 
@@ -461,12 +472,51 @@ exercise while its own except-clause swallowed it. Every non-trivial guard
 in this remediation has since been checked by breaking the thing it
 guards.
 
-## Not yet done
+## Deliberately not done, and why
 
-- **P1 execution** — the tooling is in; the re-run is what remains. Until it
-  finishes and the manifest is committed, the tier-3 results in `results/`
-  are the pre-hardening ones and the artifact is not certified.
-- **P4, new** — `check_rerun.py` compares against `results/pre_fix`. It
-  should learn about `results/pre_hardening` too, so the certified run can
-  be checked against the run it replaces rather than against a much older
-  one.
+* **A runtime assertion in `cstage.solve_tableau`.** Combining a
+  configuration whose placed set omits a triple-word column with the
+  default full mask makes the model infeasible by contradiction rather
+  than by refutation — a silent false refutation. It predates the
+  exactness change and cannot arise today, because Theorem 3 puts all
+  three triple-word columns in every pattern that reaches tier 3; verified
+  over all 1,327 configurations and pinned by
+  `tests/test_tw_mask_invariant.py`.
+
+  The assertion is still the more direct guard, and it is not applied
+  because `cstage.py` is one of the six modules whose text determines
+  checkpoint identity. Editing it invalidates 50 identity-bound cells and
+  18.7 hours of solver time, and leaves the certified manifest pointing at
+  a commit whose model sources differ from HEAD — reintroducing exactly
+  the provenance drift this work exists to remove. **Batch it into the
+  next model-touching run**, together with anything else that needs those
+  six files.
+
+* **Partition pivot selection.** `choose_pivot` maximises the number of
+  cross options in the lexicon, not the spread of configurations that
+  actually exist. On (0,1,3,7,10,11,14) it picks column 3, whose 1,619
+  options carry only 15 realised words with 334 sharing one; round-robin
+  splits option *indices*, so those 334 are atomic and no block count
+  divides them. One cell ran for over eleven hours on one core while three
+  sat idle. Column 10 realises 118 distinct values with a largest bucket of
+  57: re-enumerating there with 48 blocks took 90 minutes on 3 cores and
+  reached the identical 623 configurations.
+
+  Pure scheduling — it changes which cell computes what, not what is
+  computed or how it is bounded — but it touches `partition.py`, so it
+  belongs in the same batch.
+
+## Still open, beyond this remediation
+
+* ~264 CP-SAT infeasibility claims are trusted. Removing them from the
+  trust base needs a DRAT/LRAT layer over a CNF re-encoding, checked by a
+  verified checker. Note the trap: without a proof that the encoding is
+  faithful, that moves trust from a heavily-tested solver to a bespoke
+  encoder, which may be a downgrade. All defects found in this project
+  have been in encoding, bookkeeping and orchestration; none in CP-SAT.
+* The stage-A geometry caps are not independently re-derived —
+  `check_independent.py` reports this rather than claiming agreement. It
+  needs an independent cross-bound table, and is the last significant
+  piece reachable without a solver.
+* The lexicon being genuine NWL2023 is an empirical claim no formalisation
+  can discharge.

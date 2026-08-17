@@ -12,6 +12,40 @@ construction scoring **1,786**.
 
 ---
 
+> ## Certified run: manifest `99a5fe3feede`
+>
+> The computational content of these theorems was re-run from an empty
+> checkpoint namespace on 2026-08-17 at commit `4174af3`, with a clean
+> source tree, one solver build (OR-Tools 9.15.6755) and one machine
+> across every cell.
+>
+> | | |
+> |---|---|
+> | cells | 50 of 50 complete, 0 corrupt, 0 unstamped |
+> | configurations | 1,327 enumerated, **1,327 refuted** |
+> | undecided | 0 — the last case closed by decomposition *in the pipeline* |
+> | above the threshold | 0 |
+> | lexicon | `data/NWL2023.txt`, sha256 `7ced912101628ad7…`, 196,601 words |
+>
+> `results/MANIFEST.json` binds the environment, the parameters, and a
+> SHA-256 of every artifact, cell checkpoint and verdict file.
+> `python -m scrabble_max.manifest --verify` re-hashes them.
+>
+> The run that preceded it was **not** exhaustive: it reused a checkpoint
+> left by an aborted launch and skipped five configurations of pattern
+> (0,1,3,7,11,13,14). All five refute, and the certified run enumerates
+> them. `results/soundness_remediation.md` records what was wrong and what
+> changed; `results/tier3_results.md` carries the corrections inline.
+>
+> `check_independent.py` re-derives what can be re-derived without a
+> solver, from a separate implementation of the rules that imports nothing
+> from `scrabble_max`: 31 checks, 0 failures, including the 1,786 score
+> from the board layout up and 1,063 of the 1,327 refutations. What it
+> cannot verify — 264 CP-SAT infeasibility claims, and the stage-A
+> geometry caps — it reports as out of scope rather than as agreement.
+
+---
+
 > ## Status: recomputed after the `cross_options` bug; all theorems stand
 >
 > A soundness bug was found in `tighten.cross_options` after these
