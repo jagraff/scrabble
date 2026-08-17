@@ -520,3 +520,75 @@ guards.
   piece reachable without a solver.
 * The lexicon being genuine NWL2023 is an empirical claim no formalisation
   can discharge.
+
+---
+
+## Appendix: what was actually done, in order
+
+For someone picking this up cold. Commits `73aa8d6`..`c026bda`.
+
+**Audited the review before acting on it.** Three findings held, one held in
+a weaker form than claimed, one was mostly wrong. Recorded above with the
+evidence, because acting on a finding that does not hold is how correct code
+gets broken.
+
+**P0 — checkpoint identity.** `identity.py`; headers on every cell; the gate
+raises rather than warns; directories namespaced by run digest; the three
+conflicting `n_blocks` defaults reconciled. Diverged from the review twice,
+deliberately: the solver version is recorded but not gated (an infeasibility
+proof is a fact about the model, not the prover), and `PYTHONHASHSEED` is
+refused outright when unset rather than recorded as `None`.
+
+**P0 — witness verification.** The verifier now derives everything it
+checks, including the mover. `verify_board_sequence` ties the rack schedule
+to the board it claims to build — a gap the review did not raise.
+
+**P0 — `tw_occupancy`.** The tableau model pins all three triple-word
+columns exactly. No committed number changes.
+
+**P1 — provenance.** `manifest.py` (coverage and uniformity, matched by
+identity rather than count); `blank_tier2.py`, which fills a hole where the
+step that *selected* tier 3's work had no entry point at all; per-mask solve
+statuses in `tighten.py`; `rerun.sh`; `check_rerun.check_identical`.
+
+**P2 — three gaps the review missed**, all of which let the pipeline report
+success with the proof open: the last case closed in prose rather than in
+code, a refutation phase certified by nothing, and a witness certified by
+nothing.
+
+**The re-run.** ~19 hours of solver time across two attempts. The first died
+after 11.7 hours on a `TypeError` in the decomposition — fixed three hours
+earlier, but the process had loaded the module at start and an edit on disk
+cannot reach a running interpreter. `--resume` was added so identity-bound,
+complete cells are not discarded when the interruption is downstream.
+
+**Independent verification**, on cores the straggler cell left idle: the
+largest pattern re-enumerated under a different pivot and block count
+reaching the identical 623 configurations; all 623 refuted; the stubborn one
+closed by the production decomposition function; the five hidden
+configurations refuted separately.
+
+**`check_independent.py`.** A checker that imports nothing from the package.
+
+**Corrections to the record.** `tier3_results.md`'s wrong figures struck and
+its "safe direction" sentence quoted back rather than deleted;
+`REPORT.md`'s reproduction section, which named a command that did not
+produce its own artifact; `PROOFS.md`'s reflection claim.
+
+### The six defects, and how each was found
+
+| # | defect | found by |
+|---|---|---|
+| 1 | stale checkpoint: 5 configurations never enumerated or refuted | re-running from empty |
+| 2 | decomposition crashed on a flushed log call | running the production path on the real case |
+| 3 | status watcher merged two runs' counts | watching a live run beside an archived one |
+| 4 | manifest matched verdicts by count, not identity | running the manifest mid-run |
+| 5 | documented command did not produce its own artifact | the checker crashing on the wrong shape |
+| 6 | `tier3.py` returned 0 with the proof open | reading exit paths while wiring `rerun.sh` |
+
+Five of six were invisible to review. Two of the regression tests written
+during this work were themselves decoration until mutation-tested — one
+passed with its bug reintroduced, the other threw before reaching the code
+it claimed to exercise while its own `except` swallowed it. Every
+non-trivial guard here has since been checked by breaking the thing it
+guards.

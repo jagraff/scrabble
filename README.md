@@ -23,15 +23,62 @@ are not incidental caveats and should be read before the claim is quoted.
 | **Thm 5** | The published 1,786 construction is legal and scores exactly 1,786 | complete — rules engine only |
 | **Thm 6** | 1,786 is reachable in a legal two-player game (26 moves) | complete |
 | **Tier 2** | The in-model blank penalty eliminates 4 of the 14 patterns | complete |
-| **Tier 3** | The remaining 10 patterns' 1,322 configurations are all refuted | **complete** |
+| **Tier 3** | The remaining 10 patterns' 1,327 configurations are all refuted | **complete** |
 
-Tier 3 enumerated every configuration those ten patterns admit — 1,322 in
+Tier 3 enumerated every configuration those ten patterns admit — 1,327 in
 total, every partition cell terminating in INFEASIBLE, which is what makes
 the lists exhaustive rather than merely long — and decided each one:
-**1,063** by an exact closed-form blank ceiling, **258** by a CP-SAT
-infeasibility proof, and the last by cell decomposition. Details, including
-the independent reproduction, are in
+**1,063** by an exact closed-form blank ceiling, **263** by a CP-SAT
+infeasibility proof, and the last by cell decomposition inside the
+pipeline. Details are in
 [results/tier3_results.md](results/tier3_results.md).
+
+## Where the proof currently stands
+
+The computational content was re-run from an empty checkpoint namespace on
+2026-08-17 and is certified by **`results/MANIFEST.json`**, digest
+`99a5fe3feede`, at commit `4174af3`.
+
+| | |
+|---|---|
+| cells | 50 of 50 complete, 0 corrupt, 0 unstamped |
+| configurations | 1,327 enumerated, **1,327 refuted** |
+| undecided | 0 |
+| above the threshold | 0 |
+| environment | one solver build (OR-Tools 9.15.6755), one machine, one commit, clean source |
+| lexicon | `data/NWL2023.txt`, sha256 `7ced912101628ad7…`, 196,601 words |
+
+Two commands check it:
+
+```bash
+.venv/bin/python -m scrabble_max.manifest --verify  # re-hash everything it names
+python3 check_independent.py                        # re-derive it, sharing no code
+```
+
+The second is a separate implementation of the rules that imports nothing
+from `scrabble_max`. It re-derives the 1,786 score from the board layout
+up, replays the 25-move witness to the record pre-board, and reproduces
+1,063 of the 1,327 refutations without a solver — 31 checks, 0 failures.
+
+**The run this replaced was not exhaustive.** It reused a checkpoint left
+by an aborted launch and skipped five configurations of pattern
+(0,1,3,7,11,13,14). All five refute, and the certified run enumerates them;
+the count moved from 1,322 to 1,327. That defect, five others found with
+it, and what changed in response are recorded in
+[results/soundness_remediation.md](results/soundness_remediation.md).
+
+### What is still trusted
+
+Certification covers the *search*, not the modelling. Outside it:
+
+* ~264 CP-SAT infeasibility claims, which would need a DRAT/LRAT layer;
+* the stage-A geometry caps, which `check_independent.py` reports as not
+  re-derived rather than claiming agreement;
+* that the encodings model Scrabble faithfully, and that the lexicon file
+  is genuinely NWL2023.
+
+So this is an **exhaustive, machine-checkable computer-assisted search**,
+not a machine-checked proof in the sense a proof assistant would mean.
 
 ## What the claim is *not*
 
