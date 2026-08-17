@@ -35,16 +35,37 @@ $PY -m scrabble_max.provenance | tee -a "$LOG/rerun.log"
 # The checkpoint directory must be empty of *this run's* namespace. It is
 # namespaced by the run digest, so a previous run at the same settings would
 # be reused -- which is exactly what a clean re-run must not do.
+#
+# `--resume` is the one legitimate exception, and it is narrow. It keeps the
+# existing namespace so a run interrupted *after* its enumeration finished
+# can carry on. What makes that sound is not the operator's word: the cells
+# are identity-bound, so any that were produced under a different lexicon,
+# threshold, partition or model source are refused on sight, and the ones
+# that remain are proofs about the model being run now. The move-aside
+# exists to stop a *different* computation being reused, and the identity
+# gate already does that job -- this only avoids discarding twelve hours of
+# valid work when the interruption was a crash in a later stage.
+RESUME=0
+if [ "${1:-}" = '--resume' ]; then
+  RESUME=1
+fi
+
 RUNDIR=$($PY -c "
 from scrabble_max import identity as ID
 from scrabble_max.provenance import LEXICON_PATH
 run = ID.run_manifest(lexicon_path=LEXICON_PATH, threshold=1786,
                       word='OXYPHENBUTAZONE', n_blocks=4)
 print(ID.run_dir('results/enum_cells', run))")
-if [ -d "$RUNDIR" ]; then
+if [ -d "$RUNDIR" ] && [ "$RESUME" = '0' ]; then
   echo "moving aside a previous run at the same settings: $RUNDIR" \
     | tee -a "$LOG/rerun.log"
   mv "$RUNDIR" "${RUNDIR}.superseded.$(date +%s)"
+elif [ "$RESUME" = '1' ]; then
+  n_done=$(grep -l '"complete"' "$RUNDIR"/*.jsonl 2>/dev/null | wc -l | tr -d ' ')
+  n_all=$(ls "$RUNDIR"/*.jsonl 2>/dev/null | wc -l | tr -d ' ')
+  echo "--resume: keeping $RUNDIR ($n_done of $n_all cells already complete;" \
+    "each is identity-bound and re-verified before reuse)" \
+    | tee -a "$LOG/rerun.log"
 fi
 echo "cells will be written to $RUNDIR" | tee -a "$LOG/rerun.log"
 
