@@ -1,0 +1,10 @@
+run ddc68461eadd -> results/enum_cells/run-ddc68461eadd
+cells        : 50 (50 complete, 0 corrupt, 0 unstamped)
+configurations: 1327
+solver time  : 18.7 h
+refutation   : 1327 checked, 1327 refuted, 0 undecided, 0 above the threshold
+  of which    1/1 closed by decomposition
+artifacts    : 8
+-> results/MANIFEST.json
+manifest digest: bcc10dbc8ba9cc7020dd6b9f78ea5c4e64b75fd90fc14503606456e7ac94898b
+coverage: every cell of every surviving pattern is present and complete; every enumerated configuration has a refutation; the 1786 witness verifies and replays to the record board

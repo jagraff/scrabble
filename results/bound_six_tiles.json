@@ -10,6 +10,16 @@
   "6": 718.0,
   "7": 1730.0
  },
+ "row0_max6_per_mask_status": {
+  "0": "OPTIMAL",
+  "1": "OPTIMAL",
+  "2": "OPTIMAL",
+  "3": "OPTIMAL",
+  "4": "OPTIMAL",
+  "5": "INFEASIBLE",
+  "6": "OPTIMAL",
+  "7": "OPTIMAL"
+ },
  "row14_max6": 1706.0,
  "row14_max6_per_mask": {
   "0": 194.0,
@@ -20,5 +30,15 @@
   "5": -Infinity,
   "6": 706.0,
   "7": 1706.0
+ },
+ "row14_max6_per_mask_status": {
+  "0": "OPTIMAL",
+  "1": "OPTIMAL",
+  "2": "OPTIMAL",
+  "3": "OPTIMAL",
+  "4": "OPTIMAL",
+  "5": "INFEASIBLE",
+  "6": "OPTIMAL",
+  "7": "OPTIMAL"
  }
 }

@@ -13,8 +13,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.4
  },
  {
   "placed": [
@@ -30,8 +31,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -47,8 +49,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -64,8 +67,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -81,8 +85,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -98,8 +103,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -115,8 +121,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -132,8 +139,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -149,8 +157,9 @@
   "row1_bound": 1785.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": false,
-  "seconds": 16.3
+  "seconds": 10.7
  },
  {
   "placed": [
@@ -166,8 +175,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.6
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -183,8 +193,9 @@
   "row1_bound": 1785.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": false,
-  "seconds": 14.9
+  "seconds": 10.8
  },
  {
   "placed": [
@@ -200,8 +211,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -217,8 +229,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -234,8 +247,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -251,8 +265,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -268,8 +283,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -285,8 +301,9 @@
   "row1_bound": 1791.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 17.1
+  "seconds": 12.9
  },
  {
   "placed": [
@@ -302,8 +319,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.6
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -319,8 +337,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -336,8 +355,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -353,8 +373,9 @@
   "row1_bound": 1788.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 18.1
+  "seconds": 13.2
  },
  {
   "placed": [
@@ -370,8 +391,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -387,8 +409,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.6
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -404,8 +427,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -421,8 +445,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -438,8 +463,9 @@
   "row1_bound": 1794.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 16.8
+  "seconds": 11.5
  },
  {
   "placed": [
@@ -455,8 +481,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.6
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -472,8 +499,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.6
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -489,8 +517,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -506,8 +535,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.6
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -523,8 +553,9 @@
   "row1_bound": 1791.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 18.5
+  "seconds": 14.1
  },
  {
   "placed": [
@@ -540,8 +571,9 @@
   "row1_bound": 1792.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 14.2
+  "seconds": 10.5
  },
  {
   "placed": [
@@ -557,8 +589,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.6
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -574,8 +607,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -591,8 +625,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.6
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -608,8 +643,9 @@
   "row1_bound": 1780.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": false,
-  "seconds": 20.7
+  "seconds": 13.6
  },
  {
   "placed": [
@@ -625,8 +661,9 @@
   "row1_bound": 1788.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 18.2
+  "seconds": 12.7
  },
  {
   "placed": [
@@ -642,8 +679,9 @@
   "row1_bound": 1794.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 17.5
+  "seconds": 12.6
  },
  {
   "placed": [
@@ -659,8 +697,9 @@
   "row1_bound": 1792.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 17.0
+  "seconds": 13.4
  },
  {
   "placed": [
@@ -676,8 +715,9 @@
   "row1_bound": 1787.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 17.0
+  "seconds": 13.3
  },
  {
   "placed": [
@@ -693,8 +733,9 @@
   "row1_bound": 1791.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 18.2
+  "seconds": 12.3
  },
  {
   "placed": [
@@ -710,8 +751,9 @@
   "row1_bound": 1792.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 15.9
+  "seconds": 11.5
  },
  {
   "placed": [
@@ -727,8 +769,9 @@
   "row1_bound": 1790.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 15.9
+  "seconds": 11.2
  },
  {
   "placed": [
@@ -744,8 +787,9 @@
   "row1_bound": 1790.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 16.1
+  "seconds": 12.0
  },
  {
   "placed": [
@@ -761,8 +805,9 @@
   "row1_bound": 1791.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": true,
-  "seconds": 16.7
+  "seconds": 12.4
  },
  {
   "placed": [
@@ -778,8 +823,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -795,8 +841,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -812,8 +859,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -829,8 +877,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -846,8 +895,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -863,8 +913,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -880,8 +931,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -897,8 +949,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -914,8 +967,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -931,8 +985,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -948,8 +1003,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -965,8 +1021,9 @@
   "row1_bound": 1693.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": false,
-  "seconds": 14.1
+  "seconds": 9.6
  },
  {
   "placed": [
@@ -982,8 +1039,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -999,8 +1057,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1016,8 +1075,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -1033,8 +1093,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1050,8 +1111,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1067,8 +1129,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1084,8 +1147,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1101,8 +1165,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1118,8 +1183,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1135,8 +1201,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1152,8 +1219,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1169,8 +1237,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1186,8 +1255,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1203,8 +1273,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1220,8 +1291,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1237,8 +1309,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1254,8 +1327,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -1271,8 +1345,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1288,8 +1363,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1305,8 +1381,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1322,8 +1399,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1339,8 +1417,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1356,8 +1435,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1373,8 +1453,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1390,8 +1471,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1407,8 +1489,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1424,8 +1507,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1441,8 +1525,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1458,8 +1543,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1475,8 +1561,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1492,8 +1579,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1509,8 +1597,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1526,8 +1615,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1543,8 +1633,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1560,8 +1651,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1577,8 +1669,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1594,8 +1687,9 @@
   "row1_bound": 1701.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": false,
-  "seconds": 13.8
+  "seconds": 9.7
  },
  {
   "placed": [
@@ -1611,8 +1705,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1628,8 +1723,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1645,8 +1741,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1662,8 +1759,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -1679,8 +1777,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1696,8 +1795,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1713,8 +1813,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1730,8 +1831,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1747,8 +1849,9 @@
   "row1_bound": 1689.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": false,
-  "seconds": 16.9
+  "seconds": 12.1
  },
  {
   "placed": [
@@ -1764,8 +1867,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1781,8 +1885,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1798,8 +1903,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1815,8 +1921,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -1832,8 +1939,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1849,8 +1957,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -1866,8 +1975,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1883,8 +1993,9 @@
   "row1_bound": 1695.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": false,
-  "seconds": 16.5
+  "seconds": 12.9
  },
  {
   "placed": [
@@ -1900,8 +2011,9 @@
   "row1_bound": 1704.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": false,
-  "seconds": 14.9
+  "seconds": 11.1
  },
  {
   "placed": [
@@ -1917,8 +2029,9 @@
   "row1_bound": 1693.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": false,
-  "seconds": 13.8
+  "seconds": 10.0
  },
  {
   "placed": [
@@ -1934,8 +2047,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1951,8 +2065,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1968,8 +2083,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -1985,8 +2101,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -2002,8 +2119,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2019,8 +2137,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2036,8 +2155,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2053,8 +2173,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2070,8 +2191,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2087,8 +2209,9 @@
   "row1_bound": 1699.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": false,
-  "seconds": 14.8
+  "seconds": 10.7
  },
  {
   "placed": [
@@ -2104,8 +2227,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2121,8 +2245,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.3
  },
  {
   "placed": [
@@ -2138,8 +2263,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2155,8 +2281,9 @@
   "row1_bound": 1698.0,
   "infeasible": false,
   "proved_optimal": true,
+  "verdict": "proved_optimum",
   "kept": false,
-  "seconds": 15.3
+  "seconds": 10.5
  },
  {
   "placed": [
@@ -2172,8 +2299,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2189,8 +2317,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2206,8 +2335,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2223,8 +2353,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2240,8 +2371,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2257,8 +2389,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2274,8 +2407,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2291,8 +2425,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2308,8 +2443,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2325,8 +2461,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2342,8 +2479,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2359,8 +2497,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2376,8 +2515,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2393,8 +2533,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2410,8 +2551,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2427,8 +2569,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 1.0
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2444,8 +2587,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2461,8 +2605,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2478,8 +2623,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2495,8 +2641,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2512,8 +2659,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2529,8 +2677,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2546,8 +2695,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2563,8 +2713,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2580,8 +2731,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2597,8 +2749,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2614,8 +2767,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2631,8 +2785,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2648,8 +2803,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2665,8 +2821,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2682,8 +2839,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2699,8 +2857,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2716,8 +2875,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2733,8 +2893,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2750,8 +2911,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2767,8 +2929,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2784,8 +2947,9 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  },
  {
   "placed": [
@@ -2801,7 +2965,8 @@
   "row1_bound": null,
   "infeasible": true,
   "proved_optimal": false,
+  "verdict": "infeasible",
   "kept": false,
-  "seconds": 0.5
+  "seconds": 0.2
  }
 ]

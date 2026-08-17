@@ -14,6 +14,16 @@
    "6": 784.0,
    "7": 1798.0
   },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
+  },
   "detail": {
    "T": [
     0,
@@ -83,17 +93,20 @@
      1,
      0
     ],
-    "H": [
+    "N": [
      0,
      1
     ]
    },
    "bingo": true,
    "proved_optimal": true,
-   "row1": "PEER.HARDWOOD.V"
+   "row1": "PEER.BARNWOOD.V"
   },
   "row1_exact_per_mask": {
    "7": 1794.0
+  },
+  "row1_exact_per_mask_status": {
+   "7": "OPTIMAL"
   }
  },
  {
@@ -110,6 +123,16 @@
    "5": 778.0,
    "6": 775.0,
    "7": 1778.0
+  },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
   },
   "detail": {
    "T": [
@@ -165,6 +188,16 @@
    "6": 740.0,
    "7": 1430.0
   },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
+  },
   "detail": {
    "T": [
     0,
@@ -183,11 +216,11 @@
    ],
    "crosses": {
     "0": "PREMANUFACTURED",
-    "1": "SEXPLOITATION",
-    "3": "CHARKING",
+    "1": "SEXPLOITATIONS",
+    "3": "CHARKED",
     "6": "ABRIDGEABLE",
     "7": "NETIQUETTES",
-    "10": "YOURSELF",
+    "10": "YAWNING",
     "14": "GIZZARDS"
    },
    "blanks(bs,bu)": {
@@ -214,6 +247,16 @@
    "5": 741.0,
    "6": 763.0,
    "7": 1424.0
+  },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
   },
   "detail": {
    "T": [
@@ -269,6 +312,16 @@
    "6": 752.0,
    "7": 1703.0
   },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
+  },
   "detail": {
    "T": [
     0,
@@ -278,20 +331,20 @@
    "WM": 27,
    "placed": [
     0,
-    1,
     3,
     7,
     8,
     11,
+    13,
     14
    ],
    "crosses": {
     "0": "VENTRILOQUIZED",
-    "1": "PROFESSORIATE",
-    "3": "BOOKBINDERY",
+    "3": "PERAMBULATORY",
     "7": "CONJUNCTIVAL",
     "8": "EXPRESSO",
     "11": "WAREZ",
+    "13": "FOREKNOWN",
     "14": "HIGHFALUTING"
    },
    "blanks(bs,bu)": {
@@ -322,6 +375,16 @@
    "5": 738.0,
    "6": 724.0,
    "7": 1650.0
+  },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
   },
   "detail": {
    "T": [
@@ -372,6 +435,16 @@
    "5": 793.0,
    "6": 777.0,
    "7": 1716.0
+  },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
   },
   "detail": {
    "T": [
@@ -427,6 +500,16 @@
    "6": 721.0,
    "7": 1629.0
   },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
+  },
   "detail": {
    "T": [
     0,
@@ -481,6 +564,16 @@
    "6": 732.0,
    "7": 1639.0
   },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
+  },
   "detail": {
    "T": [
     0,
@@ -531,6 +624,16 @@
    "6": 717.0,
    "7": 1629.0
   },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
+  },
   "detail": {
    "T": [
     0,
@@ -580,6 +683,16 @@
    "5": 749.0,
    "6": 743.0,
    "7": 1666.0
+  },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
   },
   "detail": {
    "T": [
@@ -635,6 +748,16 @@
    "6": 727.0,
    "7": 1645.0
   },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
+  },
   "detail": {
    "T": [
     0,
@@ -685,6 +808,16 @@
    "6": 739.0,
    "7": 1642.0
   },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
+  },
   "detail": {
    "T": [
     0,
@@ -734,6 +867,16 @@
    "5": 726.0,
    "6": 715.0,
    "7": 1621.0
+  },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
   },
   "detail": {
    "T": [
@@ -789,6 +932,16 @@
    "6": 714.0,
    "7": 1624.0
   },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
+  },
   "detail": {
    "T": [
     0,
@@ -807,7 +960,7 @@
    ],
    "crosses": {
     "0": "DJELLABAH",
-    "1": "INVESTIGATORY",
+    "1": "VINDICATORY",
     "3": "PYRIDOXINE",
     "7": "BUCKRAM",
     "11": "QUARTZ",
@@ -838,6 +991,16 @@
    "5": 715.0,
    "6": 707.0,
    "7": 1585.0
+  },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
   },
   "detail": {
    "T": [
@@ -889,6 +1052,16 @@
    "6": 724.0,
    "7": 1560.0
   },
+  "per_mask_status": {
+   "0": "OPTIMAL",
+   "1": "OPTIMAL",
+   "2": "OPTIMAL",
+   "3": "OPTIMAL",
+   "4": "OPTIMAL",
+   "5": "OPTIMAL",
+   "6": "OPTIMAL",
+   "7": "OPTIMAL"
+  },
   "detail": {
    "T": [
     0,
@@ -901,21 +1074,21 @@
     2,
     6,
     7,
-    9,
+    8,
     11,
     14
    ],
    "crosses": {
-    "0": "OPACIFICATIONS",
-    "2": "EVAGINATED",
-    "6": "PREQUALIFIED",
+    "0": "OPACIFYING",
+    "2": "EQUALITIES",
+    "6": "PREINTERVIEWED",
     "7": "HEXARCHY",
-    "9": "SLOWDOWN",
-    "11": "ZUKES",
-    "14": "GASTRONOMICALLY"
+    "8": "AWAKENED",
+    "11": "ZOOGAMETES",
+    "14": "GIZZARDS"
    },
    "blanks(bs,bu)": {
-    "C": [
+    "Z": [
      2,
      0
     ]

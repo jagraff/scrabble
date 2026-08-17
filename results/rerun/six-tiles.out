@@ -1,0 +1,4 @@
+provenance: commit 5d3247ea4b0e85d24773267656c718b88c7ec573 ortools 9.15.6755 seed 0 lexicon 7ced91210162
+OXYPHENBUTAZONE row=0 |S|<=6: 1730  (42.5s)
+OXYPHENBUTAZONE row=14 |S|<=6: 1706  (50.9s)
+-> results/bound_six_tiles.json

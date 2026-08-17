@@ -1,0 +1,12 @@
+stage B      : 0 violations, 0 bounds rose
+six-tile     : 0 violations, 8 bounds rose
+tier 2       : 0 violations, 0 bounds rose
+               survivors 14 -> 14  (new: [])
+               165 patterns: 140 infeasible, 25 proved optima, 0 timeout-derived
+tier 3 lists : 0 violations, 0 lists changed
+
+vs results/pre_hardening (nothing should have moved at all):
+  1 value(s) MOVED -- each needs an explanation, though a timeout-derived bound may move legitimately with the solver version:
+    tier 3 (0, 1, 3, 7, 11, 13, 14): 0 -> 5 configurations (MOVED)
+
+all directional checks pass: nothing moved the wrong way

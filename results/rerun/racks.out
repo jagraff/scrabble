@@ -1,0 +1,5 @@
+26 moves (25 build-up + the record play), 97 tiles played
+board replay: True  (26 moves replayed, final move scored 1786)
+rack/bag feasible with 2 alternating players: True
+witness independently re-verified: True  (97 played, 3 on racks, 0 in bag)
+  witness -> results/rack_schedule.json

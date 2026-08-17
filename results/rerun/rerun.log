@@ -1,0 +1,51 @@
+clean re-run starting Mon Aug 17 03:59:16 EDT 2026
+{
+ "git_commit": "5d3247ea4b0e85d24773267656c718b88c7ec573",
+ "git_dirty": true,
+ "python": "3.12.3",
+ "platform": "Darwin/arm64",
+ "ortools": "9.15.6755",
+ "pythonhashseed": "0",
+ "lexicon": {
+  "path": "data/NWL2023.txt",
+  "sha256": "7ced912101628ad7f80a38553fa79a5e6c2a163dd871d7251ca4cef10b12b97f",
+  "words": 196601
+ }
+}
+--resume: keeping results/enum_cells/run-ddc68461eadd (50 of 50 cells already complete; each is identity-bound and re-verified before reuse)
+cells will be written to results/enum_cells/run-ddc68461eadd
+=== 03:59:16  tests-fast
+    tests-fast ok in 66s
+=== 04:00:22  tests-slow
+    tests-slow ok in 559s
+=== 04:09:41  stage-a
+    stage-a ok in 2s
+=== 04:09:43  stage-b
+    stage-b ok in 1081s
+=== 04:27:44  six-tiles
+    six-tiles ok in 94s
+=== 04:29:18  tier-2
+    tier-2 ok in 335s
+=== 04:34:53  sweep
+    sweep ok in 364s
+=== 04:40:57  tier-3
+    tier-3 ok in 1689s
+=== 05:09:06  reach
+    reach ok in 0s
+=== 05:09:06  racks
+    racks ok in 0s
+=== 05:09:06  directional
+    directional ok in 0s
+=== 05:09:06  manifest
+    manifest ok in 27s
+=== 05:09:33  done in 70 min
+run ddc68461eadd -> results/enum_cells/run-ddc68461eadd
+cells        : 50 (50 complete, 0 corrupt, 0 unstamped)
+configurations: 1327
+solver time  : 18.7 h
+refutation   : 1327 checked, 1327 refuted, 0 undecided, 0 above the threshold
+  of which    1/1 closed by decomposition
+artifacts    : 8
+-> results/MANIFEST.json
+manifest digest: bcc10dbc8ba9cc7020dd6b9f78ea5c4e64b75fd90fc14503606456e7ac94898b
+coverage: every cell of every surviving pattern is present and complete; every enumerated configuration has a refutation; the 1786 witness verifies and replays to the record board

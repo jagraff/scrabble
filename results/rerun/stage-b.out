@@ -1,0 +1,21 @@
+provenance: commit 5d3247ea4b0e85d24773267656c718b88c7ec573 ortools 9.15.6755 seed 0 lexicon 7ced91210162
+OXYPHENBUTAZONE row=0: relaxed 2000 -> tight 1798  (43.9s)
+  building line DAWG...
+  row1-exact: 1798 -> 1794 (22.4s)
+OXYPHENBUTAZONE row=14: relaxed 1935 -> tight 1778  (57.8s)
+PSYCHOANALYZING row=0: relaxed 1911 -> tight 1430  (58.9s)
+PSYCHOANALYZING row=14: relaxed 1897 -> tight 1424  (238.7s)
+DEMYTHOLOGIZING row=14: relaxed 1860 -> tight 1703  (67.5s)
+DEMYTHOLOGIZING row=0: relaxed 1845 -> tight 1650  (25.6s)
+DEMYTHOLOGIZERS row=14: relaxed 1839 -> tight 1716  (151.1s)
+DEMYTHOLOGIZERS row=0: relaxed 1836 -> tight 1629  (37.7s)
+NEPHRECTOMIZING row=14: relaxed 1836 -> tight 1639  (55.5s)
+VENTRILOQUIZING row=0: relaxed 1834 -> tight 1629  (13.9s)
+REMYTHOLOGIZING row=14: relaxed 1830 -> tight 1666  (59.7s)
+HYPERIMMUNIZING row=0: relaxed 1825 -> tight 1645  (31.0s)
+NEPHRECTOMIZING row=0: relaxed 1824 -> tight 1642  (46.4s)
+REMYTHOLOGIZING row=0: relaxed 1815 -> tight 1621  (23.7s)
+HYPERIMMUNIZING row=14: relaxed 1807 -> tight 1624  (59.1s)
+DICHLOROBENZENE row=0: relaxed 1790 -> tight 1585  (31.2s)
+OVEREMPHASIZING row=0: relaxed 1789 -> tight 1560  (55.2s)
+done in 1080s -> results/tight_bounds.json
